@@ -11,12 +11,12 @@
       --line: #dfdce8;
       --paper: #fffdf8;
       --warm: #fff5df;
-      --red: #ef5555;
-      --blue: #4f74ff;
-      --green: #79b45d;
-      --gold: #efb333;
-      --lilac: #8476d8;
-      --shadow: 10px 12px 0 rgba(31, 31, 38, .12);
+      --red: #ff4d58;
+      --blue: #5277ff;
+      --green: #54c35d;
+      --gold: #ffc735;
+      --lilac: #9a78ff;
+      --shadow: 7px 9px 0 rgba(31, 31, 38, .13);
     }
 
     * { box-sizing: border-box; }
@@ -27,10 +27,10 @@
       color: var(--ink);
       font-family: "Microsoft YaHei", "PingFang SC", "KaiTi", "Comic Sans MS", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
       background:
-        radial-gradient(circle at 14% 16%, rgba(239, 85, 85, .20), transparent 19%),
-        radial-gradient(circle at 88% 10%, rgba(79, 116, 255, .18), transparent 17%),
-        radial-gradient(circle at 76% 84%, rgba(121, 180, 93, .18), transparent 22%),
-        linear-gradient(180deg, #fff2d5, #f9f0ff 54%, #f1ffd9);
+        radial-gradient(circle at 13% 18%, rgba(255, 77, 88, .16), transparent 18%),
+        radial-gradient(circle at 88% 12%, rgba(82, 119, 255, .15), transparent 16%),
+        radial-gradient(circle at 78% 86%, rgba(84, 195, 93, .16), transparent 22%),
+        linear-gradient(180deg, #fffdf8, #fff8ee 54%, #fbfff3);
       background-attachment: fixed;
     }
 
@@ -42,10 +42,11 @@
       opacity: .22;
       mix-blend-mode: multiply;
       background:
-        repeating-linear-gradient(8deg, rgba(29,29,34,.08) 0 1px, transparent 1px 7px),
-        radial-gradient(circle at 20% 30%, rgba(29,29,34,.18) 0 1px, transparent 1.5px),
-        radial-gradient(circle at 70% 60%, rgba(29,29,34,.16) 0 1px, transparent 1.5px);
-      background-size: auto, 17px 19px, 23px 21px;
+        repeating-linear-gradient(6deg, rgba(29,29,34,.06) 0 1px, transparent 1px 10px),
+        radial-gradient(circle at 20% 30%, rgba(255,77,88,.24) 0 1.2px, transparent 1.8px),
+        radial-gradient(circle at 70% 60%, rgba(82,119,255,.22) 0 1px, transparent 1.7px),
+        radial-gradient(circle at 38% 78%, rgba(255,199,53,.22) 0 1px, transparent 1.7px);
+      background-size: auto, 25px 28px, 31px 27px, 37px 34px;
       z-index: -1;
     }
 
@@ -77,11 +78,11 @@
       margin: 0 0 14px;
       padding: 6px 12px;
       border: 2px solid var(--ink);
-      border-radius: 17px 9px 20px 11px;
+      border-radius: 18px 8px 22px 13px;
       color: #1d1d22;
       background: #ffe680;
-      box-shadow: 4px 5px 0 rgba(29,29,34,.12);
-      transform: rotate(-1deg);
+      box-shadow: 3px 4px 0 rgba(29,29,34,.16);
+      transform: rotate(-2.5deg);
       font-size: 14px;
       font-weight: 900;
     }
@@ -92,7 +93,7 @@
       font-size: clamp(36px, 7vw, 76px);
       line-height: 1;
       letter-spacing: 0;
-      text-shadow: 3px 3px 0 rgba(239,179,51,.28);
+      text-shadow: 3px 3px 0 rgba(255,199,53,.38), -2px 2px 0 rgba(82,119,255,.12);
     }
 
     .subtitle {
@@ -118,7 +119,7 @@
       min-height: 48px;
       padding: 0 22px;
       border-radius: 18px 10px 22px 12px;
-      border: 3px solid var(--ink);
+      border: 4px solid var(--ink);
       cursor: pointer;
       font-weight: 900;
       transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
@@ -127,7 +128,7 @@
     .primary {
       color: #fff;
       background: var(--ink);
-      box-shadow: 6px 7px 0 rgba(239, 179, 51, .55);
+      box-shadow: 6px 7px 0 rgba(255, 199, 53, .65);
     }
 
     .ghost {
@@ -141,9 +142,11 @@
     }
 
     .alignment-board, .panel {
-      border: 4px solid var(--ink);
-      border-radius: 20px 12px 24px 14px;
-      background: rgba(255, 255, 255, .82);
+      border: 5px solid var(--ink);
+      border-radius: 24px 12px 28px 16px;
+      background:
+        repeating-linear-gradient(-8deg, rgba(255,199,53,.05) 0 8px, transparent 8px 20px),
+        rgba(255, 255, 255, .90);
       box-shadow: var(--shadow);
       overflow: hidden;
     }
@@ -151,7 +154,7 @@
     .alignment-board {
       min-height: 368px;
       padding: 22px;
-      transform: rotate(.3deg);
+      transform: rotate(-.9deg);
     }
 
     .board-title {
@@ -165,7 +168,7 @@
       position: relative;
       height: 254px;
       border: 1px solid var(--line);
-      background: linear-gradient(90deg, rgba(239,85,85,.07), rgba(255,255,255,.76), rgba(79,116,255,.08));
+      background: linear-gradient(90deg, rgba(255,77,88,.12), rgba(255,255,255,.86), rgba(82,119,255,.14));
     }
 
     .axis::before, .axis::after {
@@ -178,14 +181,14 @@
       left: 50%;
       top: 20px;
       bottom: 20px;
-      width: 2px;
+      width: 4px;
     }
 
     .axis::after {
       top: 50%;
       left: 20px;
       right: 20px;
-      height: 2px;
+      height: 4px;
     }
 
     .circle {
@@ -193,7 +196,7 @@
       top: 50%;
       width: 144px;
       height: 144px;
-      border: 3px solid var(--ink);
+      border: 4px solid var(--ink);
       border-radius: 50%;
       transform: translateY(-50%);
       opacity: .82;
@@ -216,7 +219,7 @@
       border: 2px solid var(--ink);
       border-radius: 50%;
       background: var(--gold);
-      box-shadow: 0 8px 20px rgba(239, 179, 51, .34);
+      box-shadow: 4px 4px 0 rgba(29,29,34,.14);
       left: calc(50% - 17px);
       top: calc(50% - 17px);
       transition: left .42s ease, top .42s ease, background .42s ease;
@@ -380,45 +383,42 @@
     .result.theme-heaven::before {
       opacity: 1;
       background:
-        repeating-linear-gradient(-8deg, rgba(255,255,255,.28) 0 7px, transparent 7px 19px),
-        radial-gradient(circle at 78% 12%, rgba(255, 230, 128, .70), transparent 20%),
-        radial-gradient(circle at 18% 18%, rgba(255, 255, 255, .92), transparent 18%),
-        radial-gradient(circle at 86% 82%, rgba(79, 116, 255, .14), transparent 21%),
-        linear-gradient(135deg, rgba(255, 245, 198, .94), rgba(228, 241, 255, .88));
+        repeating-linear-gradient(-9deg, rgba(255,199,53,.13) 0 10px, transparent 10px 23px),
+        radial-gradient(circle at 82% 12%, rgba(255, 226, 71, .72), transparent 18%),
+        radial-gradient(circle at 20% 22%, rgba(255, 255, 255, .96), transparent 20%),
+        linear-gradient(135deg, rgba(255, 251, 218, .98), rgba(231, 246, 255, .92));
     }
 
     .result.theme-human::before {
       opacity: 1;
       background:
-        repeating-linear-gradient(10deg, rgba(29,29,34,.045) 0 2px, transparent 2px 15px),
-        radial-gradient(circle at 16% 18%, rgba(121, 180, 93, .24), transparent 22%),
-        radial-gradient(circle at 86% 26%, rgba(239, 179, 51, .26), transparent 20%),
-        radial-gradient(circle at 54% 90%, rgba(79, 116, 255, .10), transparent 18%),
-        linear-gradient(135deg, rgba(255, 250, 240, .96), rgba(244, 248, 255, .9));
+        repeating-linear-gradient(7deg, rgba(84,195,93,.12) 0 8px, transparent 8px 21px),
+        radial-gradient(circle at 18% 18%, rgba(84, 195, 93, .28), transparent 22%),
+        radial-gradient(circle at 86% 24%, rgba(255, 199, 53, .35), transparent 18%),
+        linear-gradient(135deg, rgba(255, 253, 248, .98), rgba(238, 255, 232, .93));
     }
 
     .result.theme-hell::before {
       opacity: 1;
       background:
-        repeating-linear-gradient(-12deg, rgba(29,29,34,.08) 0 3px, transparent 3px 17px),
-        radial-gradient(circle at 80% 16%, rgba(239, 85, 85, .46), transparent 23%),
-        radial-gradient(circle at 10% 90%, rgba(29, 29, 34, .20), transparent 26%),
-        radial-gradient(circle at 42% 18%, rgba(239, 179, 51, .22), transparent 16%),
-        linear-gradient(135deg, rgba(255, 230, 220, .94), rgba(255, 244, 210, .86));
+        repeating-linear-gradient(-12deg, rgba(255,77,88,.18) 0 8px, transparent 8px 21px),
+        radial-gradient(circle at 80% 16%, rgba(255, 77, 88, .50), transparent 23%),
+        radial-gradient(circle at 18% 86%, rgba(29, 29, 34, .15), transparent 24%),
+        linear-gradient(135deg, rgba(255, 231, 216, .96), rgba(255, 245, 195, .90));
     }
 
     .theme-heaven .score-card {
-      background: linear-gradient(160deg, #fff8ce, #eef7ff);
+      background: repeating-linear-gradient(-8deg, rgba(255,199,53,.18) 0 10px, transparent 10px 22px), #fff8ce;
       box-shadow: 10px 10px 0 rgba(239, 179, 51, .18);
     }
 
     .theme-human .score-card {
-      background: linear-gradient(160deg, #fffaf0, #eff8ea);
+      background: repeating-linear-gradient(7deg, rgba(84,195,93,.16) 0 10px, transparent 10px 22px), #f1ffd8;
       box-shadow: 10px 10px 0 rgba(121, 180, 93, .16);
     }
 
     .theme-hell .score-card {
-      background: linear-gradient(160deg, #ffe2dc, #fff1c5);
+      background: repeating-linear-gradient(-10deg, rgba(255,77,88,.18) 0 10px, transparent 10px 22px), #ffe2dc;
       box-shadow: 10px 10px 0 rgba(239, 85, 85, .18);
     }
 
@@ -430,12 +430,12 @@
     }
 
     .score-card {
-      border: 4px solid var(--ink);
-      border-radius: 22px 14px 25px 12px;
+      border: 5px solid var(--ink);
+      border-radius: 25px 13px 30px 16px;
       background: #fffaf0;
       padding: 20px;
       text-align: center;
-      transform: rotate(-.8deg);
+      transform: rotate(1.4deg);
     }
 
     .score {
@@ -463,11 +463,11 @@
       width: 112px;
       height: 112px;
       margin: 0 0 18px;
-      border: 4px solid var(--ink);
-      border-radius: 18px 10px 20px 12px;
-      background: linear-gradient(135deg, #fff7df, #eef3ff);
-      box-shadow: 8px 8px 0 rgba(29, 29, 34, .16);
-      transform: rotate(-1deg);
+      border: 5px solid var(--ink);
+      border-radius: 23px 12px 24px 15px;
+      background: #fff7df;
+      box-shadow: 6px 7px 0 rgba(29, 29, 34, .16);
+      transform: rotate(-3deg);
     }
 
     .badge-row {
@@ -482,9 +482,9 @@
       align-items: center;
       min-height: 30px;
       padding: 0 10px;
-      border: 2px solid var(--ink);
-      border-radius: 14px 9px 16px 10px;
-      background: #fff;
+      border: 3px solid var(--ink);
+      border-radius: 15px 8px 17px 11px;
+      background: #fff7c7;
       font-size: 13px;
       font-weight: 900;
     }
@@ -505,9 +505,9 @@
 
     .metric {
       min-height: 76px;
-      border: 3px solid var(--ink);
-      border-radius: 18px 10px 20px 12px;
-      background: #fff;
+      border: 4px solid var(--ink);
+      border-radius: 20px 10px 22px 13px;
+      background: #fffdf8;
       padding: 12px;
       box-shadow: 4px 5px 0 rgba(29,29,34,.08);
     }
@@ -529,9 +529,9 @@
       width: min(100%, 420px);
       max-height: 76vh;
       margin-top: 22px;
-      border: 4px solid var(--ink);
-      border-radius: 20px 12px 24px 14px;
-      background: #fff;
+      border: 5px solid var(--ink);
+      border-radius: 24px 12px 28px 16px;
+      background: #fffdf8;
       object-fit: contain;
       box-shadow: 8px 9px 0 rgba(29,29,34,.12);
     }
@@ -1145,6 +1145,46 @@
       ctx.restore();
     }
 
+    function crayonDust(ctx, x, y, width, height, colors = ["#ff4d58", "#5277ff", "#54c35d", "#ffc735"], alpha = .16, step = 18) {
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      for (let yy = y; yy < y + height; yy += step) {
+        for (let xx = x; xx < x + width; xx += step) {
+          const n = Math.sin(xx * 5.73 + yy * 9.31) * 10000;
+          const f = n - Math.floor(n);
+          if (f > .42) {
+            ctx.fillStyle = colors[Math.floor(f * colors.length) % colors.length];
+            ctx.beginPath();
+            ctx.ellipse(xx + f * 9, yy + (1 - f) * 8, 1.8 + f * 2.8, 1.2 + f * 2.2, f * Math.PI, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+      }
+      ctx.restore();
+    }
+
+    function crayonLine(ctx, points, color, width = 8, passes = 3) {
+      for (let p = 0; p < passes; p += 1) {
+        ctx.save();
+        ctx.globalAlpha = .58 - p * .12;
+        ctx.strokeStyle = color;
+        ctx.lineWidth = width - p;
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
+        ctx.beginPath();
+        ctx.moveTo(points[0][0] + Math.sin(p + 1) * 3, points[0][1] + Math.cos(p + 2) * 3);
+        for (let i = 1; i < points.length; i += 1) {
+          const [x, y] = points[i];
+          const [px, py] = points[i - 1];
+          const mx = (px + x) / 2 + Math.sin((i + p) * 3.2) * 9;
+          const my = (py + y) / 2 + Math.cos((i + p) * 2.7) * 8;
+          ctx.quadraticCurveTo(mx, my, x + Math.cos(i + p) * 3, y + Math.sin(i + p) * 3);
+        }
+        ctx.stroke();
+        ctx.restore();
+      }
+    }
+
     function wobble(value, seed, unit) {
       return value + Math.sin(seed * 12.9898) * unit * 1.2;
     }
@@ -1240,13 +1280,19 @@
       }
       function textMark(text, tx = 50, ty = 56, fontSize = 16) {
         ctx.fillStyle = "#1d1d22";
-        ctx.font = `900 ${fontSize * unit}px Microsoft YaHei, sans-serif`;
+        ctx.font = `900 ${fontSize * unit}px KaiTi, Microsoft YaHei, sans-serif`;
         ctx.textAlign = "center";
         ctx.fillText(text, tx * unit, ty * unit);
         ctx.textAlign = "left";
       }
 
-      if (item.includes("号码牌") || item.includes("叫号") || item.includes("排队")) {
+      if (item.includes("草莓")) {
+        path([[50, 24], [72, 42], [65, 78], [50, 88], [34, 78], [28, 42]], "#ff4d58");
+        path([[38, 26], [48, 14], [54, 28], [68, 20], [60, 36]], "#54c35d");
+        circle(42, 48, 2.5, "#fff7c7");
+        circle(56, 58, 2.5, "#fff7c7");
+        circle(49, 72, 2.5, "#fff7c7");
+      } else if (item.includes("号码牌") || item.includes("叫号") || item.includes("排队")) {
         rect(25, 22, 50, 56, "#ffffff", 8);
         line(34, 32, 66, 32, accent, 4);
         textMark(item.includes("叫号") ? "A07" : "27", 50, 58, 22);
@@ -1743,6 +1789,7 @@
         textMark(item.replace(/[^\u4e00-\u9fa5A-Za-z0-9]/g, "").slice(0, 2) || "物", 50, 51, 18);
       }
 
+      crayonDust(ctx, size * .08, size * .08, size * .84, size * .84, [main, accent, "#ff4d58", "#5277ff", "#54c35d", "#ffc735"], .18, size / 11);
       ctx.restore();
     }
 
@@ -1843,7 +1890,7 @@
     function fontSizeForText(ctx, text, maxWidth, startSize, minSize) {
       let size = startSize;
       while (size > minSize) {
-        ctx.font = `900 ${size}px Microsoft YaHei, sans-serif`;
+        ctx.font = `900 ${size}px KaiTi, Microsoft YaHei, sans-serif`;
         if (ctx.measureText(text).width <= maxWidth || text.length > 5) break;
         size -= 2;
       }
@@ -1864,56 +1911,58 @@
       ctx.save();
       ctx.fillStyle = "#fffdf8";
       ctx.strokeStyle = "#1d1d22";
-      ctx.lineWidth = 3;
-      roundedRect(ctx, x, y, size, size, 12);
+      ctx.lineWidth = Math.max(4, size * .028);
+      roundedRect(ctx, x, y, size, size, size * .08);
       ctx.fill();
       ctx.stroke();
+      crayonDust(ctx, x + 6, y + 6, size - 12, size - 12, ["#ff4d58", "#5277ff", "#ffc735"], .10, size / 10);
 
-      ctx.strokeStyle = "#b9b5c4";
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.moveTo(x + size / 2, y + 28);
-      ctx.lineTo(x + size / 2, y + size - 28);
-      ctx.moveTo(x + 28, y + size / 2);
-      ctx.lineTo(x + size - 28, y + size / 2);
-      ctx.stroke();
-
-      ctx.globalAlpha = .18;
+      ctx.globalAlpha = .32;
       ctx.fillStyle = "#ef5555";
       ctx.beginPath();
-      ctx.arc(x + size * .38, y + size * .52, size * .24, 0, Math.PI * 2);
+      ctx.ellipse(x + size * .39, y + size * .55, size * .22, size * .28, -.12, 0, Math.PI * 2);
       ctx.fill();
       ctx.fillStyle = "#4f74ff";
       ctx.beginPath();
-      ctx.arc(x + size * .62, y + size * .52, size * .24, 0, Math.PI * 2);
+      ctx.ellipse(x + size * .64, y + size * .53, size * .22, size * .28, .13, 0, Math.PI * 2);
       ctx.fill();
       ctx.globalAlpha = 1;
 
+      crayonLine(ctx, [[x + size / 2, y + 30], [x + size / 2 + 5, y + size - 34]], "#34343b", Math.max(4, size * .028), 2);
+      crayonLine(ctx, [[x + 30, y + size / 2], [x + size - 32, y + size / 2 - 3]], "#34343b", Math.max(4, size * .028), 2);
+
       const pointX = x + clamp(50 + state.good * 2.8, 10, 90) / 100 * size;
       const pointY = y + clamp(50 - state.order * 2.8, 10, 90) / 100 * size;
+      ctx.fillStyle = "#fffdf8";
+      ctx.strokeStyle = "#fffdf8";
+      ctx.lineWidth = Math.max(8, size * .05);
+      ctx.beginPath();
+      ctx.arc(pointX, pointY, Math.max(17, size * .11), 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
       ctx.fillStyle = lastResult.score >= 65 ? "#79b45d" : lastResult.score >= 35 ? "#efb333" : "#ef5555";
       ctx.strokeStyle = "#1d1d22";
-      ctx.lineWidth = 4;
+      ctx.lineWidth = Math.max(5, size * .03);
       ctx.beginPath();
-      ctx.arc(pointX, pointY, 18, 0, Math.PI * 2);
+      ctx.arc(pointX, pointY, Math.max(17, size * .11), 0, Math.PI * 2);
       ctx.fill();
       ctx.stroke();
 
       ctx.fillStyle = "#fffdf8";
-      ctx.strokeStyle = "#dfdce8";
-      ctx.lineWidth = 2;
+      ctx.strokeStyle = "#1d1d22";
+      ctx.lineWidth = Math.max(2, size * .014);
       [
-        [x + 18, y + size / 2 - 36, 46, 28, "恶"],
-        [x + size - 64, y + size / 2 - 36, 46, 28, "善"],
-        [x + size / 2 - 34, y + 18, 68, 28, "混乱"],
-        [x + size / 2 - 34, y + size - 46, 68, 28, "守序"]
+        [x + 8, y + size / 2 - 50, size * .22, size * .18, "恶"],
+        [x + size - size * .24 - 8, y + size / 2 - 50, size * .22, size * .18, "善"],
+        [x + size / 2 - size * .18, y + 8, size * .36, size * .18, "混乱"],
+        [x + size / 2 - size * .18, y + size - size * .22 - 8, size * .36, size * .18, "守序"]
       ].forEach(([rx, ry, rw, rh, text]) => {
-        roundedRect(ctx, rx, ry, rw, rh, 14);
+        roundedRect(ctx, rx, ry, rw, rh, rh / 2);
         ctx.fill();
         ctx.stroke();
-        ctx.fillStyle = "#6d6d75";
-        ctx.font = "700 20px Microsoft YaHei, sans-serif";
-        ctx.fillText(text, rx + (rw - ctx.measureText(text).width) / 2, ry + 20);
+        ctx.fillStyle = "#3d3d45";
+        ctx.font = `900 ${Math.max(18, size * .12)}px KaiTi, Microsoft YaHei, sans-serif`;
+        ctx.fillText(text, rx + (rw - ctx.measureText(text).width) / 2, ry + rh * .68);
         ctx.fillStyle = "#fffdf8";
       });
       ctx.restore();
@@ -1992,22 +2041,16 @@
       ctx.fill();
       ctx.stroke();
       ctx.fillStyle = "#1d1d22";
-      ctx.font = "900 22px Microsoft YaHei, sans-serif";
+      ctx.font = "900 22px KaiTi, Microsoft YaHei, sans-serif";
       ctx.fillText(text, 22, 31);
       ctx.restore();
     }
 
     function drawShareScene(ctx, theme) {
-      const bg = ctx.createLinearGradient(0, 0, 0, 1350);
-      bg.addColorStop(0, theme.top);
-      bg.addColorStop(1, theme.bottom);
-      ctx.fillStyle = bg;
+      ctx.fillStyle = "#fffdf8";
       ctx.fillRect(0, 0, 900, 1350);
-      ctx.fillStyle = theme.band;
-      ctx.fillRect(0, 0, 900, 250);
-      ctx.fillStyle = theme.wash;
-      ctx.fillRect(0, 1010, 900, 340);
-      grain(ctx, 0, 0, 900, 1350, .11, 8);
+      crayonDust(ctx, 0, 0, 900, 1350, ["#ff4d58", "#5277ff", "#54c35d", "#ffc735", "#9a78ff"], .18, 25);
+      grain(ctx, 0, 0, 900, 1350, .07, 9);
 
       ctx.save();
       ctx.strokeStyle = "#1d1d22";
@@ -2015,38 +2058,40 @@
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
       if (theme.key === "heaven") {
-        posterBlob(ctx, [[600, 62], [682, 18], [790, 38], [850, 104], [814, 166], [692, 156], [596, 132]], "rgba(255,255,255,.80)");
-        posterBlob(ctx, [[658, 980], [746, 940], [870, 986], [900, 1070], [812, 1124], [676, 1096]], "rgba(255,255,255,.56)", "#1d1d22", 4);
-        posterBlob(ctx, [[722, 116], [772, 90], [822, 118], [814, 174], [764, 202], [718, 168]], "#ffe680");
-        doodlePath(ctx, [[678, 82], [700, 102], [720, 120]], "#efb333", 6);
-        doodlePath(ctx, [[835, 82], [816, 105], [806, 130]], "#efb333", 6);
-        doodlePath(ctx, [[742, 224], [706, 256], [682, 306], [682, 360]], "rgba(29,29,34,.44)", 5);
-        doodlePath(ctx, [[790, 224], [820, 268], [836, 322], [828, 382]], "rgba(29,29,34,.44)", 5);
-        doodlePath(ctx, [[604, 246], [648, 234], [714, 240], [778, 232], [846, 246]], "#ffffff", 10);
-        stampText(ctx, "天堂摇号处", 610, 1030, "#fff7bd", -.08);
+        posterBlob(ctx, [[0, 0], [900, 0], [900, 250], [820, 230], [670, 258], [512, 224], [370, 252], [210, 220], [0, 248]], "rgba(255, 231, 94, .34)", "rgba(255,199,53,.55)", 2);
+        posterBlob(ctx, [[604, 68], [680, 36], [758, 64], [812, 120], [786, 188], [692, 178], [612, 150]], "rgba(255,255,255,.82)", "#5277ff", 6);
+        crayonLine(ctx, [[640, 138], [686, 92], [740, 98], [790, 146]], "#5277ff", 10, 3);
+        crayonLine(ctx, [[662, 78], [704, 46], [760, 56], [806, 92]], "#ffc735", 12, 3);
+        ctx.beginPath();
+        ctx.ellipse(736, 98, 68, 22, -.18, 0, Math.PI * 2);
+        ctx.strokeStyle = "#ffc735";
+        ctx.lineWidth = 10;
+        ctx.stroke();
+        crayonLine(ctx, [[612, 1035], [662, 1000], [720, 1032], [770, 1004], [835, 1038]], "#ffffff", 16, 3);
+        crayonLine(ctx, [[590, 1094], [642, 1060], [710, 1080], [790, 1058], [870, 1094]], "#b7dcff", 10, 2);
+        stampText(ctx, "天堂", 628, 1038, "#fff7bd", -.13);
       } else if (theme.key === "human") {
-        posterBlob(ctx, [[560, 1014], [652, 940], [796, 940], [900, 1014], [900, 1136], [734, 1102], [584, 1142]], "rgba(121,180,93,.66)");
-        posterBlob(ctx, [[628, 158], [692, 112], [796, 136], [852, 214], [824, 264], [708, 262], [612, 226]], "rgba(255,255,255,.66)");
-        posterBlob(ctx, [[736, 74], [774, 56], [808, 84], [800, 124], [754, 136], [724, 110]], "#efb333");
-        posterBlob(ctx, [[644, 1018], [700, 952], [754, 1018], [754, 1120], [642, 1120]], "#fffdf8", "#1d1d22", 5);
-        rectSketch(ctx, 678, 1050, 38, 70, "#4f74ff");
-        doodlePath(ctx, [[580, 1138], [676, 1102], [790, 1118], [900, 1086]], "#1d1d22", 5);
-        doodlePath(ctx, [[612, 928], [628, 884], [660, 870], [690, 902]], "#79b45d", 9);
-        stampText(ctx, "人间观察站", 618, 103, "#dff4ce", .07);
+        posterBlob(ctx, [[0, 1048], [120, 1016], [250, 1062], [390, 1018], [534, 1070], [670, 1022], [900, 1054], [900, 1350], [0, 1350]], "rgba(84,195,93,.50)", "#54c35d", 4);
+        posterBlob(ctx, [[720, 64], [765, 42], [812, 74], [798, 124], [740, 132], [700, 98]], "#ffc735", "#f5a400", 4);
+        crayonLine(ctx, [[612, 1030], [612, 920]], "#7a4c27", 12, 3);
+        posterBlob(ctx, [[570, 940], [604, 870], [654, 922], [626, 984]], "#54c35d", "#1d1d22", 5);
+        posterBlob(ctx, [[640, 936], [688, 872], [730, 944], [690, 990]], "#3bb84a", "#1d1d22", 5);
+        crayonLine(ctx, [[762, 1050], [762, 948]], "#7a4c27", 12, 3);
+        posterBlob(ctx, [[710, 965], [760, 902], [822, 956], [790, 1016]], "#54c35d", "#1d1d22", 5);
+        crayonLine(ctx, [[552, 1115], [640, 1094], [722, 1120], [840, 1096]], "#2ea845", 9, 2);
+        stampText(ctx, "人间", 626, 104, "#dff4ce", .10);
       } else {
-        posterBlob(ctx, [[570, 1006], [620, 914], [684, 1036], [736, 898], [812, 1052], [900, 978], [900, 1220], [560, 1220]], "rgba(239,85,85,.62)");
-        posterBlob(ctx, [[650, 198], [690, 106], [724, 220]], "#ef5555");
-        posterBlob(ctx, [[724, 214], [782, 84], [832, 218]], "#ef5555");
-        posterBlob(ctx, [[700, 210], [734, 134], [760, 214]], "#efb333", "#1d1d22", 4);
-        doodlePath(ctx, [[628, 96], [668, 44], [710, 112], [754, 58], [804, 122], [842, 76]], "#efb333", 7);
-        doodlePath(ctx, [[626, 260], [686, 290], [748, 268], [814, 304], [872, 278]], "rgba(29,29,34,.48)", 6);
-        for (let i = 0; i < 7; i += 1) {
-          doodlePath(ctx, [[570 + i * 54, 1098], [596 + i * 54, 1068], [622 + i * 54, 1108]], "#1d1d22", 4);
-        }
-        stampText(ctx, "地狱复核中", 626, 118, "#ffd8d8", -.05);
+        posterBlob(ctx, [[0, 1016], [110, 1075], [220, 1018], [334, 1094], [468, 1012], [612, 1084], [744, 1018], [900, 1080], [900, 1350], [0, 1350]], "rgba(255,77,88,.54)", "#ff4d58", 4);
+        posterBlob(ctx, [[604, 190], [652, 88], [710, 206]], "#ff4d58", "#1d1d22", 6);
+        posterBlob(ctx, [[704, 210], [768, 68], [835, 214]], "#ff4d58", "#1d1d22", 6);
+        posterBlob(ctx, [[660, 210], [706, 112], [752, 214]], "#ffc735", "#1d1d22", 5);
+        crayonLine(ctx, [[600, 92], [648, 38], [706, 110], [760, 46], [820, 122], [860, 82]], "#ffc735", 12, 3);
+        crayonLine(ctx, [[578, 1090], [624, 1048], [670, 1102], [722, 1048], [774, 1106], [828, 1050], [884, 1100]], "#1d1d22", 8, 2);
+        crayonLine(ctx, [[0, 1136], [100, 1114], [210, 1150], [330, 1118], [460, 1154], [620, 1124], [900, 1148]], "#ffc735", 16, 2);
+        stampText(ctx, "地狱", 636, 116, "#ffd8d8", -.10);
       }
-      doodlePath(ctx, [[42, 266], [134, 246], [228, 260], [318, 236]], "rgba(29,29,34,.24)", 4);
-      doodlePath(ctx, [[560, 848], [666, 826], [780, 850], [852, 830]], "rgba(29,29,34,.22)", 4);
+      crayonLine(ctx, [[50, 265], [138, 246], [226, 264], [320, 238]], "rgba(29,29,34,.25)", 5, 1);
+      crayonLine(ctx, [[570, 842], [666, 826], [778, 850], [850, 826]], "rgba(29,29,34,.18)", 5, 1);
       ctx.restore();
     }
 
@@ -2061,16 +2106,16 @@
       drawShareScene(ctx, theme);
 
       ctx.fillStyle = "#1d1d22";
-      ctx.font = "900 34px Microsoft YaHei, sans-serif";
+      ctx.font = "900 34px KaiTi, Microsoft YaHei, sans-serif";
       ctx.fillText(`${theme.title} · 功德分投胎报告`, 62, 86);
-      ctx.font = "700 24px Microsoft YaHei, sans-serif";
+      ctx.font = "700 24px KaiTi, Microsoft YaHei, sans-serif";
       ctx.fillStyle = "#6d6d75";
       ctx.fillText(theme.subtitle, 62, 126);
 
       ctx.fillStyle = "#1d1d22";
-      ctx.font = "900 118px Microsoft YaHei, sans-serif";
+      ctx.font = "900 118px KaiTi, Microsoft YaHei, sans-serif";
       ctx.fillText(String(lastResult.score), 62, 230);
-      ctx.font = "900 28px Microsoft YaHei, sans-serif";
+      ctx.font = "900 28px KaiTi, Microsoft YaHei, sans-serif";
       ctx.fillStyle = "#6d6d75";
       ctx.fillText("功德分", 240, 216);
       ctx.fillStyle = theme.accent;
@@ -2080,7 +2125,7 @@
       ctx.fill();
       ctx.stroke();
       ctx.fillStyle = "#1d1d22";
-      ctx.font = "900 22px Microsoft YaHei, sans-serif";
+      ctx.font = "900 22px KaiTi, Microsoft YaHei, sans-serif";
       ctx.fillText(theme.name, 386, 212);
 
       rectSketch(ctx, 44, 282, 812, 560, "rgba(255,255,255,.93)", 22, 5);
@@ -2089,37 +2134,37 @@
       drawItemIllustration(ctx, lastResult.item, { type: lastResult.type }, 84, 332, 300);
 
       ctx.fillStyle = "#1d1d22";
-      ctx.font = "900 32px Microsoft YaHei, sans-serif";
+      ctx.font = "900 32px KaiTi, Microsoft YaHei, sans-serif";
       ctx.fillText(lastResult.alignment, 430, 348);
       const titleSize = fontSizeForText(ctx, lastResult.item, 370, 58, 38);
-      ctx.font = `900 ${titleSize}px Microsoft YaHei, sans-serif`;
+      ctx.font = `900 ${titleSize}px KaiTi, Microsoft YaHei, sans-serif`;
       ctx.fillStyle = "#1d1d22";
       const titleEndY = drawTextBlock(ctx, lastResult.item, 430, 430, 370, titleSize + 10, 3);
-      ctx.font = "800 26px Microsoft YaHei, sans-serif";
+      ctx.font = "800 26px KaiTi, Microsoft YaHei, sans-serif";
       ctx.fillStyle = "#6d6d75";
       let infoY = Math.max(570, titleEndY + 26);
       ctx.fillText(lastResult.level, 430, infoY);
       ctx.fillText(lastResult.type, 430, infoY + 38);
       ctx.fillText(`善恶轴 ${state.good >= 0 ? "+" : ""}${state.good}`, 430, infoY + 76);
       ctx.fillText(`秩序轴 ${state.order >= 0 ? "+" : ""}${state.order}`, 430, infoY + 114);
-      drawAxis(ctx, 636, 626, 150);
+      drawAxis(ctx, 600, 588, 210);
 
       rectSketch(ctx, 44, 872, 812, 250, "rgba(255,255,255,.92)", 18, 5);
       grain(ctx, 54, 882, 792, 230, .055, 11);
       ctx.fillStyle = "#1d1d22";
-      ctx.font = "700 26px Microsoft YaHei, sans-serif";
+      ctx.font = "700 26px KaiTi, Microsoft YaHei, sans-serif";
       drawTextBlock(ctx, lastResult.text, 76, 930, 748, 42, 5);
 
       rectSketch(ctx, 654, 1148, 168, 170, "rgba(255,255,255,.94)", 14, 4);
       await drawShareQr(ctx, 688, 1164, 100);
       ctx.fillStyle = "#6d6d75";
-      ctx.font = "700 18px Microsoft YaHei, sans-serif";
+      ctx.font = "700 18px KaiTi, Microsoft YaHei, sans-serif";
       ctx.textAlign = "center";
       ctx.fillText("扫码测试", 738, 1288);
       ctx.textAlign = "left";
 
       ctx.fillStyle = "#6d6d75";
-      ctx.font = "700 22px Microsoft YaHei, sans-serif";
+      ctx.font = "700 22px KaiTi, Microsoft YaHei, sans-serif";
       ctx.fillText("复制图片，把这份灵魂判决发给朋友", 72, 1258);
       el.shareCanvas.classList.add("show");
     }
