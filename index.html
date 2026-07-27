@@ -1,0 +1,1775 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>测测你的功德分：下辈子会投胎成什么东西</title>
+  <style>
+    :root {
+      --ink: #1d1d22;
+      --muted: #6d6d75;
+      --line: #dfdce8;
+      --paper: #fffdf8;
+      --warm: #fff5df;
+      --red: #ef5555;
+      --blue: #4f74ff;
+      --green: #79b45d;
+      --gold: #efb333;
+      --lilac: #8476d8;
+      --shadow: 0 18px 52px rgba(31, 31, 38, .13);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: "Microsoft YaHei", "PingFang SC", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background:
+        linear-gradient(135deg, rgba(239, 85, 85, .13), transparent 34%),
+        linear-gradient(225deg, rgba(79, 116, 255, .14), transparent 32%),
+        linear-gradient(180deg, #fffaf0, #f8f9ff 54%, #f7fff3);
+    }
+
+    button {
+      font: inherit;
+      color: inherit;
+    }
+
+    .shell {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 30px 0 48px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) 374px;
+      gap: 28px;
+      align-items: stretch;
+      margin-bottom: 24px;
+    }
+
+    .hero-copy {
+      padding: 36px 0 16px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      margin: 0 0 14px;
+      color: #865b00;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 760px;
+      font-size: clamp(36px, 7vw, 76px);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      max-width: 720px;
+      margin: 18px 0 0;
+      color: #424248;
+      font-size: 18px;
+      line-height: 1.75;
+    }
+
+    .actions, .result-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 26px;
+    }
+
+    .primary, .ghost {
+      min-height: 48px;
+      padding: 0 22px;
+      border-radius: 999px;
+      border: 1px solid var(--ink);
+      cursor: pointer;
+      font-weight: 900;
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+    }
+
+    .primary {
+      color: #fff;
+      background: var(--ink);
+      box-shadow: 0 10px 24px rgba(29, 29, 34, .18);
+    }
+
+    .ghost {
+      background: rgba(255, 255, 255, .62);
+    }
+
+    .primary:hover, .ghost:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(29, 29, 34, .16);
+    }
+
+    .alignment-board, .panel {
+      border: 2px solid var(--ink);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .82);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .alignment-board {
+      min-height: 368px;
+      padding: 22px;
+    }
+
+    .board-title {
+      margin: 0 0 14px;
+      font-size: 18px;
+      font-weight: 1000;
+      text-align: center;
+    }
+
+    .axis {
+      position: relative;
+      height: 254px;
+      border: 1px solid var(--line);
+      background: linear-gradient(90deg, rgba(239,85,85,.07), rgba(255,255,255,.76), rgba(79,116,255,.08));
+    }
+
+    .axis::before, .axis::after {
+      content: "";
+      position: absolute;
+      background: rgba(29, 29, 34, .7);
+    }
+
+    .axis::before {
+      left: 50%;
+      top: 20px;
+      bottom: 20px;
+      width: 2px;
+    }
+
+    .axis::after {
+      top: 50%;
+      left: 20px;
+      right: 20px;
+      height: 2px;
+    }
+
+    .circle {
+      position: absolute;
+      top: 50%;
+      width: 144px;
+      height: 144px;
+      border: 3px solid var(--ink);
+      border-radius: 50%;
+      transform: translateY(-50%);
+      opacity: .82;
+    }
+
+    .circle.bad {
+      left: 52px;
+      background: rgba(239, 85, 85, .18);
+    }
+
+    .circle.good {
+      right: 52px;
+      background: rgba(79, 116, 255, .16);
+    }
+
+    .mark {
+      position: absolute;
+      width: 34px;
+      height: 34px;
+      border: 2px solid var(--ink);
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 8px 20px rgba(239, 179, 51, .34);
+      left: calc(50% - 17px);
+      top: calc(50% - 17px);
+      transition: left .42s ease, top .42s ease, background .42s ease;
+      z-index: 2;
+    }
+
+    .label {
+      position: absolute;
+      z-index: 1;
+      font-size: 13px;
+      font-weight: 900;
+      color: var(--muted);
+    }
+
+    .label.good,
+    .label.bad,
+    .label.order,
+    .label.chaos {
+      min-width: 32px;
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: rgba(255, 253, 248, .86);
+      text-align: center;
+    }
+
+    .label.good { right: 16px; top: calc(50% - 38px); }
+    .label.bad { left: 16px; top: calc(50% - 38px); }
+    .label.order { left: 50%; bottom: 14px; transform: translateX(-50%); }
+    .label.chaos { left: 50%; top: 14px; transform: translateX(-50%); }
+
+    .quiz-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 245, 223, .82);
+    }
+
+    .progress-wrap {
+      flex: 1;
+      height: 10px;
+      border: 1px solid var(--ink);
+      border-radius: 999px;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .progress {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--red), var(--gold), var(--green));
+      transition: width .25s ease;
+    }
+
+    .counter {
+      min-width: 78px;
+      color: var(--muted);
+      font-weight: 900;
+      text-align: right;
+    }
+
+    .question-area {
+      padding: 28px;
+      min-height: 520px;
+    }
+
+    .question-tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 0 12px;
+      margin-bottom: 14px;
+      border-radius: 999px;
+      background: #eff2ff;
+      color: #3158d4;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    h2 {
+      margin: 0 0 22px;
+      font-size: clamp(24px, 3.8vw, 38px);
+      line-height: 1.28;
+      letter-spacing: 0;
+    }
+
+    .options {
+      display: grid;
+      gap: 12px;
+    }
+
+    .option {
+      width: 100%;
+      min-height: 72px;
+      padding: 16px 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      text-align: left;
+      cursor: pointer;
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 12px;
+      align-items: center;
+      transition: transform .16s ease, border-color .16s ease, background .16s ease;
+    }
+
+    .option:hover {
+      transform: translateY(-1px);
+      border-color: var(--ink);
+      background: #fffaf0;
+    }
+
+    .letter {
+      width: 34px;
+      height: 34px;
+      border: 1px solid var(--ink);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-weight: 1000;
+      background: var(--warm);
+    }
+
+    .option-text {
+      font-size: 17px;
+      line-height: 1.5;
+      font-weight: 800;
+    }
+
+    .result {
+      display: none;
+      padding: 30px;
+    }
+
+    .result.show { display: block; }
+    .question-area.hide { display: none; }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 26px;
+      align-items: start;
+    }
+
+    .score-card {
+      border: 2px solid var(--ink);
+      border-radius: 8px;
+      background: #fffaf0;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .score {
+      margin: 8px 0 4px;
+      font-size: 76px;
+      line-height: 1;
+      font-weight: 1000;
+    }
+
+    .score-label {
+      margin: 0;
+      color: var(--muted);
+      font-weight: 900;
+    }
+
+    .reincarnation {
+      margin: 0 0 12px;
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .result-illustration {
+      width: 112px;
+      height: 112px;
+      margin: 0 0 18px;
+      border: 2px solid var(--ink);
+      border-radius: 8px;
+      background: linear-gradient(135deg, #fff7df, #eef3ff);
+      box-shadow: 8px 8px 0 rgba(29, 29, 34, .08);
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 0 10px;
+      border: 1px solid var(--ink);
+      border-radius: 999px;
+      background: #fff;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .result-copy {
+      margin: 0;
+      color: #33333a;
+      font-size: 18px;
+      line-height: 1.85;
+    }
+
+    .breakdown {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .metric {
+      min-height: 76px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 12px;
+    }
+
+    .metric strong {
+      display: block;
+      margin-bottom: 3px;
+      font-size: 22px;
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .share-preview {
+      display: none;
+      width: min(100%, 440px);
+      margin-top: 22px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .share-preview.show { display: block; }
+
+    .qr-image {
+      display: none;
+    }
+
+    .footer-note {
+      margin: 16px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    @media (max-width: 860px) {
+      .shell { width: min(100% - 22px, 720px); padding-top: 20px; }
+      .hero { grid-template-columns: 1fr; gap: 14px; }
+      .hero-copy { padding-top: 16px; }
+      .alignment-board { min-height: 310px; }
+      .axis { height: 220px; }
+      .circle { width: 122px; height: 122px; }
+      .circle.bad { left: 30px; }
+      .circle.good { right: 30px; }
+      .question-area { padding: 22px 16px; }
+      .quiz-head { padding: 14px; }
+      .result { padding: 20px 16px; }
+      .result-grid { grid-template-columns: 1fr; }
+      .breakdown { grid-template-columns: 1fr; }
+      .score-card { max-width: 320px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="hero" aria-labelledby="page-title">
+      <div class="hero-copy">
+        <p class="eyebrow">功德分人格测试 · 九宫格道德阵营</p>
+        <h1 id="page-title">测测你的功德分，看看下辈子会投胎成什么东西</h1>
+        <p class="subtitle">18 道灵魂小题，检测你的善恶倾向、守序程度和混乱浓度。结果会生成一张可复制的投胎报告图，适合发给朋友互相审判。</p>
+        <div class="actions">
+          <button class="primary" id="startBtn" type="button">开始测试</button>
+          <button class="ghost" id="randomBtn" type="button">随机投胎一次</button>
+        </div>
+      </div>
+
+      <aside class="alignment-board" aria-label="道德阵营坐标">
+        <p class="board-title">你的灵魂坐标</p>
+        <div class="axis">
+          <span class="label bad">恶</span>
+          <span class="label good">善</span>
+          <span class="label chaos">混乱</span>
+          <span class="label order">守序</span>
+          <span class="circle bad"></span>
+          <span class="circle good"></span>
+          <span class="mark" id="soulMark"></span>
+        </div>
+        <p class="footer-note">答题过程中，金色小点会跟着你的选择移动。</p>
+      </aside>
+    </section>
+
+    <section class="panel" id="quizPanel" aria-live="polite">
+      <div class="quiz-head">
+        <div class="progress-wrap" aria-label="答题进度">
+          <div class="progress" id="progress"></div>
+        </div>
+        <div class="counter" id="counter">0 / 18</div>
+      </div>
+
+      <div class="question-area" id="questionArea">
+        <span class="question-tag" id="questionTag">灵魂预热</span>
+        <h2 id="questionTitle">准备好接受功德审判了吗？</h2>
+        <div class="options" id="options">
+          <button class="option" type="button" id="readyBtn">
+            <span class="letter">Go</span>
+            <span class="option-text">我准备好了，来测我的下辈子</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="result" id="result">
+        <div class="result-grid">
+          <div class="score-card">
+            <p class="score-label">你的功德分</p>
+            <div class="score" id="score">50</div>
+            <p class="score-label" id="scoreLevel">人间摇摆型</p>
+          </div>
+          <div>
+            <canvas class="result-illustration" id="resultIllustration" width="224" height="224" aria-hidden="true"></canvas>
+            <h2 class="reincarnation" id="rebirthName">咖啡店猫</h2>
+            <div class="badge-row">
+              <span class="badge" id="alignmentBadge">中立善良</span>
+              <span class="badge" id="fateBadge">福报稳定型</span>
+              <span class="badge" id="axisBadge">善恶轴 +0</span>
+            </div>
+            <p class="result-copy" id="resultCopy"></p>
+            <div class="breakdown">
+              <div class="metric"><strong id="goodMetric">0</strong><span>善恶轴：正数偏善，负数偏恶</span></div>
+              <div class="metric"><strong id="orderMetric">0</strong><span>秩序轴：正数守序，负数混乱</span></div>
+              <div class="metric"><strong id="chaosMetric">0</strong><span>混乱浓度：越高越像随机事件</span></div>
+            </div>
+            <canvas class="share-preview" id="shareCanvas" width="900" height="1350" aria-label="结果图片预览"></canvas>
+            <img class="qr-image" id="qrImage" alt="" crossorigin="anonymous" />
+            <div class="result-actions">
+              <button class="primary" type="button" id="copyImageBtn">复制结果图片</button>
+              <button class="ghost" type="button" id="copyTextBtn">复制结果文案</button>
+              <button class="ghost" type="button" id="restartBtn">重新测试</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const questions = [
+      { tag: "第 1 题 / 人间路考", title: "路上看到有人东西掉了，你会？", options: [["追上去提醒，还帮忙捡起来", 8, 3, 2], ["喊一声：你东西掉了", 4, 1, 0], ["看一眼，觉得应该会有人提醒", -2, 0, 0], ["捡起来装兜里，回家再研究值不值钱", -13, -4, -2]] },
+      { tag: "第 2 题 / 友情压力测试", title: "朋友深夜发来一大段崩溃小作文，你会？", options: [["认真看完，先安慰再帮他理问题", 8, 3, 1], ["先回一句抱抱，约明天细聊", 4, 2, 0], ["已读但脑子宕机，第二天再补救", -2, 0, 0], ["截图发小群：家人们新的连续剧来了", -13, -4, -3]] },
+      { tag: "第 3 题 / 队伍里的你", title: "排队时有人插队，你会？", options: [["礼貌提醒他去后面排队", 6, 1, 4], ["不想吵架，默默忍了", 1, 0, 0], ["大声阴阳怪气：有人赶着投胎", 0, -1, -3], ["插到他前面还回头说：互相学习", -9, -3, -4]] },
+      { tag: "第 4 题 / 承诺管理", title: "你答应帮朋友一个忙，但临时不想做了，你会？", options: [["提前说明原因，并给替代方案", 7, 2, 3], ["实话说今天做不了", 3, 0, 1], ["拖到最后一刻再说忘了", -5, -1, 0], ["装死三天，等对方自己怀疑人生", -11, -3, -3]] },
+      { tag: "第 5 题 / 吃瓜伦理", title: "看到网上有人被误解围攻，你知道真相，你会？", options: [["整理证据，尽量客观澄清", 10, 4, 2], ["私信提醒当事人怎么解释", 6, 2, 0], ["不参与，怕惹麻烦", -2, 0, 0], ["带节奏拱火：我只能说懂的都懂", -14, -4, -4]] },
+      { tag: "第 6 题 / 亲密关系边界", title: "亲密关系里，你更接近哪种？", options: [["尊重边界，会确认对方感受", 8, 4, 1], ["看氛围，但基本会顾及对方", 4, 1, 0], ["不太会表达，容易自己憋着", 0, 0, 0], ["只顾自己爽，事后还装无辜", -15, -5, -2]] },
+      { tag: "第 7 题 / 职场小审判", title: "你发现同事的方案有明显漏洞，但不影响你，你会？", options: [["私下提醒，并告诉他怎么改", 7, 3, 1], ["如果他问我，我就说", 2, 0, 0], ["装没看见，别人的锅别端", -3, 0, 0], ["等汇报时看他翻车，顺手补一刀", -13, -4, -1]] },
+      { tag: "第 8 题 / 外卖命运", title: "外卖送错了，但送来的是更贵的餐，你会？", options: [["联系骑手或商家说明情况", 7, 2, 4], ["先等一会儿，没人找就算了", 1, 0, 0], ["直接吃，命运的馈赠", -5, -1, -2], ["吃完还投诉：怎么现在才送到", -15, -5, -1]] },
+      { tag: "第 9 题 / 群聊温度", title: "群聊里有人讲了一个很尴尬的冷笑话，你会？", options: [["捧一下场，别让对方太尴尬", 5, 2, 0], ["发个表情包糊弄过去", 2, 0, -1], ["沉默，让空气自己结冰", -2, 0, 0], ["截图投稿：今日尴尬人类观察", -11, -3, -3]] },
+      { tag: "第 10 题 / 门禁卡事件", title: "你捡到一张别人遗失的门禁卡，你会？", options: [["交给前台或物业", 6, 1, 4], ["放在显眼位置", 3, 1, 0], ["放着不管，缘分会处理", -2, 0, 0], ["拿来刷楼层，看看人生隐藏地图", -12, -2, -5]] },
+      { tag: "第 11 题 / 诚实与求生欲", title: "朋友问你：“我今天穿这样好看吗？”但确实一般，你会？", options: [["温和说实话，并给一个更好的建议", 6, 3, 1], ["说还不错，保命要紧", 1, 0, 0], ["说你开心就好，把球踢回去", -1, 0, 0], ["说像要去参加前任婚礼，还建议戴墨镜", -9, -2, -4]] },
+      { tag: "第 12 题 / 匿名权力", title: "如果你可以匿名做一件事，你最可能做？", options: [["给讨厌的人也留一条体面的后路", 8, 4, 1], ["给喜欢的人点个赞，但不暴露自己", 3, 1, 0], ["什么都不做，匿名权也是一种沉默权", 0, 0, 0], ["把仇人的黑历史做成 PPT，在大群定时发送", -16, -5, -5]] },
+      { tag: "第 13 题 / 公共空间", title: "电影院里后排一直踢你椅背，你会？", options: [["转头礼貌提醒一次", 5, 1, 3], ["忍到结束，回家发朋友圈骂", -2, 0, -1], ["椅背同频反击，主打物理交流", -6, -1, -4], ["站起来大声审判，让全场一起尴尬", -5, -1, -5]] },
+      { tag: "第 14 题 / 钱包考验", title: "朋友聚餐 AA，少算了你 40 块，你会？", options: [["主动补上，账要清楚", 6, 2, 3], ["提醒组织者重新算一下", 4, 1, 2], ["假装没发现，下次再请", -2, 0, 0], ["默默开心，还截图给别人炫耀省钱", -9, -3, -1]] },
+      { tag: "第 15 题 / 工作群深夜消息", title: "晚上 11 点老板在群里问“有人在吗”，你会？", options: [["如果是紧急事项就回复", 3, 1, 2], ["已读不回，明天按流程处理", 1, 0, 2], ["回“梦里在”然后撤回", -3, 0, -4], ["把群名改成大型午夜惊悚片", -8, -2, -5]] },
+      { tag: "第 16 题 / 朋友秘密", title: "你无意间知道了朋友的秘密，你会？", options: [["当作没听见，绝不外传", 8, 4, 3], ["只在对方需要时提供支持", 6, 3, 1], ["憋得很难受，但忍住", 1, 0, 0], ["匿名投稿给吃瓜号，还改个更炸的标题", -16, -5, -4]] },
+      { tag: "第 17 题 / 便利店最后一盒", title: "便利店只剩最后一盒你爱吃的甜品，后面小孩也想要，你会？", options: [["让给小孩，今天修一点功德", 7, 4, 0], ["问店员还有没有库存", 3, 1, 1], ["先拿到手再思考人生", -3, 0, -1], ["当场买走并说：社会就是这样", -12, -4, -2]] },
+      { tag: "第 18 题 / 灵魂终审", title: "如果下辈子可以自己选一点点，你最想保留什么？", options: [["保留同理心，别成为讨厌的人", 8, 4, 1], ["保留好运，其他随缘", 2, 0, 0], ["保留看热闹的第一排视角", -2, 0, -2], ["保留让别人破防的能力，继续精准攻击", -13, -5, -5]] }
+    ];
+
+    const rebirthPool = {
+      "守序善良": [
+        ["寺庙金光猫", "图书馆台灯", "救护车上的小毯子", "被认真保管的护身符"],
+        ["斑马线红绿灯", "医院排队叫号屏", "社区公告栏", "认真工作的公交卡"],
+        ["会议室白板", "办公室净水器", "小区门口的快递柜", "雨天借人的备用伞"],
+        ["地铁安检门", "打卡机", "流程说明书", "永远准点的闹钟"],
+        ["绩效表格", "迟到登记本", "被反复盖章的文件夹", "会议纪要模板"]
+      ],
+      "中立善良": [
+        ["咖啡店猫", "柔软围巾", "晒过太阳的被子", "被认真读完的旧书"],
+        ["奶茶杯套", "热水袋", "朋友包里的纸巾", "深夜便利店灯箱"],
+        ["办公室绿萝", "公交车空座", "刚好满电的充电宝", "路边长椅"],
+        ["便利店关东煮签", "沙发缝里的硬币", "没被拆封的创可贴", "雨后小水坑"],
+        ["被遗忘的伞", "外套口袋里的发票", "过期但舍不得扔的优惠券", "找不到主人的钥匙扣"]
+      ],
+      "混乱善良": [
+        ["流浪猫头子", "演唱会荧光棒", "生日蛋糕蜡烛", "朋友婚礼上的彩带"],
+        ["KTV 骰子", "群聊表情包", "好运来背景音乐", "突然降临的免单券"],
+        ["半夜响起的闹钟", "朋友 99+ 语音", "自动播放的搞笑视频", "派对上的纸皇冠"],
+        ["被风吹走的传单", "突然弹开的汽水", "抽屉里的整蛊贴纸", "随机播放键"],
+        ["误发到大群的哈哈哈", "没刹住的购物车", "聚会上的真心话卡牌", "让人社死的拍立得"]
+      ],
+      "守序中立": [
+        ["档案柜钥匙", "公司门禁卡", "Excel 公式", "会议室预约系统"],
+        ["打印机", "排队号码牌", "快递面单", "地铁换乘指示牌"],
+        ["过期优惠券", "自动售货机按钮", "写满待办的便签", "考勤机"],
+        ["永远加载中的表单", "不能跳过的协议弹窗", "格式正确但没人看的周报", "报销单据"],
+        ["复印机卡纸提示", "没有情绪的验证码", "会议倒计时牌", "冰冷的系统提示音"]
+      ],
+      "绝对中立": [
+        ["云", "石头", "空白 PPT 模板", "海边一粒沙"],
+        ["路边长椅", "共享充电宝", "电梯里的镜子", "便利店门口的台阶"],
+        ["没电遥控器", "空调遥控器的后盖", "抽屉里的橡皮筋", "没人认领的水杯"],
+        ["网页里的空白页", "群公告里的句号", "冰箱角落的冰块", "路灯下的影子"],
+        ["文件名里的最终版", "桌面上的新建文件夹", "过期日历", "无人注意的加载条"]
+      ],
+      "混乱中立": [
+        ["盲盒隐藏款", "随机播放键", "KTV 骰子", "占卜摊上的签筒"],
+        ["突然弹出的广告", "卡住的拉链", "自动纠错键盘", "被误触的语音通话"],
+        ["找不到的袜子", "群聊里的“在吗”", "电梯里突然响的手机", "没人知道谁点的奶茶"],
+        ["外卖袋里的第 3 双筷子", "转盘上停不下来的指针", "被风吹翻的菜单", "自动续播的短视频"],
+        ["聚餐桌上的最后一块肉", "找不到源头的 Wi-Fi", "迟到但很会解释的人设", "误入镜头的路人甲"]
+      ],
+      "守序邪恶": [
+        ["会员自动续费", "绩效考核表", "公司门禁", "不可撤回的审批流程"],
+        ["超时会议邀请", "迟到一分钟扣款规则", "冷冰冰的 KPI 表", "永远差一个签字的合同"],
+        ["强制更新弹窗", "不能跳过的开屏广告", "报销系统驳回理由", "下班前五分钟的会议链接"],
+        ["隐藏很深的取消订阅按钮", "加班申请表", "满屏红字的错误提示", "办公室摄像头"],
+        ["周一早会闹钟", "自动扣费协议", "格式审查清单", "没有感情的风控系统"]
+      ],
+      "中立邪恶": [
+        ["蚊子", "广告弹窗", "缓存垃圾", "手机里删不掉的预装软件"],
+        ["过期酸奶", "外卖漏汤勺", "卡在牙缝里的菜叶", "永远差一格的 Wi-Fi"],
+        ["别人手机里的垃圾短信", "免费试用到期提醒", "快递盒里的碎泡沫", "鞋底的小石子"],
+        ["找不到关闭键的小广告", "电量 1% 的手机", "拖到最后一秒的进度条", "地铁扶手上的黏感"],
+        ["过期会员权益", "自动播放的音频广告", "借钱不还的转账备注", "坏掉一半的耳机"]
+      ],
+      "混乱邪恶": [
+        ["半夜装修电钻", "突然断网的路由器", "卡住的拉链", "会议中突然外放的短视频"],
+        ["前任备忘录", "厕所门把手", "帅哥的备用内裤", "洗衣机里失踪的那条内裤"],
+        ["电梯里放响的屁但没人承认", "凌晨三点的楼上弹珠声", "刚写完没保存就闪退的文档", "火锅汤里的白衬衫袖口"],
+        ["公共场合自动连上的蓝牙音箱", "被误发给领导的吐槽截图", "撕不开的快递胶带", "坏掉的共享单车刹车"],
+        ["只剩一格纸的厕所卷纸", "突然裂开的手机钢化膜", "约会时崩掉的裤扣", "永远对不准的充电口"]
+      ]
+    };
+
+    const alignmentIntro = {
+      "守序善良": "你像人间功德机，善良还自带流程感。你不是只会喊口号的人，你会真的把事情处理好。",
+      "中立善良": "你不会到处拯救世界，但别人真有事你会伸手。你的善良不吵闹，也不表演。",
+      "混乱善良": "你做好事的方式经常很野，结果通常是好的，过程通常让人瞳孔地震。",
+      "守序中立": "你相信世界需要规则、表格和提前十分钟到场。你的灵魂里可能住着一个项目经理。",
+      "绝对中立": "你主打不参与、不反对、不解释。世界在旁边沸腾，你先看看天气预报。",
+      "混乱中立": "你的人生像随机播放，朋友永远不知道你下一秒是热心帮忙还是突然发疯。",
+      "守序邪恶": "你很懂规则，也很懂怎么用规则卡住别人。你的坏不是乱来，是审批通过之后再坏。",
+      "中立邪恶": "你不一定要毁灭世界，只是很擅长把自己的收益放在前面。别人被消耗时，你通常已经离场。",
+      "混乱邪恶": "你爽就完了，后果像随机赠品一样发给别人。宇宙看完答卷，默默给你安排了带点尴尬的轮回。"
+    };
+
+    const identityRules = [
+      { words: ["猫", "蚊子"], icon: "🐾", type: "活体轮回", line: "你会带着一点本能继续营业：想亲近就亲近，想消耗就消耗，命运全看你今天的道德余额。" },
+      { words: ["灯", "光", "路灯"], icon: "💡", type: "发光单位", line: "你下辈子负责照亮别人，也负责暴露一些不该被看见的尴尬瞬间。" },
+      { words: ["毯", "围巾", "被子", "纸巾", "创可贴"], icon: "🧣", type: "温柔物件", line: "你会变成一种低调的安慰，出现得不轰烈，但刚好能救一下场。" },
+      { words: ["门禁", "表", "流程", "审批", "考勤", "KPI", "规则", "系统", "验证码"], icon: "📋", type: "规则装置", line: "你会被写进某种流程里，别人一边离不开你，一边忍不住想对你翻白眼。" },
+      { words: ["广告", "弹窗", "续费", "订阅", "更新", "协议"], icon: "📢", type: "打扰型存在", line: "你会在别人最不想看见你的时候出现，主打一个精准降低人类耐心。" },
+      { words: ["视频", "播放", "开屏"], icon: "▶", type: "媒介小事故", line: "你会变成一段很会抢镜的内容，不一定人人想看，但出现时绝对有存在感。" },
+      { words: ["内裤", "厕所", "卷纸", "裤扣", "钢化膜"], icon: "🩲", type: "社死道具", line: "你会成为命运安排的小型尴尬现场，平时不起眼，关键时刻非常致命。" },
+      { words: ["骰子", "盲盒", "随机", "签筒", "转盘", "真心话"], icon: "🎲", type: "随机事件", line: "你会继续负责制造不可控，让别人的人生突然多一段弹幕。" },
+      { words: ["PPT", "Excel", "文件", "文档", "周报", "表单", "模板"], icon: "📄", type: "办公转生", line: "你会在电脑里反复被打开、修改、另存为，成为打工人精神状态的一部分。" },
+      { words: ["充电", "遥控器", "Wi-Fi", "路由器", "电量", "耳机"], icon: "🔋", type: "电子灵魂", line: "你会掌握别人一点点安全感，只要你掉链子，现场立刻进入低电量人生。" },
+      { words: ["甜品", "奶茶", "关东煮", "酸奶", "火锅", "肉"], icon: "🍮", type: "食物命运", line: "你会短暂出现，然后被迅速消灭；但在那一刻，你确实拥有过人类的爱。" },
+      { words: ["伞", "钥匙", "水杯", "硬币", "袜子"], icon: "🧦", type: "失物体质", line: "你会不断出现在寻找与失去之间，像宇宙留给人类的小型谜题。" },
+      { words: ["电钻", "弹珠", "音箱", "闹钟", "会议"], icon: "🔊", type: "噪音轮回", line: "你会在别人最需要安静的时候发声，存在感非常强，道德感非常吵。" },
+      { words: ["云", "石头", "沙", "影子", "冰块"], icon: "🪨", type: "自然旁观者", line: "你会继续旁观世界，低能耗、低参与、低解释，主打一个存在即合理。" },
+      { words: ["快递", "胶带", "购物车", "共享单车"], icon: "📦", type: "生活机关", line: "你会变成日常生活里那个小卡点，大家不恨你，但确实经常被你卡住。" }
+    ];
+
+    const verdictEndings = [
+      "这不是惩罚，是宇宙给你安排的沉浸式人格复健。",
+      "请珍惜这次轮回，至少你这次很有辨识度。",
+      "你的灵魂没有坏透，只是被命运拿去做了一个小实验。",
+      "下辈子别急着翻身，先把这个岗位干明白。",
+      "这份判决不一定公平，但很适合发给朋友一起笑。"
+    ];
+
+    const levelNames = ["天选功德人", "福报稳定型", "小善小恶正常人", "人间摇摆型", "阴德余额不足"];
+    const levelThresholds = [82, 65, 48, 30, 0];
+
+    let current = 0;
+    let answerSignature = 0;
+    let state = { merit: 50, good: 0, order: 0 };
+    let lastResult = null;
+
+    const el = {
+      startBtn: document.getElementById("startBtn"),
+      randomBtn: document.getElementById("randomBtn"),
+      readyBtn: document.getElementById("readyBtn"),
+      restartBtn: document.getElementById("restartBtn"),
+      copyImageBtn: document.getElementById("copyImageBtn"),
+      copyTextBtn: document.getElementById("copyTextBtn"),
+      questionArea: document.getElementById("questionArea"),
+      result: document.getElementById("result"),
+      tag: document.getElementById("questionTag"),
+      title: document.getElementById("questionTitle"),
+      options: document.getElementById("options"),
+      progress: document.getElementById("progress"),
+      counter: document.getElementById("counter"),
+      soulMark: document.getElementById("soulMark"),
+      score: document.getElementById("score"),
+      scoreLevel: document.getElementById("scoreLevel"),
+      resultIllustration: document.getElementById("resultIllustration"),
+      rebirthName: document.getElementById("rebirthName"),
+      alignmentBadge: document.getElementById("alignmentBadge"),
+      fateBadge: document.getElementById("fateBadge"),
+      axisBadge: document.getElementById("axisBadge"),
+      resultCopy: document.getElementById("resultCopy"),
+      goodMetric: document.getElementById("goodMetric"),
+      orderMetric: document.getElementById("orderMetric"),
+      chaosMetric: document.getElementById("chaosMetric"),
+      shareCanvas: document.getElementById("shareCanvas"),
+      qrImage: document.getElementById("qrImage")
+    };
+
+    function clamp(num, min, max) {
+      return Math.max(min, Math.min(max, num));
+    }
+
+    function levelIndex(score) {
+      return levelThresholds.findIndex(threshold => score >= threshold);
+    }
+
+    function getAlignment() {
+      const moral = state.good > 4 ? "善良" : state.good < -4 ? "邪恶" : "中立";
+      const action = state.order > 4 ? "守序" : state.order < -4 ? "混乱" : "";
+      if (moral === "中立" && action === "") return "绝对中立";
+      if (moral === "中立") return action + "中立";
+      if (action === "") return "中立" + moral;
+      return action + moral;
+    }
+
+    function updateMark() {
+      const x = clamp(50 + state.good * 2.8, 10, 90);
+      const y = clamp(50 - state.order * 2.8, 10, 90);
+      const score = clamp(state.merit, 0, 100);
+      const hue = score >= 65 ? "#79b45d" : score >= 35 ? "#efb333" : "#ef5555";
+      el.soulMark.style.left = `calc(${x}% - 17px)`;
+      el.soulMark.style.top = `calc(${y}% - 17px)`;
+      el.soulMark.style.background = hue;
+    }
+
+    function start() {
+      current = 0;
+      answerSignature = 0;
+      state = { merit: 50, good: 0, order: 0 };
+      lastResult = null;
+      el.questionArea.classList.remove("hide");
+      el.result.classList.remove("show");
+      el.shareCanvas.classList.remove("show");
+      renderQuestion();
+      updateMark();
+      document.getElementById("quizPanel").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function renderQuestion() {
+      const question = questions[current];
+      el.tag.textContent = question.tag;
+      el.title.textContent = question.title;
+      el.options.innerHTML = "";
+      question.options.forEach((option, index) => {
+        const button = document.createElement("button");
+        button.className = "option";
+        button.type = "button";
+        button.innerHTML = `<span class="letter">${String.fromCharCode(65 + index)}</span><span class="option-text">${option[0]}</span>`;
+        button.addEventListener("click", () => choose(option, index));
+        el.options.appendChild(button);
+      });
+      el.progress.style.width = `${(current / questions.length) * 100}%`;
+      el.counter.textContent = `${current + 1} / ${questions.length}`;
+    }
+
+    function choose(option, index) {
+      state.merit += option[1];
+      state.good += option[2];
+      state.order += option[3];
+      answerSignature += (index + 1) * (current + 3);
+      current += 1;
+      updateMark();
+      if (current >= questions.length) showResult();
+      else renderQuestion();
+    }
+
+    function pickRebirth(alignment, score) {
+      const tier = levelIndex(score);
+      const choices = rebirthPool[alignment][tier];
+      return choices[Math.abs(answerSignature + state.good * 7 + state.order * 11) % choices.length];
+    }
+
+    function getIdentityProfile(item) {
+      return identityRules.find(rule => rule.words.some(word => item.includes(word))) || {
+        icon: "✨",
+        type: "特殊轮回",
+        line: "你会成为一个很难被归类的东西，听起来离谱，但仔细想想又很像你的灵魂状态。"
+      };
+    }
+
+    function makeVerdict(item, alignment, score, level) {
+      const profile = getIdentityProfile(item);
+      const ending = verdictEndings[Math.abs(answerSignature + item.length + state.good - state.order) % verdictEndings.length];
+      const scoreLine = score >= 82
+        ? "你的功德分亮到宇宙都得眯一下眼。"
+        : score >= 65
+          ? "你的功德余额还挺健康，至少没被系统标红。"
+          : score >= 48
+            ? "你的善恶正在拉扯，像一份还没保存的草稿。"
+            : score >= 30
+              ? "你的阴德有点漏风，建议近期少做缺德小动作。"
+              : "你的灵魂已经开始弹出风险提示。";
+      return `系统判定你属于「${alignment}」里的「${profile.type}」。${scoreLine} 下辈子你会成为「${item}」：${profile.line} ${ending}`;
+    }
+
+    const publicShareUrl = "https://qiuzhiqing-debug.github.io/merit-rebirth-test/";
+
+    function shareUrl() {
+      return window.location.protocol === "file:"
+        ? publicShareUrl
+        : window.location.href.split("#")[0];
+    }
+
+    function qrApiUrl() {
+      return `https://api.qrserver.com/v1/create-qr-code/?size=180x180&margin=1&data=${encodeURIComponent(shareUrl())}`;
+    }
+
+    let qrLibraryPromise = null;
+
+    function loadQrLibrary() {
+      if (window.QRCode && window.QRCode.toCanvas) return Promise.resolve(true);
+      if (qrLibraryPromise) return qrLibraryPromise;
+      qrLibraryPromise = new Promise(resolve => {
+        const script = document.createElement("script");
+        script.src = "https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js";
+        script.onload = () => resolve(Boolean(window.QRCode && window.QRCode.toCanvas));
+        script.onerror = () => resolve(false);
+        document.head.appendChild(script);
+      });
+      return qrLibraryPromise;
+    }
+
+    function loadQrImage() {
+      return new Promise(resolve => {
+        el.qrImage.onload = () => resolve(true);
+        el.qrImage.onerror = () => resolve(false);
+        el.qrImage.src = qrApiUrl();
+      });
+    }
+
+    async function drawShareQr(ctx, x, y, size) {
+      drawFallbackQr(ctx, x, y, size);
+      if (await loadQrLibrary()) {
+        try {
+          const qrCanvas = document.createElement("canvas");
+          await new Promise((resolve, reject) => {
+            window.QRCode.toCanvas(qrCanvas, shareUrl(), {
+              width: size,
+              margin: 1,
+              color: { dark: "#1d1d22", light: "#ffffff" }
+            }, error => error ? reject(error) : resolve());
+          });
+          ctx.drawImage(qrCanvas, x, y, size, size);
+          return true;
+        } catch {
+          drawFallbackQr(ctx, x, y, size);
+          return false;
+        }
+      }
+      return false;
+    }
+
+    function drawFallbackQr(ctx, x, y, size) {
+      const cells = 29;
+      const cell = size / cells;
+      ctx.fillStyle = "#fff";
+      ctx.fillRect(x, y, size, size);
+      ctx.fillStyle = "#1d1d22";
+      function finder(cx, cy) {
+        ctx.fillRect(x + cx * cell, y + cy * cell, cell * 7, cell * 7);
+        ctx.fillStyle = "#fff";
+        ctx.fillRect(x + (cx + 1) * cell, y + (cy + 1) * cell, cell * 5, cell * 5);
+        ctx.fillStyle = "#1d1d22";
+        ctx.fillRect(x + (cx + 2) * cell, y + (cy + 2) * cell, cell * 3, cell * 3);
+      }
+      finder(1, 1);
+      finder(21, 1);
+      finder(1, 21);
+      const seed = Array.from(shareUrl()).reduce((sum, char) => sum + char.charCodeAt(0), 0) + answerSignature;
+      for (let row = 0; row < cells; row += 1) {
+        for (let col = 0; col < cells; col += 1) {
+          const inFinder = (col < 9 && row < 9) || (col > 19 && row < 9) || (col < 9 && row > 19);
+          if (!inFinder && ((row * 17 + col * 31 + seed) % 7 < 3)) {
+            ctx.fillRect(x + col * cell, y + row * cell, Math.ceil(cell), Math.ceil(cell));
+          }
+        }
+      }
+    }
+
+    function paletteForType(type) {
+      const palettes = {
+        "活体轮回": ["#ffe4d6", "#ef5555", "#1d1d22"],
+        "发光单位": ["#fff1b8", "#efb333", "#4f74ff"],
+        "温柔物件": ["#f1e9ff", "#8476d8", "#79b45d"],
+        "规则装置": ["#e9efff", "#4f74ff", "#1d1d22"],
+        "打扰型存在": ["#ffe2e2", "#ef5555", "#efb333"],
+        "媒介小事故": ["#f1edff", "#8476d8", "#efb333"],
+        "社死道具": ["#ffe8f0", "#ef5555", "#8476d8"],
+        "随机事件": ["#edf8df", "#79b45d", "#efb333"],
+        "办公转生": ["#eef3ff", "#4f74ff", "#6d6d75"],
+        "电子灵魂": ["#e4fbff", "#4f74ff", "#79b45d"],
+        "食物命运": ["#fff1d6", "#efb333", "#ef5555"],
+        "失物体质": ["#f7f7f0", "#6d6d75", "#efb333"],
+        "噪音轮回": ["#f0e9ff", "#8476d8", "#ef5555"],
+        "自然旁观者": ["#eff8e8", "#79b45d", "#6d6d75"],
+        "生活机关": ["#fff0dd", "#efb333", "#1d1d22"],
+        "特殊轮回": ["#fff7df", "#8476d8", "#efb333"]
+      };
+      return palettes[type] || palettes["特殊轮回"];
+    }
+
+    function drawItemIllustration(ctx, item, profile, x, y, size) {
+      const [soft, main, accent] = paletteForType(profile.type);
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.fillStyle = soft;
+      ctx.strokeStyle = "#1d1d22";
+      ctx.lineWidth = Math.max(2, size * .018);
+      roundedRect(ctx, 0, 0, size, size, size * .09);
+      ctx.fill();
+      ctx.stroke();
+
+      const cx = size / 2;
+      const cy = size / 2;
+      const unit = size / 100;
+
+      function rect(rx, ry, rw, rh, color = main, radius = 6) {
+        ctx.fillStyle = color;
+        ctx.strokeStyle = "#1d1d22";
+        roundedRect(ctx, rx * unit, ry * unit, rw * unit, rh * unit, radius * unit);
+        ctx.fill();
+        ctx.stroke();
+      }
+      function circle(rx, ry, rr, color = main) {
+        ctx.fillStyle = color;
+        ctx.strokeStyle = "#1d1d22";
+        ctx.beginPath();
+        ctx.arc(rx * unit, ry * unit, rr * unit, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+      }
+      function line(x1, y1, x2, y2, color = accent, width = 5) {
+        ctx.strokeStyle = color;
+        ctx.lineWidth = width * unit;
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
+        ctx.beginPath();
+        ctx.moveTo(x1 * unit, y1 * unit);
+        ctx.lineTo(x2 * unit, y2 * unit);
+        ctx.stroke();
+        ctx.lineWidth = Math.max(2, size * .018);
+      }
+      function path(points, color = main) {
+        ctx.fillStyle = color;
+        ctx.strokeStyle = "#1d1d22";
+        ctx.beginPath();
+        points.forEach(([px, py], index) => {
+          if (index === 0) ctx.moveTo(px * unit, py * unit);
+          else ctx.lineTo(px * unit, py * unit);
+        });
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+      }
+      function textMark(text, tx = 50, ty = 56, fontSize = 16) {
+        ctx.fillStyle = "#1d1d22";
+        ctx.font = `900 ${fontSize * unit}px Microsoft YaHei, sans-serif`;
+        ctx.textAlign = "center";
+        ctx.fillText(text, tx * unit, ty * unit);
+        ctx.textAlign = "left";
+      }
+
+      if (item.includes("号码牌") || item.includes("叫号") || item.includes("排队")) {
+        rect(25, 22, 50, 56, "#ffffff", 8);
+        line(34, 32, 66, 32, accent, 4);
+        textMark(item.includes("叫号") ? "A07" : "27", 50, 58, 22);
+        line(34, 68, 66, 68, main, 4);
+      } else if (item.includes("毯子") || item.includes("围巾") || item.includes("被子") || item.includes("纸巾") || item.includes("创可贴") || item.includes("热水袋")) {
+        if (item.includes("创可贴")) {
+          rect(23, 40, 54, 20, "#ffffff", 10);
+          rect(42, 34, 16, 32, main, 6);
+          circle(47, 48, 2.5, soft);
+          circle(53, 52, 2.5, soft);
+        } else if (item.includes("热水袋")) {
+          rect(34, 25, 32, 52, main, 16);
+          rect(41, 18, 18, 12, "#ffffff", 4);
+          line(40, 50, 60, 50, accent, 4);
+          line(43, 61, 57, 61, accent, 4);
+        } else if (item.includes("纸巾")) {
+          rect(24, 38, 52, 28, "#ffffff", 7);
+          path([[38, 38], [52, 20], [66, 38]], main);
+          line(34, 52, 66, 52, accent, 3);
+        } else {
+          path([[25, 30], [75, 24], [78, 68], [30, 78]], main);
+          line(32, 42, 70, 37, "#ffffff", 3);
+          line(34, 56, 72, 51, "#ffffff", 3);
+          line(28, 72, 76, 62, accent, 4);
+        }
+      } else if (item.includes("伞")) {
+        ctx.beginPath();
+        ctx.fillStyle = main;
+        ctx.strokeStyle = "#1d1d22";
+        ctx.moveTo(20 * unit, 54 * unit);
+        ctx.quadraticCurveTo(50 * unit, 18 * unit, 80 * unit, 54 * unit);
+        ctx.lineTo(20 * unit, 54 * unit);
+        ctx.fill();
+        ctx.stroke();
+        line(50, 54, 50, 78, accent, 5);
+        ctx.beginPath();
+        ctx.strokeStyle = accent;
+        ctx.lineWidth = 5 * unit;
+        ctx.arc(58 * unit, 78 * unit, 8 * unit, 0, Math.PI);
+        ctx.stroke();
+      } else if (item.includes("安检门")) {
+        rect(24, 20, 52, 68, "#ffffff", 6);
+        rect(36, 32, 28, 56, soft, 3);
+        line(29, 28, 35, 28, main, 4);
+        line(65, 28, 71, 28, main, 4);
+        circle(50, 58, 6, accent);
+      } else if (item.includes("流程") || item.includes("说明书") || item.includes("登记本") || item.includes("绩效") || item.includes("KPI") || item.includes("合同") || item.includes("协议") || item.includes("报销") || item.includes("申请表") || item.includes("审查") || item.includes("风控") || item.includes("清单")) {
+        rect(25, 18, 50, 66, "#ffffff", 5);
+        rect(38, 12, 24, 12, accent, 5);
+        line(36, 38, 64, 38, main, 4);
+        line(36, 52, 64, 52, main, 4);
+        line(36, 66, 56, 66, main, 4);
+        if (item.includes("驳回") || item.includes("扣款") || item.includes("冷冰冰")) {
+          circle(70, 28, 8, "#ef5555");
+          line(66, 28, 74, 28, "#ffffff", 2);
+        } else {
+          line(28, 42, 33, 47, accent, 3);
+          line(33, 47, 42, 34, accent, 3);
+        }
+      } else if (item.includes("绿萝")) {
+        rect(34, 58, 32, 22, accent, 6);
+        path([[50, 60], [30, 35], [46, 32]], main);
+        path([[50, 60], [70, 34], [54, 31]], main);
+        path([[50, 60], [42, 23], [58, 26]], "#79b45d");
+        line(50, 58, 50, 34, "#1d1d22", 3);
+      } else if (item.includes("小水坑")) {
+        ctx.beginPath();
+        ctx.fillStyle = "#9ed8ff";
+        ctx.strokeStyle = "#1d1d22";
+        ctx.ellipse(50 * unit, 62 * unit, 30 * unit, 14 * unit, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+        line(33, 58, 48, 54, "#ffffff", 3);
+        circle(68, 36, 5, main);
+      } else if (item.includes("发票")) {
+        path([[28, 22], [72, 22], [72, 78], [63, 72], [55, 78], [47, 72], [39, 78], [28, 72]], "#ffffff");
+        line(38, 38, 64, 38, main, 4);
+        line(38, 52, 60, 52, accent, 4);
+        textMark("¥", 50, 69, 16);
+      } else if (item.includes("彩带") || item.includes("纸皇冠") || item.includes("传单") || item.includes("贴纸") || item.includes("拍立得") || item.includes("表情包") || item.includes("背景音乐") || item.includes("语音") || item.includes("哈哈哈")) {
+        if (item.includes("纸皇冠")) {
+          path([[22, 68], [30, 35], [46, 55], [50, 25], [58, 55], [74, 35], [78, 68]], main);
+          line(25, 68, 75, 68, accent, 5);
+        } else if (item.includes("拍立得")) {
+          rect(24, 18, 52, 64, "#ffffff", 5);
+          rect(32, 28, 36, 28, main, 3);
+          circle(62, 66, 4, accent);
+        } else if (item.includes("背景音乐") || item.includes("语音")) {
+          circle(43, 65, 9, main);
+          circle(67, 57, 9, accent);
+          line(52, 22, 52, 65, main, 5);
+          line(76, 16, 76, 57, accent, 5);
+          line(52, 24, 76, 18, main, 4);
+        } else {
+          rect(26, 30, 48, 34, "#ffffff", 7);
+          circle(40, 47, 4, main);
+          circle(60, 47, 4, main);
+          line(40, 56, 60, 56, accent, 4);
+        }
+      } else if (item.includes("打印机")) {
+        rect(24, 38, 52, 32, main, 7);
+        rect(32, 18, 36, 24, "#ffffff", 4);
+        rect(32, 60, 36, 24, "#ffffff", 4);
+        circle(66, 50, 4, accent);
+      } else if (item.includes("便签")) {
+        rect(26, 24, 48, 52, "#fff4a8", 4);
+        path([[58, 76], [74, 60], [74, 76]], accent);
+        line(36, 42, 64, 42, main, 4);
+        line(36, 56, 58, 56, main, 4);
+      } else if (item.includes("橡皮筋")) {
+        ctx.beginPath();
+        ctx.strokeStyle = main;
+        ctx.lineWidth = 11 * unit;
+        ctx.ellipse(50 * unit, 52 * unit, 28 * unit, 18 * unit, -0.25, 0, Math.PI * 2);
+        ctx.stroke();
+        line(29, 35, 72, 68, accent, 3);
+      } else if (item.includes("空白页") || item.includes("句号") || item.includes("日历") || item.includes("加载条")) {
+        if (item.includes("加载条")) {
+          rect(20, 44, 60, 16, "#ffffff", 8);
+          rect(22, 46, 32, 12, main, 6);
+          circle(70, 52, 3, accent);
+        } else if (item.includes("日历")) {
+          rect(24, 24, 52, 54, "#ffffff", 5);
+          rect(24, 24, 52, 16, main, 5);
+          textMark("31", 50, 64, 18);
+        } else {
+          rect(26, 18, 48, 64, "#ffffff", 4);
+          if (item.includes("句号")) circle(50, 62, 4, main);
+        }
+      } else if (item.includes("键盘") || item.includes("语音通话") || item.includes("在吗")) {
+        if (item.includes("语音通话")) {
+          circle(50, 50, 30, "#ffffff");
+          path([[35, 40], [44, 34], [55, 56], [47, 64]], main);
+          line(60, 35, 68, 43, accent, 3);
+          line(64, 28, 76, 42, accent, 3);
+        } else {
+          rect(18, 40, 64, 26, "#ffffff", 6);
+          for (let gx = 28; gx <= 68; gx += 10) line(gx, 50, gx + 2, 50, main, 3);
+          textMark(item.includes("在吗") ? "?" : "AI", 50, 78, 14);
+        }
+      } else if (item.includes("袜子")) {
+        path([[38, 20], [58, 20], [58, 58], [78, 62], [70, 78], [44, 72], [38, 54]], "#ffffff");
+        line(38, 28, 58, 28, accent, 4);
+        circle(65, 66, 4, main);
+      } else if (item.includes("筷子")) {
+        line(38, 22, 52, 82, main, 6);
+        line(58, 20, 66, 82, accent, 6);
+        rect(30, 70, 45, 12, "#ffffff", 4);
+      } else if (item.includes("菜单")) {
+        rect(24, 20, 52, 62, "#ffffff", 6);
+        textMark("MENU", 50, 38, 12);
+        line(36, 50, 64, 50, main, 4);
+        line(36, 64, 60, 64, accent, 4);
+      } else if (item.includes("人设") || item.includes("路人甲")) {
+        circle(50, 36, 14, main);
+        rect(30, 56, 40, 24, "#ffffff", 12);
+        textMark(item.includes("路人") ? "甲" : "设", 50, 70, 18);
+      } else if (item.includes("会员") || item.includes("续费") || item.includes("订阅") || item.includes("扣费") || item.includes("试用") || item.includes("权益") || item.includes("取消订阅")) {
+        rect(22, 28, 56, 44, "#ffffff", 8);
+        textMark("VIP", 50, 48, 18);
+        line(34, 60, 66, 60, accent, 4);
+        if (item.includes("取消")) line(30, 32, 70, 68, "#ef5555", 5);
+      } else if (item.includes("摄像头")) {
+        rect(24, 34, 52, 30, "#ffffff", 8);
+        circle(50, 49, 13, main);
+        circle(50, 49, 5, accent);
+        line(50, 64, 50, 82, "#1d1d22", 5);
+      } else if (item.includes("蚊子")) {
+        circle(50, 48, 7, main);
+        line(50, 55, 50, 76, "#1d1d22", 3);
+        line(45, 51, 25, 62, accent, 3);
+        line(55, 51, 75, 62, accent, 3);
+        line(45, 45, 25, 34, accent, 3);
+        line(55, 45, 75, 34, accent, 3);
+      } else if (item.includes("缓存垃圾") || item.includes("垃圾短信")) {
+        rect(32, 34, 36, 44, "#ffffff", 5);
+        line(28, 32, 72, 32, main, 5);
+        line(42, 22, 58, 22, accent, 5);
+        line(43, 44, 43, 68, main, 3);
+        line(57, 44, 57, 68, main, 3);
+      } else if (item.includes("漏汤勺") || item.includes("勺")) {
+        circle(40, 34, 13, "#ffffff");
+        line(49, 45, 76, 76, main, 7);
+        circle(30, 70, 5, accent);
+      } else if (item.includes("小石子") || item.includes("菜叶")) {
+        if (item.includes("菜叶")) {
+          path([[50, 20], [76, 48], [52, 80], [26, 50]], main);
+          line(36, 38, 64, 62, accent, 4);
+        } else {
+          path([[30, 60], [38, 34], [62, 28], [78, 52], [66, 76], [40, 80]], main);
+          line(40, 56, 60, 48, accent, 3);
+        }
+      } else if (item.includes("截图") || item.includes("备忘录") || item.includes("备注")) {
+        rect(28, 18, 44, 64, "#ffffff", 7);
+        rect(34, 28, 32, 18, main, 4);
+        line(36, 58, 64, 58, accent, 4);
+        line(36, 70, 56, 70, accent, 4);
+      } else if (item.includes("打卡机") || item.includes("考勤机")) {
+        rect(24, 24, 52, 52, "#ffffff", 8);
+        circle(50, 46, 14, soft);
+        line(50, 46, 50, 34, main, 4);
+        line(50, 46, 61, 50, accent, 4);
+        rect(34, 66, 32, 8, accent, 4);
+      } else if (item.includes("公告栏") || item.includes("白板") || item.includes("指示牌")) {
+        rect(20, 24, 60, 44, "#ffffff", 6);
+        line(30, 38, 70, 38, main, 4);
+        line(30, 52, 62, 52, accent, 4);
+        line(50, 68, 50, 86, "#1d1d22", 5);
+      } else if (item.includes("快递柜")) {
+        rect(20, 24, 60, 58, "#ffffff", 5);
+        for (let gx = 40; gx <= 60; gx += 20) line(gx, 24, gx, 82, "#d7d8e7", 2);
+        for (let gy = 43; gy <= 62; gy += 19) line(20, gy, 80, gy, "#d7d8e7", 2);
+        circle(70, 72, 4, accent);
+      } else if (item.includes("优惠券") || item.includes("免单券")) {
+        path([[22, 36], [78, 30], [82, 62], [26, 70]], "#ffffff");
+        circle(28, 52, 5, soft);
+        circle(76, 48, 5, soft);
+        line(38, 44, 66, 58, main, 4);
+        textMark("%", 52, 59, 18);
+      } else if (item.includes("验证码") || item.includes("错误提示") || item.includes("系统提示")) {
+        rect(20, 30, 60, 40, "#ffffff", 7);
+        textMark("404", 50, 56, 18);
+        circle(76, 28, 8, "#ef5555");
+        line(73, 28, 79, 28, "#ffffff", 2);
+      } else if (item.includes("护身符") || item.includes("钥匙扣")) {
+        circle(50, 28, 7, "#ffffff");
+        path([[34, 38], [66, 38], [72, 68], [50, 84], [28, 68]], main);
+        textMark("福", 50, 62, 18);
+      } else if (item.includes("净水器") || item.includes("售货机")) {
+        rect(30, 18, 40, 64, "#ffffff", 7);
+        rect(39, 30, 22, 18, main, 4);
+        circle(50, 61, 7, accent);
+        line(44, 74, 56, 74, main, 4);
+      } else if (item.includes("椅") || item.includes("长椅") || item.includes("沙发")) {
+        rect(24, 46, 52, 20, main, 7);
+        rect(28, 30, 44, 20, "#ffffff", 6);
+        line(34, 66, 30, 82, accent, 5);
+        line(66, 66, 70, 82, accent, 5);
+      } else if (item.includes("镜子")) {
+        path([[50, 18], [72, 38], [66, 74], [50, 88], [34, 74], [28, 38]], "#ffffff");
+        line(38, 42, 62, 66, accent, 4);
+      } else if (item.includes("胶带")) {
+        circle(50, 50, 28, "#ffffff");
+        circle(50, 50, 11, soft);
+        rect(54, 42, 28, 16, main, 4);
+      } else if (item.includes("猫")) {
+        circle(50, 52, 24, main);
+        path([[28, 36], [38, 18], [47, 38]], main);
+        path([[53, 38], [62, 18], [72, 36]], main);
+        circle(42, 50, 3, "#1d1d22");
+        circle(58, 50, 3, "#1d1d22");
+        circle(50, 59, 3, accent);
+        line(34, 64, 18, 58, accent, 3);
+        line(66, 64, 82, 58, accent, 3);
+      } else if (item.includes("灯") || item.includes("光") || item.includes("蜡烛")) {
+        circle(50, 40, 22, "#ffe680");
+        rect(38, 62, 24, 14, accent, 4);
+        line(50, 12, 50, 3, main, 5);
+        line(22, 26, 12, 18, main, 5);
+        line(78, 26, 88, 18, main, 5);
+        if (item.includes("红绿灯")) {
+          rect(36, 24, 28, 58, "#ffffff", 12);
+          circle(50, 38, 7, "#ef5555");
+          circle(50, 53, 7, "#efb333");
+          circle(50, 68, 7, "#79b45d");
+        }
+      } else if (item.includes("门禁") || item.includes("公交卡") || item.includes("卡")) {
+        rect(24, 28, 52, 42, "#ffffff", 8);
+        circle(38, 49, 8, main);
+        line(52, 42, 68, 42, accent, 4);
+        line(52, 55, 66, 55, accent, 4);
+      } else if (item.includes("钥匙")) {
+        circle(34, 48, 14, "#ffffff");
+        line(48, 48, 82, 48, main, 9);
+        line(70, 48, 70, 62, accent, 5);
+        line(80, 48, 80, 58, accent, 5);
+      } else if (item.includes("PPT") || item.includes("Excel") || item.includes("文件") || item.includes("文档") || item.includes("周报") || item.includes("表单") || item.includes("模板")) {
+        rect(24, 18, 52, 64, "#ffffff", 4);
+        rect(62, 12, 14, 18, accent, 3);
+        if (item.includes("Excel") || item.includes("表")) {
+          for (let gx = 34; gx <= 64; gx += 10) line(gx, 34, gx, 70, "#d7d8e7", 2);
+          for (let gy = 36; gy <= 66; gy += 10) line(32, gy, 68, gy, "#d7d8e7", 2);
+          textMark("X", 50, 62, 18);
+        } else if (item.includes("PPT")) {
+          circle(50, 48, 18, accent);
+          path([[50, 48], [50, 30], [68, 48]], main);
+          textMark("P", 50, 70, 14);
+        } else {
+          line(34, 38, 66, 38, main, 4);
+          line(34, 52, 66, 52, main, 4);
+          line(34, 66, 56, 66, main, 4);
+        }
+      } else if (item.includes("视频") || item.includes("播放") || item.includes("广告") || item.includes("弹窗") || item.includes("开屏")) {
+        rect(18, 24, 64, 46, "#ffffff", 8);
+        path([[45, 36], [45, 58], [64, 47]], main);
+        rect(24, 74, 52, 10, accent, 5);
+        if (item.includes("弹窗") || item.includes("广告")) {
+          rect(54, 14, 30, 24, "#fff1d6", 5);
+          line(62, 22, 76, 30, "#ef5555", 3);
+          line(76, 22, 62, 30, "#ef5555", 3);
+        }
+        if (item.includes("自动")) {
+          circle(26, 47, 6, accent);
+          line(23, 47, 29, 47, "#ffffff", 2);
+        }
+      } else if (item.includes("手机") || item.includes("电量") || item.includes("充电") || item.includes("遥控器") || item.includes("耳机") || item.includes("路由器") || item.includes("Wi-Fi")) {
+        if (item.includes("路由器") || item.includes("Wi-Fi")) {
+          rect(24, 52, 52, 22, "#ffffff", 7);
+          line(34, 52, 26, 30, main, 4);
+          line(66, 52, 74, 30, main, 4);
+          circle(40, 63, 3, accent);
+          circle(52, 63, 3, accent);
+          circle(64, 63, 3, accent);
+          line(35, 28, 50, 18, accent, 3);
+          line(65, 28, 50, 18, accent, 3);
+        } else if (item.includes("耳机")) {
+          ctx.beginPath();
+          ctx.strokeStyle = "#1d1d22";
+          ctx.lineWidth = 6 * unit;
+          ctx.arc(50 * unit, 50 * unit, 28 * unit, Math.PI, 0);
+          ctx.stroke();
+          rect(20, 48, 14, 26, main, 5);
+          rect(66, 48, 14, 26, main, 5);
+        } else {
+          rect(32, 18, 36, 64, "#ffffff", 8);
+          rect(40, 30, 20, 34, main, 4);
+          line(42, 72, 58, 72, accent, 4);
+        }
+      } else if (item.includes("奶茶") || item.includes("咖啡") || item.includes("水杯") || item.includes("酸奶") || item.includes("关东煮") || item.includes("甜品") || item.includes("蛋糕") || item.includes("火锅") || item.includes("肉")) {
+        if (item.includes("奶茶") || item.includes("咖啡") || item.includes("水杯")) {
+          path([[34, 28], [66, 28], [60, 82], [40, 82]], "#ffffff");
+          line(40, 24, 62, 12, accent, 4);
+          rect(36, 46, 28, 16, main, 4);
+          circle(44, 68, 3, accent);
+          circle(54, 70, 3, accent);
+        } else if (item.includes("蛋糕") || item.includes("甜品")) {
+          rect(26, 50, 48, 28, "#fff4c2", 6);
+          line(30, 52, 70, 52, main, 5);
+          line(36, 40, 36, 52, accent, 4);
+          line(50, 36, 50, 52, accent, 4);
+          line(64, 40, 64, 52, accent, 4);
+        } else if (item.includes("火锅")) {
+          rect(22, 44, 56, 30, "#ffffff", 10);
+          line(18, 44, 82, 44, accent, 5);
+          circle(38, 56, 5, main);
+          circle(55, 58, 5, accent);
+        } else {
+          circle(50, 50, 28, "#fff4c2");
+          circle(38, 42, 7, main);
+          circle(58, 38, 6, accent);
+          line(28, 68, 72, 68, accent, 4);
+        }
+      } else if (item.includes("骰子") || item.includes("盲盒") || item.includes("签筒") || item.includes("转盘") || item.includes("真心话")) {
+        if (item.includes("转盘")) {
+          circle(50, 50, 30, "#ffffff");
+          path([[50, 50], [50, 20], [76, 50]], main);
+          path([[50, 50], [24, 50], [50, 80]], accent);
+          circle(50, 50, 6, "#1d1d22");
+        } else {
+          rect(28, 28, 44, 44, "#ffffff", 8);
+          circle(40, 40, 4, main);
+          circle(60, 40, 4, accent);
+          circle(50, 50, 4, "#1d1d22");
+          circle(40, 60, 4, accent);
+          circle(60, 60, 4, main);
+        }
+      } else if (item.includes("内裤") || item.includes("厕所") || item.includes("卷纸") || item.includes("裤扣") || item.includes("钢化膜")) {
+        if (item.includes("卷纸")) {
+          circle(42, 50, 24, "#ffffff");
+          circle(42, 50, 8, soft);
+          rect(54, 36, 22, 42, "#ffffff", 6);
+        } else if (item.includes("钢化膜")) {
+          rect(32, 18, 36, 64, "#ffffff", 8);
+          line(34, 26, 66, 68, main, 4);
+          line(48, 20, 60, 80, accent, 3);
+        } else if (item.includes("厕所")) {
+          rect(34, 28, 34, 40, "#ffffff", 12);
+          rect(40, 64, 22, 12, main, 4);
+          line(50, 28, 50, 16, accent, 4);
+        } else {
+          path([[22, 34], [78, 34], [68, 76], [56, 76], [50, 58], [44, 76], [32, 76]], "#ffffff");
+          line(26, 38, 74, 38, main, 5);
+          circle(50, 56, 6, accent);
+        }
+      } else if (item.includes("闹钟") || item.includes("电钻") || item.includes("音箱") || item.includes("弹珠") || item.includes("会议")) {
+        if (item.includes("闹钟")) {
+          circle(50, 54, 25, "#ffffff");
+          circle(32, 28, 8, main);
+          circle(68, 28, 8, main);
+          line(50, 54, 50, 38, accent, 4);
+          line(50, 54, 64, 58, accent, 4);
+        } else if (item.includes("电钻")) {
+          rect(22, 42, 42, 20, main, 5);
+          path([[64, 42], [86, 52], [64, 62]], accent);
+          rect(34, 62, 14, 24, "#ffffff", 4);
+        } else {
+          rect(24, 34, 34, 42, main, 6);
+          circle(41, 55, 10, "#ffffff");
+          line(62, 42, 82, 32, accent, 4);
+          line(64, 56, 88, 56, accent, 4);
+          line(62, 70, 82, 80, accent, 4);
+        }
+      } else if (item.includes("云") || item.includes("石头") || item.includes("沙") || item.includes("冰块") || item.includes("影子")) {
+        if (item.includes("云")) {
+          circle(36, 56, 16, "#ffffff");
+          circle(52, 46, 20, "#ffffff");
+          circle(66, 58, 15, "#ffffff");
+          line(26, 72, 76, 72, accent, 4);
+        } else {
+          path([[28, 62], [38, 36], [62, 30], [76, 54], [64, 76], [38, 78]], main);
+          line(38, 58, 62, 50, accent, 3);
+        }
+      } else if (item.includes("快递") || item.includes("胶带") || item.includes("购物车") || item.includes("共享单车")) {
+        if (item.includes("购物车")) {
+          line(24, 32, 34, 64, "#1d1d22", 5);
+          rect(34, 38, 42, 24, "#ffffff", 4);
+          circle(42, 76, 5, main);
+          circle(68, 76, 5, main);
+        } else if (item.includes("单车")) {
+          circle(34, 70, 12, "#ffffff");
+          circle(68, 70, 12, "#ffffff");
+          line(34, 70, 50, 46, main, 4);
+          line(50, 46, 68, 70, main, 4);
+          line(46, 46, 64, 46, accent, 4);
+        } else {
+          rect(28, 34, 44, 40, "#ffffff", 4);
+          line(28, 46, 72, 46, main, 4);
+          line(50, 34, 50, 74, accent, 4);
+        }
+      } else if (profile.type === "活体轮回") {
+        circle(50, 52, 24, main);
+        circle(34, 35, 9, soft);
+        circle(66, 35, 9, soft);
+        circle(42, 50, 3, "#1d1d22");
+        circle(58, 50, 3, "#1d1d22");
+        line(34, 64, 18, 58, accent, 3);
+        line(66, 64, 82, 58, accent, 3);
+      } else if (profile.type === "发光单位") {
+        circle(50, 42, 22, "#ffe680");
+        rect(38, 62, 24, 14, accent, 4);
+        line(50, 12, 50, 3, main, 5);
+        line(22, 26, 12, 18, main, 5);
+        line(78, 26, 88, 18, main, 5);
+      } else if (profile.type === "规则装置" || profile.type === "办公转生") {
+        rect(24, 18, 52, 64, "#ffffff", 4);
+        line(34, 36, 66, 36, main, 4);
+        line(34, 50, 66, 50, main, 4);
+        line(34, 64, 56, 64, main, 4);
+        rect(62, 12, 14, 18, accent, 3);
+      } else if (profile.type === "电子灵魂") {
+        rect(28, 26, 44, 54, "#ffffff", 8);
+        rect(38, 36, 24, 28, main, 4);
+        rect(74, 42, 6, 20, accent, 2);
+        line(38, 72, 62, 72, accent, 4);
+      } else if (profile.type === "食物命运") {
+        circle(50, 50, 28, "#fff4c2");
+        circle(38, 42, 7, main);
+        circle(58, 38, 6, accent);
+        line(28, 68, 72, 68, accent, 4);
+      } else if (profile.type === "随机事件") {
+        rect(28, 28, 44, 44, "#ffffff", 8);
+        circle(40, 40, 4, main);
+        circle(60, 40, 4, accent);
+        circle(50, 50, 4, "#1d1d22");
+        circle(40, 60, 4, accent);
+        circle(60, 60, 4, main);
+      } else if (profile.type === "社死道具") {
+        rect(26, 32, 48, 36, "#ffffff", 12);
+        line(30, 36, 22, 54, main, 5);
+        line(70, 36, 78, 54, main, 5);
+        circle(50, 50, 8, accent);
+      } else if (profile.type === "噪音轮回") {
+        rect(24, 40, 22, 28, main, 4);
+        line(48, 38, 72, 24, accent, 5);
+        line(52, 50, 82, 50, accent, 5);
+        line(48, 62, 72, 78, accent, 5);
+      } else if (profile.type === "自然旁观者") {
+        circle(42, 56, 22, main);
+        circle(58, 46, 18, "#ffffff");
+        line(25, 76, 75, 76, accent, 4);
+      } else if (profile.type === "打扰型存在") {
+        rect(22, 30, 56, 40, "#ffffff", 7);
+        line(30, 40, 68, 40, main, 5);
+        line(30, 56, 58, 56, accent, 5);
+        circle(78, 26, 10, main);
+      } else if (profile.type === "失物体质") {
+        circle(44, 48, 18, "#ffffff");
+        rect(54, 58, 26, 14, main, 4);
+        line(32, 72, 70, 28, accent, 4);
+      } else {
+        rect(20, 26, 60, 48, "#ffffff", 8);
+        rect(28, 18, 44, 16, main, 8);
+        line(30, 58, 70, 58, accent, 4);
+        textMark(item.replace(/[^\u4e00-\u9fa5A-Za-z0-9]/g, "").slice(0, 2) || "物", 50, 51, 18);
+      }
+
+      ctx.fillStyle = "rgba(29,29,34,.75)";
+      ctx.font = `700 ${Math.max(10, size * .075)}px Microsoft YaHei, sans-serif`;
+      const label = item.length > 5 ? item.slice(0, 5) : item;
+      ctx.fillText(label, 10 * unit, 92 * unit);
+      ctx.restore();
+    }
+
+    function renderResultIllustration() {
+      if (!lastResult) return;
+      const canvas = el.resultIllustration;
+      const ctx = canvas.getContext("2d");
+      canvas.width = 224;
+      canvas.height = 224;
+      drawItemIllustration(ctx, lastResult.item, { type: lastResult.type }, 0, 0, 224);
+    }
+
+    function showResult() {
+      const score = clamp(state.merit, 0, 100);
+      const alignment = getAlignment();
+      const tier = levelIndex(score);
+      const item = pickRebirth(alignment, score);
+      const level = levelNames[tier];
+      const chaos = Math.max(0, -state.order);
+      const profile = getIdentityProfile(item);
+      const verdict = makeVerdict(item, alignment, score, level);
+
+      lastResult = { score, alignment, item, level, chaos, icon: profile.icon, type: profile.type, text: verdict };
+      el.questionArea.classList.add("hide");
+      el.result.classList.add("show");
+      el.progress.style.width = "100%";
+      el.counter.textContent = `${questions.length} / ${questions.length}`;
+      el.score.textContent = score;
+      el.scoreLevel.textContent = level;
+      el.rebirthName.textContent = item;
+      el.alignmentBadge.textContent = alignment;
+      el.fateBadge.textContent = level;
+      el.axisBadge.textContent = `善恶轴 ${state.good >= 0 ? "+" : ""}${state.good}`;
+      el.goodMetric.textContent = state.good >= 0 ? `+${state.good}` : state.good;
+      el.orderMetric.textContent = state.order >= 0 ? `+${state.order}` : state.order;
+      el.chaosMetric.textContent = chaos;
+      el.resultCopy.textContent = lastResult.text;
+      renderResultIllustration();
+      renderShareCard();
+      updateMark();
+    }
+
+    function randomResult() {
+      const alignments = Object.keys(rebirthPool);
+      const alignment = alignments[Math.floor(Math.random() * alignments.length)];
+      const randomTier = Math.floor(Math.random() * levelNames.length);
+      answerSignature = Math.floor(Math.random() * 1000);
+      state.merit = clamp(Math.round(90 - randomTier * 17 + Math.random() * 8), 0, 100);
+      state.good = alignment.includes("善良") ? 8 : alignment.includes("邪恶") ? -8 : 0;
+      state.order = alignment.includes("守序") ? 8 : alignment.includes("混乱") ? -8 : 0;
+      el.questionArea.classList.add("hide");
+      el.result.classList.add("show");
+      el.progress.style.width = "100%";
+      el.counter.textContent = `随机 / ${questions.length}`;
+      showResult();
+      document.getElementById("quizPanel").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function wrapText(ctx, text, x, y, maxWidth, lineHeight, maxLines = 6) {
+      const chars = Array.from(text);
+      let line = "";
+      let lines = 0;
+      for (let i = 0; i < chars.length; i += 1) {
+        const testLine = line + chars[i];
+        if (ctx.measureText(testLine).width > maxWidth && line) {
+          ctx.fillText(line, x, y);
+          line = chars[i];
+          y += lineHeight;
+          lines += 1;
+          if (lines >= maxLines - 1) break;
+        } else {
+          line = testLine;
+        }
+      }
+      if (line && lines < maxLines) ctx.fillText(line, x, y);
+    }
+
+    function drawTextBlock(ctx, text, x, y, maxWidth, lineHeight, maxLines = 6) {
+      const chars = Array.from(text);
+      const rows = [];
+      let line = "";
+      for (let i = 0; i < chars.length; i += 1) {
+        const testLine = line + chars[i];
+        if (ctx.measureText(testLine).width > maxWidth && line) {
+          rows.push(line);
+          line = chars[i];
+          if (rows.length >= maxLines - 1) break;
+        } else {
+          line = testLine;
+        }
+      }
+      if (line && rows.length < maxLines) rows.push(line);
+      rows.forEach((row, index) => ctx.fillText(row, x, y + index * lineHeight));
+      return y + rows.length * lineHeight;
+    }
+
+    function fontSizeForText(ctx, text, maxWidth, startSize, minSize) {
+      let size = startSize;
+      while (size > minSize) {
+        ctx.font = `900 ${size}px Microsoft YaHei, sans-serif`;
+        if (ctx.measureText(text).width <= maxWidth || text.length > 5) break;
+        size -= 2;
+      }
+      return size;
+    }
+
+    function roundedRect(ctx, x, y, width, height, radius) {
+      ctx.beginPath();
+      ctx.moveTo(x + radius, y);
+      ctx.arcTo(x + width, y, x + width, y + height, radius);
+      ctx.arcTo(x + width, y + height, x, y + height, radius);
+      ctx.arcTo(x, y + height, x, y, radius);
+      ctx.arcTo(x, y, x + width, y, radius);
+      ctx.closePath();
+    }
+
+    function drawAxis(ctx, x, y, size) {
+      ctx.save();
+      ctx.fillStyle = "#fffdf8";
+      ctx.strokeStyle = "#1d1d22";
+      ctx.lineWidth = 3;
+      roundedRect(ctx, x, y, size, size, 12);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.strokeStyle = "#b9b5c4";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(x + size / 2, y + 28);
+      ctx.lineTo(x + size / 2, y + size - 28);
+      ctx.moveTo(x + 28, y + size / 2);
+      ctx.lineTo(x + size - 28, y + size / 2);
+      ctx.stroke();
+
+      ctx.globalAlpha = .18;
+      ctx.fillStyle = "#ef5555";
+      ctx.beginPath();
+      ctx.arc(x + size * .38, y + size * .52, size * .24, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = "#4f74ff";
+      ctx.beginPath();
+      ctx.arc(x + size * .62, y + size * .52, size * .24, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalAlpha = 1;
+
+      const pointX = x + clamp(50 + state.good * 2.8, 10, 90) / 100 * size;
+      const pointY = y + clamp(50 - state.order * 2.8, 10, 90) / 100 * size;
+      ctx.fillStyle = lastResult.score >= 65 ? "#79b45d" : lastResult.score >= 35 ? "#efb333" : "#ef5555";
+      ctx.strokeStyle = "#1d1d22";
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.arc(pointX, pointY, 18, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = "#fffdf8";
+      ctx.strokeStyle = "#dfdce8";
+      ctx.lineWidth = 2;
+      [
+        [x + 18, y + size / 2 - 36, 46, 28, "恶"],
+        [x + size - 64, y + size / 2 - 36, 46, 28, "善"],
+        [x + size / 2 - 34, y + 18, 68, 28, "混乱"],
+        [x + size / 2 - 34, y + size - 46, 68, 28, "守序"]
+      ].forEach(([rx, ry, rw, rh, text]) => {
+        roundedRect(ctx, rx, ry, rw, rh, 14);
+        ctx.fill();
+        ctx.stroke();
+        ctx.fillStyle = "#6d6d75";
+        ctx.font = "700 20px Microsoft YaHei, sans-serif";
+        ctx.fillText(text, rx + (rw - ctx.measureText(text).width) / 2, ry + 20);
+        ctx.fillStyle = "#fffdf8";
+      });
+      ctx.restore();
+    }
+
+    async function renderShareCard(useRemoteQr = true) {
+      if (!lastResult) return;
+      const canvas = el.shareCanvas;
+      const ctx = canvas.getContext("2d");
+      canvas.width = 900;
+      canvas.height = 1350;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#fffaf0";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "rgba(79,116,255,.11)";
+      ctx.fillRect(0, 0, canvas.width, 250);
+      ctx.fillStyle = "rgba(239,85,85,.10)";
+      ctx.fillRect(0, 1010, canvas.width, 340);
+
+      ctx.fillStyle = "#1d1d22";
+      ctx.font = "900 34px Microsoft YaHei, sans-serif";
+      ctx.fillText("功德分投胎报告", 62, 86);
+      ctx.font = "700 24px Microsoft YaHei, sans-serif";
+      ctx.fillStyle = "#6d6d75";
+      ctx.fillText("测测你的下辈子会变成什么东西", 62, 126);
+
+      ctx.fillStyle = "#1d1d22";
+      ctx.font = "900 118px Microsoft YaHei, sans-serif";
+      ctx.fillText(String(lastResult.score), 62, 230);
+      ctx.font = "900 28px Microsoft YaHei, sans-serif";
+      ctx.fillStyle = "#6d6d75";
+      ctx.fillText("功德分", 240, 216);
+
+      ctx.fillStyle = "#fff";
+      ctx.strokeStyle = "#1d1d22";
+      ctx.lineWidth = 4;
+      roundedRect(ctx, 44, 282, 812, 560, 20);
+      ctx.fill();
+      ctx.stroke();
+
+      drawItemIllustration(ctx, lastResult.item, { type: lastResult.type }, 84, 332, 300);
+
+      ctx.fillStyle = "#1d1d22";
+      ctx.font = "900 32px Microsoft YaHei, sans-serif";
+      ctx.fillText(lastResult.alignment, 430, 348);
+      const titleSize = fontSizeForText(ctx, lastResult.item, 370, 58, 38);
+      ctx.font = `900 ${titleSize}px Microsoft YaHei, sans-serif`;
+      ctx.fillStyle = "#1d1d22";
+      const titleEndY = drawTextBlock(ctx, lastResult.item, 430, 430, 370, titleSize + 10, 3);
+      ctx.font = "800 26px Microsoft YaHei, sans-serif";
+      ctx.fillStyle = "#6d6d75";
+      let infoY = Math.max(570, titleEndY + 26);
+      ctx.fillText(lastResult.level, 430, infoY);
+      ctx.fillText(lastResult.type, 430, infoY + 38);
+      ctx.fillText(`善恶轴 ${state.good >= 0 ? "+" : ""}${state.good}`, 430, infoY + 76);
+      ctx.fillText(`秩序轴 ${state.order >= 0 ? "+" : ""}${state.order}`, 430, infoY + 114);
+      drawAxis(ctx, 636, 626, 150);
+
+      ctx.fillStyle = "#fff";
+      ctx.strokeStyle = "#1d1d22";
+      ctx.lineWidth = 4;
+      roundedRect(ctx, 44, 872, 812, 276, 18);
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = "#1d1d22";
+      ctx.font = "700 26px Microsoft YaHei, sans-serif";
+      drawTextBlock(ctx, lastResult.text, 76, 930, 748, 42, 5);
+
+      ctx.fillStyle = "#fff";
+      ctx.strokeStyle = "#1d1d22";
+      ctx.lineWidth = 3;
+      roundedRect(ctx, 638, 1174, 184, 132, 14);
+      ctx.fill();
+      ctx.stroke();
+      await drawShareQr(ctx, 656, 1190, 100);
+      ctx.fillStyle = "#6d6d75";
+      ctx.font = "700 18px Microsoft YaHei, sans-serif";
+      ctx.fillText("扫码测试", 742, 1248);
+
+      ctx.fillStyle = "#6d6d75";
+      ctx.font = "700 22px Microsoft YaHei, sans-serif";
+      ctx.fillText("复制图片，把这份灵魂判决发给朋友", 72, 1258);
+      el.shareCanvas.classList.add("show");
+    }
+
+    function canvasToBlob(canvas) {
+      return new Promise(resolve => canvas.toBlob(resolve, "image/png"));
+    }
+
+    async function copyImageResult() {
+      await renderShareCard();
+      const blob = await canvasToBlob(el.shareCanvas);
+      try {
+        if (navigator.clipboard && window.ClipboardItem) {
+          await navigator.clipboard.write([new ClipboardItem({ "image/png": blob })]);
+          el.copyImageBtn.textContent = "图片已复制";
+        } else {
+          throw new Error("clipboard image unsupported");
+        }
+      } catch {
+        const url = URL.createObjectURL(blob);
+        window.open(url, "_blank");
+        el.copyImageBtn.textContent = "已打开图片";
+      }
+      setTimeout(() => el.copyImageBtn.textContent = "复制结果图片", 1500);
+    }
+
+    async function copyTextResult() {
+      const text = `我的功德分：${el.score.textContent}\n我的阵营：${el.alignmentBadge.textContent}\n下辈子投胎成：${el.rebirthName.textContent}\n${el.resultCopy.textContent}`;
+      try {
+        await navigator.clipboard.writeText(text);
+        el.copyTextBtn.textContent = "文案已复制";
+      } catch {
+        el.copyTextBtn.textContent = "复制失败";
+      }
+      setTimeout(() => el.copyTextBtn.textContent = "复制结果文案", 1200);
+    }
+
+    el.startBtn.addEventListener("click", start);
+    el.readyBtn.addEventListener("click", start);
+    el.restartBtn.addEventListener("click", start);
+    el.randomBtn.addEventListener("click", randomResult);
+    el.copyImageBtn.addEventListener("click", copyImageResult);
+    el.copyTextBtn.addEventListener("click", copyTextResult);
+    updateMark();
+  </script>
+</body>
+</html>
