@@ -381,37 +381,44 @@
 
     .result.theme-heaven::before {
       opacity: 1;
+      background:
         linear-gradient(90deg, rgba(17,17,17,.05) 0 1px, transparent 1px 25%),
-        #fff;
+        linear-gradient(135deg, rgba(242,179,33,.28), rgba(169,214,255,.24)),
+        #f7fbff;
     }
 
     .result.theme-human::before {
       opacity: 1;
       background:
         linear-gradient(90deg, rgba(17,17,17,.05) 0 1px, transparent 1px 25%),
-        #fff;
+        linear-gradient(135deg, rgba(255,255,255,.86), rgba(121,180,93,.18)),
+        #ffffff;
     }
 
     .result.theme-hell::before {
       opacity: 1;
       background:
-        linear-gradient(90deg, rgba(17,17,17,.05) 0 1px, transparent 1px 25%),
-        #fff;
+        linear-gradient(90deg, rgba(17,17,17,.08) 0 1px, transparent 1px 25%),
+        linear-gradient(135deg, rgba(213,31,42,.22), rgba(9,9,11,.16)),
+        #fff4f2;
     }
 
     .theme-heaven .score-card {
-      background: #fff;
-      box-shadow: inset 0 -14px 0 rgba(21, 124, 58, .12);
+      background: #f7fbff;
+      border-color: #0a1d42;
+      box-shadow: inset 0 -14px 0 rgba(242, 179, 33, .22);
     }
 
     .theme-human .score-card {
       background: #fff;
-      box-shadow: inset 0 -14px 0 rgba(244, 194, 31, .16);
+      border-color: #0b3f23;
+      box-shadow: inset 0 -14px 0 rgba(121, 180, 93, .18);
     }
 
     .theme-hell .score-card {
-      background: #fff;
-      box-shadow: inset 0 -14px 0 rgba(223, 39, 39, .14);
+      background: #fff4f2;
+      border-color: #09090b;
+      box-shadow: inset 0 -14px 0 rgba(213, 31, 42, .20);
     }
 
     .result-grid {
@@ -841,7 +848,13 @@
         band: "rgba(255, 223, 105, .36)",
         wash: "rgba(79, 116, 255, .10)",
         accent: "#efb333",
-        soft: "#fff8dd"
+        soft: "#fff8dd",
+        frame: "#0a1d42",
+        paper: "#f7fbff",
+        panel: "#ffffff",
+        border: "#0a1d42",
+        display: "#0a1d42",
+        decor: "#f2b321"
       },
       human: {
         key: "human",
@@ -853,7 +866,13 @@
         band: "rgba(121, 180, 93, .20)",
         wash: "rgba(239, 179, 51, .14)",
         accent: "#79b45d",
-        soft: "#f7fff0"
+        soft: "#f7fff0",
+        frame: "#0b3f23",
+        paper: "#ffffff",
+        panel: "#fbfff8",
+        border: "#0b3f23",
+        display: "#0b3f23",
+        decor: "#79b45d"
       },
       hell: {
         key: "hell",
@@ -865,7 +884,13 @@
         band: "rgba(239, 85, 85, .26)",
         wash: "rgba(29, 29, 34, .10)",
         accent: "#ef5555",
-        soft: "#fff0e8"
+        soft: "#fff0e8",
+        frame: "#09090b",
+        paper: "#fff4f2",
+        panel: "#fffafa",
+        border: "#09090b",
+        display: "#09090b",
+        decor: "#d51f2a"
       }
     };
 
@@ -1932,40 +1957,83 @@
 
     function drawPosterPlant(ctx, theme, x, y, scale) {
       if (theme.key === "heaven") {
-        facetCluster(ctx, x + 36, y + 72, scale, ["#dff3ff", "#ffffff", "#b7dcff", "#e9fbff"], 1);
-        facetCluster(ctx, x + 150, y + 76, scale * .82, ["#fffbe8", "#ffffff", "#ffe680", "#dff3ff"], 2);
-        ctx.strokeStyle = "#efb333";
+        const wingStroke = theme.border || "#0a1d42";
+        const gold = theme.decor || "#f2b321";
+        const feathersLeft = [
+          [[x + 136 * scale, y + 96 * scale], [x + 86 * scale, y + 60 * scale], [x + 24 * scale, y + 96 * scale], [x + 102 * scale, y + 126 * scale]],
+          [[x + 132 * scale, y + 122 * scale], [x + 72 * scale, y + 100 * scale], [x + 34 * scale, y + 156 * scale], [x + 108 * scale, y + 150 * scale]],
+          [[x + 128 * scale, y + 148 * scale], [x + 78 * scale, y + 154 * scale], [x + 56 * scale, y + 212 * scale], [x + 118 * scale, y + 182 * scale]]
+        ];
+        const feathersRight = [
+          [[x + 154 * scale, y + 96 * scale], [x + 204 * scale, y + 60 * scale], [x + 266 * scale, y + 96 * scale], [x + 188 * scale, y + 126 * scale]],
+          [[x + 158 * scale, y + 122 * scale], [x + 218 * scale, y + 100 * scale], [x + 256 * scale, y + 156 * scale], [x + 182 * scale, y + 150 * scale]],
+          [[x + 162 * scale, y + 148 * scale], [x + 212 * scale, y + 154 * scale], [x + 234 * scale, y + 212 * scale], [x + 172 * scale, y + 182 * scale]]
+        ];
+        ["#dff3ff", "#ffffff", "#a9d6ff"].forEach((color, i) => {
+          poly(ctx, feathersLeft[i], color, wingStroke, 3.4 * scale);
+          poly(ctx, feathersRight[i], color, wingStroke, 3.4 * scale);
+        });
+        poly(ctx, [[x + 126 * scale, y + 94 * scale], [x + 145 * scale, y + 152 * scale], [x + 164 * scale, y + 94 * scale], [x + 145 * scale, y + 74 * scale]], "#f8fbff", wingStroke, 3.5 * scale);
+        ctx.strokeStyle = gold;
         ctx.lineWidth = 12 * scale;
         ctx.beginPath();
-        ctx.ellipse(x + 144 * scale, y + 34 * scale, 76 * scale, 22 * scale, -.18, 0, Math.PI * 2);
+        ctx.ellipse(x + 146 * scale, y + 30 * scale, 72 * scale, 20 * scale, -.12, 0, Math.PI * 2);
         ctx.stroke();
-        poly(ctx, [[x + 102 * scale, y + 88 * scale], [x + 136 * scale, y + 160 * scale], [x + 176 * scale, y + 90 * scale]], "#7bd3ff", "#111", 4 * scale);
+        poly(ctx, [[x + 230 * scale, y + 54 * scale], [x + 245 * scale, y + 78 * scale], [x + 272 * scale, y + 84 * scale], [x + 250 * scale, y + 100 * scale], [x + 248 * scale, y + 128 * scale], [x + 230 * scale, y + 106 * scale], [x + 202 * scale, y + 112 * scale], [x + 218 * scale, y + 88 * scale]], "#ffe17a", wingStroke, 2.5 * scale);
       } else if (theme.key === "human") {
-        ctx.strokeStyle = "#157c3a";
-        ctx.lineWidth = 12 * scale;
+        const green = theme.decor || "#79b45d";
+        ctx.fillStyle = "#dff5d7";
         ctx.beginPath();
-        ctx.moveTo(x + 94 * scale, y + 210 * scale);
-        ctx.lineTo(x + 122 * scale, y + 92 * scale);
-        ctx.moveTo(x + 132 * scale, y + 120 * scale);
-        ctx.lineTo(x + 188 * scale, y + 66 * scale);
-        ctx.moveTo(x + 112 * scale, y + 134 * scale);
-        ctx.lineTo(x + 54 * scale, y + 82 * scale);
+        ctx.moveTo(x + 4 * scale, y + 228 * scale);
+        ctx.quadraticCurveTo(x + 74 * scale, y + 188 * scale, x + 146 * scale, y + 216 * scale);
+        ctx.quadraticCurveTo(x + 214 * scale, y + 244 * scale, x + 292 * scale, y + 202 * scale);
+        ctx.lineTo(x + 292 * scale, y + 258 * scale);
+        ctx.lineTo(x + 4 * scale, y + 258 * scale);
+        ctx.closePath();
+        ctx.fill();
+        ctx.strokeStyle = theme.border || "#0b3f23";
+        ctx.lineWidth = 4 * scale;
         ctx.stroke();
-        facetCluster(ctx, x + 24 * scale, y + 42 * scale, scale, ["#0a5729", "#157c3a", "#258f47", "#083d21"], 3);
-        facetCluster(ctx, x + 130 * scale, y + 24 * scale, scale * .86, ["#0a5729", "#157c3a", "#38a857", "#0e6b34"], 2);
-        facetCluster(ctx, x + 58 * scale, y + 96 * scale, scale * .74, ["#0a5729", "#1e8a43", "#3eb85b", "#0b4c28"], 4);
+        ctx.strokeStyle = "#8b5a2b";
+        ctx.lineWidth = 14 * scale;
+        ctx.beginPath();
+        ctx.moveTo(x + 108 * scale, y + 224 * scale);
+        ctx.lineTo(x + 118 * scale, y + 116 * scale);
+        ctx.moveTo(x + 158 * scale, y + 220 * scale);
+        ctx.lineTo(x + 166 * scale, y + 124 * scale);
+        ctx.stroke();
+        facetCluster(ctx, x + 44 * scale, y + 42 * scale, scale * .8, ["#0b5c2e", "#2f9b4d", green, "#e9ffe0"], 3);
+        facetCluster(ctx, x + 120 * scale, y + 42 * scale, scale * .72, ["#0b5c2e", "#2f9b4d", green, "#e9ffe0"], 2);
+        ctx.strokeStyle = "#2f9b4d";
+        ctx.lineWidth = 5 * scale;
+        for (let i = 0; i < 7; i += 1) {
+          const bx = x + (20 + i * 38) * scale;
+          ctx.beginPath();
+          ctx.moveTo(bx, y + 244 * scale);
+          ctx.lineTo(bx + 12 * scale, y + (220 + (i % 3) * 6) * scale);
+          ctx.stroke();
+        }
       } else {
-        facetCluster(ctx, x + 24 * scale, y + 86 * scale, scale, ["#b40022", "#df2727", "#ff4b2f", "#8b001d"], 2);
-        facetCluster(ctx, x + 132 * scale, y + 64 * scale, scale * .9, ["#df2727", "#ff5f2f", "#c01924", "#8b001d"], 3);
-        poly(ctx, [[x + 48 * scale, y + 232 * scale], [x + 92 * scale, y + 150 * scale], [x + 132 * scale, y + 234 * scale]], "#f4c21f", "#111", 4 * scale);
-        ctx.strokeStyle = "#111";
+        const black = theme.border || "#09090b";
+        const red = theme.decor || "#d51f2a";
+        poly(ctx, [[x + 40 * scale, y + 210 * scale], [x + 92 * scale, y + 52 * scale], [x + 128 * scale, y + 194 * scale]], red, black, 5 * scale);
+        poly(ctx, [[x + 170 * scale, y + 194 * scale], [x + 212 * scale, y + 52 * scale], [x + 262 * scale, y + 210 * scale]], red, black, 5 * scale);
+        poly(ctx, [[x + 74 * scale, y + 184 * scale], [x + 94 * scale, y + 94 * scale], [x + 116 * scale, y + 176 * scale]], "#ff6a3d", black, 2.8 * scale);
+        poly(ctx, [[x + 186 * scale, y + 176 * scale], [x + 208 * scale, y + 94 * scale], [x + 228 * scale, y + 184 * scale]], "#ff6a3d", black, 2.8 * scale);
+        ctx.strokeStyle = black;
         ctx.lineWidth = 6 * scale;
         ctx.beginPath();
-        ctx.moveTo(x + 14 * scale, y + 246 * scale);
+        ctx.moveTo(x + 10 * scale, y + 248 * scale);
         for (let i = 0; i < 7; i += 1) {
-          ctx.lineTo(x + (42 + i * 38) * scale, y + (i % 2 ? 248 : 204) * scale);
+          ctx.lineTo(x + (42 + i * 38) * scale, y + (i % 2 ? 248 : 206) * scale);
         }
         ctx.stroke();
+        ctx.fillStyle = red;
+        ctx.globalAlpha = .22;
+        ctx.beginPath();
+        ctx.ellipse(x + 148 * scale, y + 242 * scale, 126 * scale, 26 * scale, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.globalAlpha = 1;
       }
     }
 
@@ -2076,10 +2144,10 @@
       ctx.restore();
     }
 
-    function rectSketch(ctx, x, y, width, height, fill, radius = 12, lineWidth = 4) {
+    function rectSketch(ctx, x, y, width, height, fill, radius = 12, lineWidth = 4, stroke = "#1d1d22") {
       ctx.save();
       ctx.fillStyle = fill;
-      ctx.strokeStyle = "#1d1d22";
+      ctx.strokeStyle = stroke;
       ctx.lineWidth = lineWidth;
       roundedRect(ctx, x, y, width, height, radius);
       ctx.fill();
@@ -2107,15 +2175,28 @@
     }
 
     function drawShareScene(ctx, theme) {
-      ctx.fillStyle = "#050505";
+      const frame = theme.frame || "#050505";
+      const paper = theme.paper || "#fff";
+      const border = theme.border || "#111";
+      const display = theme.display || "#111";
+      const decor = theme.decor || theme.accent || "#efb333";
+      ctx.fillStyle = frame;
       ctx.fillRect(0, 0, 900, 1350);
-      ctx.fillStyle = "#fff";
+      ctx.fillStyle = paper;
       ctx.fillRect(42, 42, 816, 1266);
-      ctx.strokeStyle = "#111";
+      ctx.save();
+      ctx.globalAlpha = theme.key === "hell" ? .18 : .14;
+      ctx.fillStyle = decor;
+      ctx.fillRect(42, 42, 816, 244);
+      ctx.globalAlpha = theme.key === "heaven" ? .16 : .10;
+      ctx.fillStyle = frame;
+      ctx.fillRect(42, 1170, 816, 138);
+      ctx.restore();
+      ctx.strokeStyle = border;
       ctx.lineWidth = 6;
       ctx.strokeRect(42, 42, 816, 1266);
       grain(ctx, 42, 42, 816, 1266, .045, 9);
-      ctx.fillStyle = "#111";
+      ctx.fillStyle = display;
       ctx.font = "700 13px Arial, Microsoft YaHei, sans-serif";
       ctx.textAlign = "right";
       ctx.fillText("Vegetable Rebirth Diary No.2026", 832, 70);
@@ -2123,7 +2204,7 @@
       ctx.textAlign = "left";
       ctx.fillText("Copyright 2026 Merit Test. All Rights Reserved.", 62, 1290);
       ctx.save();
-      drawPosterPlant(ctx, theme, 548, 126, 1.02);
+      drawPosterPlant(ctx, theme, 568, 82, .74);
       ctx.restore();
     }
 
@@ -2136,44 +2217,49 @@
       canvas.height = 1350;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       drawShareScene(ctx, theme);
+      const display = theme.display || "#1d1d22";
+      const muted = theme.key === "hell" ? "#5d2424" : theme.key === "human" ? "#456a4b" : "#4f5d83";
+      const panel = theme.panel || "#fff";
+      const border = theme.border || "#1d1d22";
+      const decor = theme.decor || theme.accent;
 
-      ctx.fillStyle = "#1d1d22";
+      ctx.fillStyle = display;
       ctx.font = "900 34px Arial Black, Microsoft YaHei, sans-serif";
       ctx.fillText(`${theme.title} · 功德分投胎报告`, 62, 112);
       ctx.font = "700 24px Arial, Microsoft YaHei, sans-serif";
-      ctx.fillStyle = "#6d6d75";
+      ctx.fillStyle = muted;
       ctx.fillText(theme.subtitle, 62, 150);
 
-      ctx.fillStyle = "#1d1d22";
+      ctx.fillStyle = display;
       ctx.font = "900 118px Arial Black, Microsoft YaHei, sans-serif";
       ctx.fillText(String(lastResult.score), 62, 252);
       ctx.font = "900 28px Arial Black, Microsoft YaHei, sans-serif";
-      ctx.fillStyle = "#6d6d75";
+      ctx.fillStyle = muted;
       ctx.fillText("功德分", 240, 238);
-      ctx.fillStyle = theme.accent;
-      ctx.strokeStyle = "#1d1d22";
+      ctx.fillStyle = decor;
+      ctx.strokeStyle = border;
       ctx.lineWidth = 3;
       roundedRect(ctx, 360, 202, 150, 48, 24);
       ctx.fill();
       ctx.stroke();
-      ctx.fillStyle = "#1d1d22";
+      ctx.fillStyle = theme.key === "hell" ? "#fffafa" : display;
       ctx.font = "900 22px Arial Black, Microsoft YaHei, sans-serif";
       ctx.fillText(theme.name, 386, 234);
 
-      rectSketch(ctx, 62, 306, 776, 520, "#fff", 0, 4);
+      rectSketch(ctx, 62, 306, 776, 520, panel, 0, 4, border);
       grain(ctx, 54, 292, 792, 540, .055, 10);
 
       drawItemIllustration(ctx, lastResult.item, { type: lastResult.type }, 88, 348, 270);
 
-      ctx.fillStyle = "#1d1d22";
+      ctx.fillStyle = display;
       ctx.font = "900 32px Arial Black, Microsoft YaHei, sans-serif";
       ctx.fillText(lastResult.alignment, 430, 348);
       const titleSize = fontSizeForText(ctx, lastResult.item, 370, 58, 38);
       ctx.font = `900 ${titleSize}px Arial Black, Microsoft YaHei, sans-serif`;
-      ctx.fillStyle = "#1d1d22";
+      ctx.fillStyle = display;
       const titleEndY = drawTextBlock(ctx, lastResult.item, 430, 430, 370, titleSize + 10, 3);
       ctx.font = "800 26px Arial, Microsoft YaHei, sans-serif";
-      ctx.fillStyle = "#6d6d75";
+      ctx.fillStyle = muted;
       let infoY = Math.max(570, titleEndY + 26);
       ctx.fillText(lastResult.level, 430, infoY);
       ctx.fillText(lastResult.type, 430, infoY + 38);
@@ -2181,21 +2267,21 @@
       ctx.fillText(`秩序轴 ${state.order >= 0 ? "+" : ""}${state.order}`, 430, infoY + 114);
       drawAxis(ctx, 594, 578, 220);
 
-      rectSketch(ctx, 62, 868, 776, 240, "#fff", 0, 4);
+      rectSketch(ctx, 62, 868, 776, 240, panel, 0, 4, border);
       grain(ctx, 54, 882, 792, 230, .055, 11);
-      ctx.fillStyle = "#1d1d22";
+      ctx.fillStyle = display;
       ctx.font = "700 26px Arial, Microsoft YaHei, sans-serif";
       drawTextBlock(ctx, lastResult.text, 76, 930, 748, 42, 5);
 
-      rectSketch(ctx, 654, 1148, 168, 170, "#fff", 0, 4);
+      rectSketch(ctx, 654, 1148, 168, 170, panel, 0, 4, border);
       await drawShareQr(ctx, 688, 1164, 100);
-      ctx.fillStyle = "#6d6d75";
+      ctx.fillStyle = muted;
       ctx.font = "700 18px Arial, Microsoft YaHei, sans-serif";
       ctx.textAlign = "center";
       ctx.fillText("扫码测试", 738, 1288);
       ctx.textAlign = "left";
 
-      ctx.fillStyle = "#6d6d75";
+      ctx.fillStyle = muted;
       ctx.font = "700 22px Arial, Microsoft YaHei, sans-serif";
       ctx.fillText("复制图片，把这份灵魂判决发给朋友", 72, 1258);
       el.shareCanvas.classList.add("show");
