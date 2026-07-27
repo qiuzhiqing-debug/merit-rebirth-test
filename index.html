@@ -1042,6 +1042,8 @@
     }
 
     const publicShareUrl = "https://qiuzhiqing-debug.github.io/merit-rebirth-test/";
+    const embeddedQrDataUrl = "data:image/png;base64,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";
+    const scannableQrDataUrl = "data:image/png;base64,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";
 
     function shareUrl() {
       return window.location.protocol === "file:"
@@ -1054,6 +1056,18 @@
     }
 
     let qrLibraryPromise = null;
+    let embeddedQrImagePromise = null;
+
+    function loadEmbeddedQrImage() {
+      if (embeddedQrImagePromise) return embeddedQrImagePromise;
+      embeddedQrImagePromise = new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => resolve(img);
+        img.onerror = reject;
+        img.src = scannableQrDataUrl || embeddedQrDataUrl;
+      });
+      return embeddedQrImagePromise;
+    }
 
     function loadQrLibrary() {
       if (window.QRCode && window.QRCode.toCanvas) return Promise.resolve(true);
@@ -1077,6 +1091,18 @@
     }
 
     async function drawShareQr(ctx, x, y, size) {
+      ctx.save();
+      ctx.fillStyle = "#fff";
+      ctx.fillRect(x, y, size, size);
+      ctx.imageSmoothingEnabled = false;
+      try {
+        const embeddedQr = await loadEmbeddedQrImage();
+        ctx.drawImage(embeddedQr, x, y, size, size);
+        ctx.restore();
+        return true;
+      } catch {
+        ctx.restore();
+      }
       drawFallbackQr(ctx, x, y, size);
       if (await loadQrLibrary()) {
         try {
@@ -2273,12 +2299,12 @@
       ctx.font = "700 26px Arial, Microsoft YaHei, sans-serif";
       drawTextBlock(ctx, lastResult.text, 76, 930, 748, 42, 5);
 
-      rectSketch(ctx, 670, 1148, 142, 144, panel, 0, 3, border);
-      await drawShareQr(ctx, 694, 1162, 94);
+      rectSketch(ctx, 650, 1122, 178, 176, panel, 0, 3, border);
+      await drawShareQr(ctx, 678, 1138, 122);
       ctx.fillStyle = muted;
       ctx.font = "700 18px Arial, Microsoft YaHei, sans-serif";
       ctx.textAlign = "center";
-      ctx.fillText("扫码测试", 741, 1278);
+      ctx.fillText("扫码测试", 739, 1286);
       ctx.textAlign = "left";
 
       ctx.fillStyle = muted;
