@@ -165,8 +165,8 @@
     .axis {
       position: relative;
       height: 254px;
-      border: 2px solid #111;
-      background: #fff;
+      border: 1px solid var(--line);
+      background: linear-gradient(90deg, rgba(239,85,85,.07), rgba(255,255,255,.76), rgba(79,116,255,.08));
     }
 
     .axis::before, .axis::after {
@@ -179,14 +179,14 @@
       left: 50%;
       top: 20px;
       bottom: 20px;
-      width: 4px;
+      width: 2px;
     }
 
     .axis::after {
       top: 50%;
       left: 20px;
       right: 20px;
-      height: 4px;
+      height: 2px;
     }
 
     .circle {
@@ -195,8 +195,9 @@
       width: 144px;
       height: 144px;
       border: 3px solid var(--ink);
+      border-radius: 50%;
       transform: translateY(-50%);
-      opacity: .62;
+      opacity: .82;
     }
 
     .circle.bad {
@@ -213,9 +214,10 @@
       position: absolute;
       width: 34px;
       height: 34px;
-      border: 3px solid var(--ink);
+      border: 2px solid var(--ink);
+      border-radius: 50%;
       background: var(--gold);
-      box-shadow: none;
+      box-shadow: 0 8px 20px rgba(239, 179, 51, .34);
       left: calc(50% - 17px);
       top: calc(50% - 17px);
       transition: left .42s ease, top .42s ease, background .42s ease;
@@ -236,9 +238,8 @@
     .label.chaos {
       min-width: 32px;
       padding: 3px 7px;
-      border: 2px solid #111;
-      border-radius: 0;
-      background: #fff;
+      border-radius: 999px;
+      background: rgba(255, 253, 248, .86);
       text-align: center;
     }
 
@@ -1972,58 +1973,56 @@
       ctx.save();
       ctx.fillStyle = "#fffdf8";
       ctx.strokeStyle = "#1d1d22";
-      ctx.lineWidth = Math.max(4, size * .028);
+      ctx.lineWidth = Math.max(3, size * .018);
       roundedRect(ctx, x, y, size, size, size * .08);
       ctx.fill();
       ctx.stroke();
-      crayonDust(ctx, x + 6, y + 6, size - 12, size - 12, ["#ff4d58", "#5277ff", "#ffc735"], .10, size / 10);
 
-      ctx.globalAlpha = .32;
+      ctx.strokeStyle = "#b9b5c4";
+      ctx.lineWidth = Math.max(2, size * .012);
+      ctx.beginPath();
+      ctx.moveTo(x + size / 2, y + 28);
+      ctx.lineTo(x + size / 2, y + size - 28);
+      ctx.moveTo(x + 28, y + size / 2);
+      ctx.lineTo(x + size - 28, y + size / 2);
+      ctx.stroke();
+
+      ctx.globalAlpha = .22;
       ctx.fillStyle = "#ef5555";
       ctx.beginPath();
-      ctx.ellipse(x + size * .39, y + size * .55, size * .22, size * .28, -.12, 0, Math.PI * 2);
+      ctx.arc(x + size * .38, y + size * .52, size * .24, 0, Math.PI * 2);
       ctx.fill();
       ctx.fillStyle = "#4f74ff";
       ctx.beginPath();
-      ctx.ellipse(x + size * .64, y + size * .53, size * .22, size * .28, .13, 0, Math.PI * 2);
+      ctx.arc(x + size * .62, y + size * .52, size * .24, 0, Math.PI * 2);
       ctx.fill();
       ctx.globalAlpha = 1;
 
-      crayonLine(ctx, [[x + size / 2, y + 30], [x + size / 2 + 5, y + size - 34]], "#34343b", Math.max(4, size * .028), 2);
-      crayonLine(ctx, [[x + 30, y + size / 2], [x + size - 32, y + size / 2 - 3]], "#34343b", Math.max(4, size * .028), 2);
-
       const pointX = x + clamp(50 + state.good * 2.8, 10, 90) / 100 * size;
       const pointY = y + clamp(50 - state.order * 2.8, 10, 90) / 100 * size;
-      ctx.fillStyle = "#fffdf8";
-      ctx.strokeStyle = "#fffdf8";
-      ctx.lineWidth = Math.max(8, size * .05);
-      ctx.beginPath();
-      ctx.arc(pointX, pointY, Math.max(17, size * .11), 0, Math.PI * 2);
-      ctx.fill();
-      ctx.stroke();
       ctx.fillStyle = lastResult.score >= 65 ? "#79b45d" : lastResult.score >= 35 ? "#efb333" : "#ef5555";
       ctx.strokeStyle = "#1d1d22";
-      ctx.lineWidth = Math.max(5, size * .03);
+      ctx.lineWidth = Math.max(4, size * .02);
       ctx.beginPath();
-      ctx.arc(pointX, pointY, Math.max(17, size * .11), 0, Math.PI * 2);
+      ctx.arc(pointX, pointY, Math.max(18, size * .09), 0, Math.PI * 2);
       ctx.fill();
       ctx.stroke();
 
       ctx.fillStyle = "#fffdf8";
-      ctx.strokeStyle = "#1d1d22";
-      ctx.lineWidth = Math.max(2, size * .014);
+      ctx.strokeStyle = "#dfdce8";
+      ctx.lineWidth = Math.max(2, size * .01);
       [
-        [x + 8, y + size / 2 - 50, size * .22, size * .18, "恶"],
-        [x + size - size * .24 - 8, y + size / 2 - 50, size * .22, size * .18, "善"],
-        [x + size / 2 - size * .18, y + 8, size * .36, size * .18, "混乱"],
-        [x + size / 2 - size * .18, y + size - size * .22 - 8, size * .36, size * .18, "守序"]
+        [x + 18, y + size / 2 - 36, 46, 28, "恶"],
+        [x + size - 64, y + size / 2 - 36, 46, 28, "善"],
+        [x + size / 2 - 34, y + 18, 68, 28, "混乱"],
+        [x + size / 2 - 34, y + size - 46, 68, 28, "守序"]
       ].forEach(([rx, ry, rw, rh, text]) => {
-        roundedRect(ctx, rx, ry, rw, rh, rh / 2);
+        roundedRect(ctx, rx, ry, rw, rh, 14);
         ctx.fill();
         ctx.stroke();
-        ctx.fillStyle = "#3d3d45";
-        ctx.font = `900 ${Math.max(18, size * .12)}px Arial Black, Microsoft YaHei, sans-serif`;
-        ctx.fillText(text, rx + (rw - ctx.measureText(text).width) / 2, ry + rh * .68);
+        ctx.fillStyle = "#6d6d75";
+        ctx.font = "700 20px Arial, Microsoft YaHei, sans-serif";
+        ctx.fillText(text, rx + (rw - ctx.measureText(text).width) / 2, ry + 20);
         ctx.fillStyle = "#fffdf8";
       });
       ctx.restore();
