@@ -86,6 +86,10 @@
       margin-top: 26px;
     }
 
+    .result-actions {
+      align-items: center;
+    }
+
     .primary, .ghost {
       min-height: 48px;
       padding: 0 22px;
@@ -427,11 +431,13 @@
 
     .share-preview {
       display: none;
-      width: min(100%, 440px);
+      width: min(100%, 420px);
+      max-height: 76vh;
       margin-top: 22px;
       border: 1px solid var(--line);
       border-radius: 8px;
       background: #fff;
+      object-fit: contain;
     }
 
     .share-preview.show { display: block; }
@@ -462,6 +468,67 @@
       .result-grid { grid-template-columns: 1fr; }
       .breakdown { grid-template-columns: 1fr; }
       .score-card { max-width: 320px; }
+      .share-preview { width: min(100%, 360px); max-height: none; }
+      .result-actions .primary,
+      .result-actions .ghost { flex: 1 1 180px; }
+    }
+
+    @media (max-width: 560px) {
+      .shell {
+        width: min(100% - 18px, 420px);
+        padding: 14px 0 28px;
+      }
+      h1 {
+        font-size: 38px;
+        line-height: 1.05;
+      }
+      h2 {
+        font-size: 25px;
+      }
+      .subtitle {
+        font-size: 15px;
+        line-height: 1.65;
+      }
+      .primary, .ghost {
+        width: 100%;
+        min-height: 46px;
+        padding: 0 16px;
+      }
+      .question-area {
+        min-height: auto;
+      }
+      .option {
+        min-height: 66px;
+        padding: 13px 12px;
+        grid-template-columns: 32px 1fr;
+      }
+      .letter {
+        width: 32px;
+        height: 32px;
+      }
+      .option-text {
+        font-size: 15px;
+        overflow-wrap: anywhere;
+      }
+      .reincarnation {
+        font-size: 34px;
+        line-height: 1.12;
+        overflow-wrap: anywhere;
+      }
+      .result-copy {
+        font-size: 16px;
+        line-height: 1.75;
+      }
+      .score {
+        font-size: 68px;
+      }
+      .result-illustration {
+        width: 96px;
+        height: 96px;
+      }
+      .share-preview {
+        width: 100%;
+      }
     }
   </style>
 </head>
@@ -537,6 +604,7 @@
             <img class="qr-image" id="qrImage" alt="" crossorigin="anonymous" />
             <div class="result-actions">
               <button class="primary" type="button" id="copyImageBtn">复制结果图片</button>
+              <button class="ghost" type="button" id="downloadImageBtn">下载结果图片</button>
               <button class="ghost" type="button" id="copyTextBtn">复制结果文案</button>
               <button class="ghost" type="button" id="restartBtn">重新测试</button>
             </div>
@@ -686,6 +754,7 @@
       readyBtn: document.getElementById("readyBtn"),
       restartBtn: document.getElementById("restartBtn"),
       copyImageBtn: document.getElementById("copyImageBtn"),
+      downloadImageBtn: document.getElementById("downloadImageBtn"),
       copyTextBtn: document.getElementById("copyTextBtn"),
       questionArea: document.getElementById("questionArea"),
       result: document.getElementById("result"),
@@ -1752,6 +1821,24 @@
       setTimeout(() => el.copyImageBtn.textContent = "复制结果图片", 1500);
     }
 
+    async function downloadImageResult() {
+      await renderShareCard();
+      const blob = await canvasToBlob(el.shareCanvas);
+      const url = URL.createObjectURL(blob);
+      const safeName = (el.rebirthName.textContent || "投胎结果")
+        .replace(/[\\/:*?"<>|]/g, "")
+        .slice(0, 18);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `功德分投胎报告-${el.score.textContent}-${safeName}.png`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      el.downloadImageBtn.textContent = "已开始下载";
+      setTimeout(() => el.downloadImageBtn.textContent = "下载结果图片", 1500);
+    }
+
     async function copyTextResult() {
       const text = `我的功德分：${el.score.textContent}\n我的阵营：${el.alignmentBadge.textContent}\n下辈子投胎成：${el.rebirthName.textContent}\n${el.resultCopy.textContent}`;
       try {
@@ -1768,6 +1855,7 @@
     el.restartBtn.addEventListener("click", start);
     el.randomBtn.addEventListener("click", randomResult);
     el.copyImageBtn.addEventListener("click", copyImageResult);
+    el.downloadImageBtn.addEventListener("click", downloadImageResult);
     el.copyTextBtn.addEventListener("click", copyTextResult);
     updateMark();
   </script>
