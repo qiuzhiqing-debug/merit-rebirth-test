@@ -16,7 +16,7 @@
       --green: #54c35d;
       --gold: #ffc735;
       --lilac: #9a78ff;
-      --shadow: 7px 9px 0 rgba(31, 31, 38, .13);
+      --shadow: 0 0 0 3px #111;
     }
 
     * { box-sizing: border-box; }
@@ -25,12 +25,10 @@
       margin: 0;
       min-height: 100vh;
       color: var(--ink);
-      font-family: "Microsoft YaHei", "PingFang SC", "KaiTi", "Comic Sans MS", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: "Arial Black", "Microsoft YaHei", "PingFang SC", Arial, Helvetica, sans-serif;
       background:
-        radial-gradient(circle at 13% 18%, rgba(255, 77, 88, .16), transparent 18%),
-        radial-gradient(circle at 88% 12%, rgba(82, 119, 255, .15), transparent 16%),
-        radial-gradient(circle at 78% 86%, rgba(84, 195, 93, .16), transparent 22%),
-        linear-gradient(180deg, #fffdf8, #fff8ee 54%, #fbfff3);
+        repeating-linear-gradient(0deg, rgba(255,255,255,.045) 0 1px, transparent 1px 9px),
+        #070707;
       background-attachment: fixed;
     }
 
@@ -39,14 +37,12 @@
       position: fixed;
       inset: 0;
       pointer-events: none;
-      opacity: .22;
+      opacity: .18;
       mix-blend-mode: multiply;
       background:
-        repeating-linear-gradient(6deg, rgba(29,29,34,.06) 0 1px, transparent 1px 10px),
-        radial-gradient(circle at 20% 30%, rgba(255,77,88,.24) 0 1.2px, transparent 1.8px),
-        radial-gradient(circle at 70% 60%, rgba(82,119,255,.22) 0 1px, transparent 1.7px),
-        radial-gradient(circle at 38% 78%, rgba(255,199,53,.22) 0 1px, transparent 1.7px);
-      background-size: auto, 25px 28px, 31px 27px, 37px 34px;
+        radial-gradient(circle at 20% 30%, rgba(255,255,255,.28) 0 1px, transparent 1.6px),
+        radial-gradient(circle at 70% 60%, rgba(255,255,255,.20) 0 1px, transparent 1.7px);
+      background-size: 23px 21px, 31px 27px;
       z-index: -1;
     }
 
@@ -58,19 +54,21 @@
     .shell {
       width: min(1120px, calc(100% - 32px));
       margin: 0 auto;
-      padding: 30px 0 48px;
+      padding: 22px 0 48px;
     }
 
     .hero {
       display: grid;
       grid-template-columns: minmax(0, 1.05fr) 374px;
-      gap: 28px;
+      gap: 14px;
       align-items: stretch;
       margin-bottom: 24px;
     }
 
     .hero-copy {
-      padding: 36px 0 16px;
+      padding: 28px;
+      background: #fff;
+      border: 4px solid #111;
     }
 
     .eyebrow {
@@ -78,11 +76,11 @@
       margin: 0 0 14px;
       padding: 6px 12px;
       border: 2px solid var(--ink);
-      border-radius: 18px 8px 22px 13px;
-      color: #1d1d22;
-      background: #ffe680;
-      box-shadow: 3px 4px 0 rgba(29,29,34,.16);
-      transform: rotate(-2.5deg);
+      border-radius: 0;
+      color: #fff;
+      background: #111;
+      box-shadow: none;
+      transform: none;
       font-size: 14px;
       font-weight: 900;
     }
@@ -90,16 +88,16 @@
     h1 {
       margin: 0;
       max-width: 760px;
-      font-size: clamp(36px, 7vw, 76px);
-      line-height: 1;
+      font-size: clamp(42px, 6.8vw, 78px);
+      line-height: .94;
       letter-spacing: 0;
-      text-shadow: 3px 3px 0 rgba(255,199,53,.38), -2px 2px 0 rgba(82,119,255,.12);
+      text-shadow: none;
     }
 
     .subtitle {
       max-width: 720px;
       margin: 18px 0 0;
-      color: #424248;
+      color: #111;
       font-size: 18px;
       line-height: 1.75;
     }
@@ -118,7 +116,7 @@
     .primary, .ghost {
       min-height: 48px;
       padding: 0 22px;
-      border-radius: 18px 10px 22px 12px;
+      border-radius: 0;
       border: 4px solid var(--ink);
       cursor: pointer;
       font-weight: 900;
@@ -128,25 +126,25 @@
     .primary {
       color: #fff;
       background: var(--ink);
-      box-shadow: 6px 7px 0 rgba(255, 199, 53, .65);
+      box-shadow: none;
     }
 
     .ghost {
-      background: rgba(255, 255, 255, .76);
-      box-shadow: 5px 6px 0 rgba(29,29,34,.10);
+      background: #fff;
+      box-shadow: none;
     }
 
     .primary:hover, .ghost:hover {
       transform: translateY(-2px);
-      box-shadow: 7px 8px 0 rgba(29,29,34,.15);
+      box-shadow: inset 0 -8px 0 #e8e8e8;
     }
 
     .alignment-board, .panel {
-      border: 5px solid var(--ink);
-      border-radius: 24px 12px 28px 16px;
+      border: 4px solid #111;
+      border-radius: 0;
       background:
-        repeating-linear-gradient(-8deg, rgba(255,199,53,.05) 0 8px, transparent 8px 20px),
-        rgba(255, 255, 255, .90);
+        linear-gradient(90deg, rgba(17,17,17,.04) 0 1px, transparent 1px 25%),
+        #fff;
       box-shadow: var(--shadow);
       overflow: hidden;
     }
@@ -154,7 +152,7 @@
     .alignment-board {
       min-height: 368px;
       padding: 22px;
-      transform: rotate(-.9deg);
+      transform: none;
     }
 
     .board-title {
@@ -167,8 +165,8 @@
     .axis {
       position: relative;
       height: 254px;
-      border: 1px solid var(--line);
-      background: linear-gradient(90deg, rgba(255,77,88,.12), rgba(255,255,255,.86), rgba(82,119,255,.14));
+      border: 2px solid #111;
+      background: #fff;
     }
 
     .axis::before, .axis::after {
@@ -196,10 +194,9 @@
       top: 50%;
       width: 144px;
       height: 144px;
-      border: 4px solid var(--ink);
-      border-radius: 50%;
+      border: 3px solid var(--ink);
       transform: translateY(-50%);
-      opacity: .82;
+      opacity: .62;
     }
 
     .circle.bad {
@@ -216,10 +213,9 @@
       position: absolute;
       width: 34px;
       height: 34px;
-      border: 2px solid var(--ink);
-      border-radius: 50%;
+      border: 3px solid var(--ink);
       background: var(--gold);
-      box-shadow: 4px 4px 0 rgba(29,29,34,.14);
+      box-shadow: none;
       left: calc(50% - 17px);
       top: calc(50% - 17px);
       transition: left .42s ease, top .42s ease, background .42s ease;
@@ -240,8 +236,9 @@
     .label.chaos {
       min-width: 32px;
       padding: 3px 7px;
-      border-radius: 999px;
-      background: rgba(255, 253, 248, .86);
+      border: 2px solid #111;
+      border-radius: 0;
+      background: #fff;
       text-align: center;
     }
 
@@ -256,15 +253,15 @@
       justify-content: space-between;
       gap: 18px;
       padding: 18px 20px;
-      border-bottom: 1px solid var(--line);
-      background: rgba(255, 245, 223, .82);
+      border-bottom: 4px solid #111;
+      background: #fff;
     }
 
     .progress-wrap {
       flex: 1;
       height: 10px;
       border: 1px solid var(--ink);
-      border-radius: 999px;
+      border-radius: 0;
       background: #fff;
       overflow: hidden;
     }
@@ -272,7 +269,7 @@
     .progress {
       height: 100%;
       width: 0%;
-      background: linear-gradient(90deg, var(--red), var(--gold), var(--green));
+      background: linear-gradient(90deg, #df2727 0 33%, #f4c21f 33% 66%, #157c3a 66%);
       transition: width .25s ease;
     }
 
@@ -294,14 +291,15 @@
       min-height: 30px;
       padding: 0 12px;
       margin-bottom: 14px;
-      border: 2px solid var(--ink);
-      border-radius: 18px 9px 18px 12px;
-      background: #c9d7ff;
+      border: 3px solid var(--ink);
+      border-radius: 0;
+      background: #111;
       color: #1d1d22;
+      color: #fff;
       font-size: 13px;
       font-weight: 900;
-      box-shadow: 4px 5px 0 rgba(29,29,34,.10);
-      transform: rotate(-.8deg);
+      box-shadow: none;
+      transform: none;
     }
 
     h2 {
@@ -321,7 +319,7 @@
       min-height: 72px;
       padding: 16px 18px;
       border: 3px solid var(--ink);
-      border-radius: 17px 9px 22px 12px;
+      border-radius: 0;
       background: #fff;
       text-align: left;
       cursor: pointer;
@@ -330,7 +328,7 @@
       gap: 12px;
       align-items: center;
       transition: transform .16s ease, border-color .16s ease, background .16s ease;
-      box-shadow: 5px 6px 0 rgba(29,29,34,.08);
+      box-shadow: none;
     }
 
     .option:hover {
@@ -343,7 +341,7 @@
       width: 34px;
       height: 34px;
       border: 1px solid var(--ink);
-      border-radius: 47% 53% 45% 55%;
+      border-radius: 0;
       display: grid;
       place-items: center;
       font-weight: 1000;
@@ -382,44 +380,37 @@
 
     .result.theme-heaven::before {
       opacity: 1;
-      background:
-        repeating-linear-gradient(-9deg, rgba(255,199,53,.13) 0 10px, transparent 10px 23px),
-        radial-gradient(circle at 82% 12%, rgba(255, 226, 71, .72), transparent 18%),
-        radial-gradient(circle at 20% 22%, rgba(255, 255, 255, .96), transparent 20%),
-        linear-gradient(135deg, rgba(255, 251, 218, .98), rgba(231, 246, 255, .92));
+        linear-gradient(90deg, rgba(17,17,17,.05) 0 1px, transparent 1px 25%),
+        #fff;
     }
 
     .result.theme-human::before {
       opacity: 1;
       background:
-        repeating-linear-gradient(7deg, rgba(84,195,93,.12) 0 8px, transparent 8px 21px),
-        radial-gradient(circle at 18% 18%, rgba(84, 195, 93, .28), transparent 22%),
-        radial-gradient(circle at 86% 24%, rgba(255, 199, 53, .35), transparent 18%),
-        linear-gradient(135deg, rgba(255, 253, 248, .98), rgba(238, 255, 232, .93));
+        linear-gradient(90deg, rgba(17,17,17,.05) 0 1px, transparent 1px 25%),
+        #fff;
     }
 
     .result.theme-hell::before {
       opacity: 1;
       background:
-        repeating-linear-gradient(-12deg, rgba(255,77,88,.18) 0 8px, transparent 8px 21px),
-        radial-gradient(circle at 80% 16%, rgba(255, 77, 88, .50), transparent 23%),
-        radial-gradient(circle at 18% 86%, rgba(29, 29, 34, .15), transparent 24%),
-        linear-gradient(135deg, rgba(255, 231, 216, .96), rgba(255, 245, 195, .90));
+        linear-gradient(90deg, rgba(17,17,17,.05) 0 1px, transparent 1px 25%),
+        #fff;
     }
 
     .theme-heaven .score-card {
-      background: repeating-linear-gradient(-8deg, rgba(255,199,53,.18) 0 10px, transparent 10px 22px), #fff8ce;
-      box-shadow: 10px 10px 0 rgba(239, 179, 51, .18);
+      background: #fff;
+      box-shadow: inset 0 -14px 0 rgba(21, 124, 58, .12);
     }
 
     .theme-human .score-card {
-      background: repeating-linear-gradient(7deg, rgba(84,195,93,.16) 0 10px, transparent 10px 22px), #f1ffd8;
-      box-shadow: 10px 10px 0 rgba(121, 180, 93, .16);
+      background: #fff;
+      box-shadow: inset 0 -14px 0 rgba(244, 194, 31, .16);
     }
 
     .theme-hell .score-card {
-      background: repeating-linear-gradient(-10deg, rgba(255,77,88,.18) 0 10px, transparent 10px 22px), #ffe2dc;
-      box-shadow: 10px 10px 0 rgba(239, 85, 85, .18);
+      background: #fff;
+      box-shadow: inset 0 -14px 0 rgba(223, 39, 39, .14);
     }
 
     .result-grid {
@@ -430,12 +421,12 @@
     }
 
     .score-card {
-      border: 5px solid var(--ink);
-      border-radius: 25px 13px 30px 16px;
+      border: 4px solid var(--ink);
+      border-radius: 0;
       background: #fffaf0;
       padding: 20px;
       text-align: center;
-      transform: rotate(1.4deg);
+      transform: none;
     }
 
     .score {
@@ -443,7 +434,7 @@
       font-size: 76px;
       line-height: 1;
       font-weight: 1000;
-      text-shadow: 4px 4px 0 rgba(239,85,85,.18);
+      text-shadow: none;
     }
 
     .score-label {
@@ -463,11 +454,11 @@
       width: 112px;
       height: 112px;
       margin: 0 0 18px;
-      border: 5px solid var(--ink);
-      border-radius: 23px 12px 24px 15px;
-      background: #fff7df;
-      box-shadow: 6px 7px 0 rgba(29, 29, 34, .16);
-      transform: rotate(-3deg);
+      border: 4px solid var(--ink);
+      border-radius: 0;
+      background: #fff;
+      box-shadow: none;
+      transform: none;
     }
 
     .badge-row {
@@ -482,9 +473,9 @@
       align-items: center;
       min-height: 30px;
       padding: 0 10px;
-      border: 3px solid var(--ink);
-      border-radius: 15px 8px 17px 11px;
-      background: #fff7c7;
+      border: 2px solid var(--ink);
+      border-radius: 0;
+      background: #fff;
       font-size: 13px;
       font-weight: 900;
     }
@@ -505,11 +496,11 @@
 
     .metric {
       min-height: 76px;
-      border: 4px solid var(--ink);
-      border-radius: 20px 10px 22px 13px;
+      border: 3px solid var(--ink);
+      border-radius: 0;
       background: #fffdf8;
       padding: 12px;
-      box-shadow: 4px 5px 0 rgba(29,29,34,.08);
+      box-shadow: none;
     }
 
     .metric strong {
@@ -529,11 +520,11 @@
       width: min(100%, 420px);
       max-height: 76vh;
       margin-top: 22px;
-      border: 5px solid var(--ink);
-      border-radius: 24px 12px 28px 16px;
+      border: 4px solid var(--ink);
+      border-radius: 0;
       background: #fffdf8;
       object-fit: contain;
-      box-shadow: 8px 9px 0 rgba(29,29,34,.12);
+      box-shadow: none;
     }
 
     .share-preview.show { display: block; }
@@ -575,8 +566,8 @@
         padding: 14px 0 28px;
       }
       h1 {
-        font-size: 38px;
-        line-height: 1.05;
+        font-size: 36px;
+        line-height: 1.02;
       }
       h2 {
         font-size: 25px;
@@ -1193,18 +1184,16 @@
       const [soft, main, accent] = paletteForType(profile.type);
       ctx.save();
       ctx.translate(x, y);
-      ctx.fillStyle = soft;
+      ctx.fillStyle = "#fff";
       ctx.strokeStyle = "#1d1d22";
-      ctx.lineWidth = Math.max(3, size * .022);
-      roundedRect(ctx, 0, 0, size, size, size * .10);
+      ctx.lineWidth = Math.max(3, size * .026);
+      ctx.beginPath();
+      ctx.rect(0, 0, size, size);
       ctx.fill();
       ctx.stroke();
-      ctx.globalAlpha = .24;
-      ctx.strokeStyle = "#1d1d22";
-      roundedRect(ctx, size * .015, -size * .006, size * .97, size * 1.01, size * .11);
-      ctx.stroke();
-      ctx.globalAlpha = 1;
-      grain(ctx, 0, 0, size, size, .11, size / 25);
+      poly(ctx, [[size * .04, size * .05], [size * .68, size * .02], [size * .98, size * .28], [size * .45, size * .46]], soft, null);
+      poly(ctx, [[size * .10, size * .68], [size * .48, size * .45], [size * .92, size * .92], [size * .18, size * .96]], "rgba(17,17,17,.035)", null);
+      grain(ctx, 0, 0, size, size, .055, size / 18);
 
       const cx = size / 2;
       const cy = size / 2;
@@ -1280,7 +1269,7 @@
       }
       function textMark(text, tx = 50, ty = 56, fontSize = 16) {
         ctx.fillStyle = "#1d1d22";
-        ctx.font = `900 ${fontSize * unit}px KaiTi, Microsoft YaHei, sans-serif`;
+        ctx.font = `900 ${fontSize * unit}px Arial Black, Microsoft YaHei, sans-serif`;
         ctx.textAlign = "center";
         ctx.fillText(text, tx * unit, ty * unit);
         ctx.textAlign = "left";
@@ -1789,7 +1778,6 @@
         textMark(item.replace(/[^\u4e00-\u9fa5A-Za-z0-9]/g, "").slice(0, 2) || "物", 50, 51, 18);
       }
 
-      crayonDust(ctx, size * .08, size * .08, size * .84, size * .84, [main, accent, "#ff4d58", "#5277ff", "#54c35d", "#ffc735"], .18, size / 11);
       ctx.restore();
     }
 
@@ -1890,7 +1878,7 @@
     function fontSizeForText(ctx, text, maxWidth, startSize, minSize) {
       let size = startSize;
       while (size > minSize) {
-        ctx.font = `900 ${size}px KaiTi, Microsoft YaHei, sans-serif`;
+        ctx.font = `900 ${size}px Arial Black, Microsoft YaHei, sans-serif`;
         if (ctx.measureText(text).width <= maxWidth || text.length > 5) break;
         size -= 2;
       }
@@ -1905,6 +1893,79 @@
       ctx.arcTo(x, y + height, x, y, radius);
       ctx.arcTo(x, y, x + width, y, radius);
       ctx.closePath();
+    }
+
+    function poly(ctx, points, fill, stroke = null, width = 2) {
+      ctx.beginPath();
+      ctx.moveTo(points[0][0], points[0][1]);
+      for (let i = 1; i < points.length; i += 1) ctx.lineTo(points[i][0], points[i][1]);
+      ctx.closePath();
+      ctx.fillStyle = fill;
+      ctx.fill();
+      if (stroke) {
+        ctx.strokeStyle = stroke;
+        ctx.lineWidth = width;
+        ctx.stroke();
+      }
+    }
+
+    function facetCluster(ctx, x, y, scale, colors, seed = 1) {
+      const cells = [
+        [[0, 0], [34, -16], [62, 2], [28, 22]],
+        [[28, 22], [62, 2], [94, 22], [56, 46]],
+        [[-18, 30], [28, 22], [56, 46], [18, 72]],
+        [[56, 46], [94, 22], [112, 66], [72, 88]],
+        [[18, 72], [56, 46], [72, 88], [34, 112]],
+        [[34, 112], [72, 88], [106, 112], [62, 140]],
+        [[-28, 70], [18, 72], [34, 112], [-8, 118]]
+      ];
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.scale(scale, scale);
+      cells.forEach((cell, i) => {
+        const c = colors[(i + seed) % colors.length];
+        poly(ctx, cell, c, "rgba(17,17,17,.28)", 1.2);
+      });
+      ctx.restore();
+    }
+
+    function drawPosterPlant(ctx, theme, x, y, scale) {
+      if (theme.key === "heaven") {
+        facetCluster(ctx, x + 36, y + 72, scale, ["#dff3ff", "#ffffff", "#b7dcff", "#e9fbff"], 1);
+        facetCluster(ctx, x + 150, y + 76, scale * .82, ["#fffbe8", "#ffffff", "#ffe680", "#dff3ff"], 2);
+        ctx.strokeStyle = "#efb333";
+        ctx.lineWidth = 12 * scale;
+        ctx.beginPath();
+        ctx.ellipse(x + 144 * scale, y + 34 * scale, 76 * scale, 22 * scale, -.18, 0, Math.PI * 2);
+        ctx.stroke();
+        poly(ctx, [[x + 102 * scale, y + 88 * scale], [x + 136 * scale, y + 160 * scale], [x + 176 * scale, y + 90 * scale]], "#7bd3ff", "#111", 4 * scale);
+      } else if (theme.key === "human") {
+        ctx.strokeStyle = "#157c3a";
+        ctx.lineWidth = 12 * scale;
+        ctx.beginPath();
+        ctx.moveTo(x + 94 * scale, y + 210 * scale);
+        ctx.lineTo(x + 122 * scale, y + 92 * scale);
+        ctx.moveTo(x + 132 * scale, y + 120 * scale);
+        ctx.lineTo(x + 188 * scale, y + 66 * scale);
+        ctx.moveTo(x + 112 * scale, y + 134 * scale);
+        ctx.lineTo(x + 54 * scale, y + 82 * scale);
+        ctx.stroke();
+        facetCluster(ctx, x + 24 * scale, y + 42 * scale, scale, ["#0a5729", "#157c3a", "#258f47", "#083d21"], 3);
+        facetCluster(ctx, x + 130 * scale, y + 24 * scale, scale * .86, ["#0a5729", "#157c3a", "#38a857", "#0e6b34"], 2);
+        facetCluster(ctx, x + 58 * scale, y + 96 * scale, scale * .74, ["#0a5729", "#1e8a43", "#3eb85b", "#0b4c28"], 4);
+      } else {
+        facetCluster(ctx, x + 24 * scale, y + 86 * scale, scale, ["#b40022", "#df2727", "#ff4b2f", "#8b001d"], 2);
+        facetCluster(ctx, x + 132 * scale, y + 64 * scale, scale * .9, ["#df2727", "#ff5f2f", "#c01924", "#8b001d"], 3);
+        poly(ctx, [[x + 48 * scale, y + 232 * scale], [x + 92 * scale, y + 150 * scale], [x + 132 * scale, y + 234 * scale]], "#f4c21f", "#111", 4 * scale);
+        ctx.strokeStyle = "#111";
+        ctx.lineWidth = 6 * scale;
+        ctx.beginPath();
+        ctx.moveTo(x + 14 * scale, y + 246 * scale);
+        for (let i = 0; i < 7; i += 1) {
+          ctx.lineTo(x + (42 + i * 38) * scale, y + (i % 2 ? 248 : 204) * scale);
+        }
+        ctx.stroke();
+      }
     }
 
     function drawAxis(ctx, x, y, size) {
@@ -1961,7 +2022,7 @@
         ctx.fill();
         ctx.stroke();
         ctx.fillStyle = "#3d3d45";
-        ctx.font = `900 ${Math.max(18, size * .12)}px KaiTi, Microsoft YaHei, sans-serif`;
+        ctx.font = `900 ${Math.max(18, size * .12)}px Arial Black, Microsoft YaHei, sans-serif`;
         ctx.fillText(text, rx + (rw - ctx.measureText(text).width) / 2, ry + rh * .68);
         ctx.fillStyle = "#fffdf8";
       });
@@ -2041,57 +2102,29 @@
       ctx.fill();
       ctx.stroke();
       ctx.fillStyle = "#1d1d22";
-      ctx.font = "900 22px KaiTi, Microsoft YaHei, sans-serif";
+      ctx.font = "900 22px Arial Black, Microsoft YaHei, sans-serif";
       ctx.fillText(text, 22, 31);
       ctx.restore();
     }
 
     function drawShareScene(ctx, theme) {
-      ctx.fillStyle = "#fffdf8";
+      ctx.fillStyle = "#050505";
       ctx.fillRect(0, 0, 900, 1350);
-      crayonDust(ctx, 0, 0, 900, 1350, ["#ff4d58", "#5277ff", "#54c35d", "#ffc735", "#9a78ff"], .18, 25);
-      grain(ctx, 0, 0, 900, 1350, .07, 9);
-
-      ctx.save();
-      ctx.strokeStyle = "#1d1d22";
+      ctx.fillStyle = "#fff";
+      ctx.fillRect(42, 42, 816, 1266);
+      ctx.strokeStyle = "#111";
       ctx.lineWidth = 6;
-      ctx.lineCap = "round";
-      ctx.lineJoin = "round";
-      if (theme.key === "heaven") {
-        posterBlob(ctx, [[0, 0], [900, 0], [900, 250], [820, 230], [670, 258], [512, 224], [370, 252], [210, 220], [0, 248]], "rgba(255, 231, 94, .34)", "rgba(255,199,53,.55)", 2);
-        posterBlob(ctx, [[604, 68], [680, 36], [758, 64], [812, 120], [786, 188], [692, 178], [612, 150]], "rgba(255,255,255,.82)", "#5277ff", 6);
-        crayonLine(ctx, [[640, 138], [686, 92], [740, 98], [790, 146]], "#5277ff", 10, 3);
-        crayonLine(ctx, [[662, 78], [704, 46], [760, 56], [806, 92]], "#ffc735", 12, 3);
-        ctx.beginPath();
-        ctx.ellipse(736, 98, 68, 22, -.18, 0, Math.PI * 2);
-        ctx.strokeStyle = "#ffc735";
-        ctx.lineWidth = 10;
-        ctx.stroke();
-        crayonLine(ctx, [[612, 1035], [662, 1000], [720, 1032], [770, 1004], [835, 1038]], "#ffffff", 16, 3);
-        crayonLine(ctx, [[590, 1094], [642, 1060], [710, 1080], [790, 1058], [870, 1094]], "#b7dcff", 10, 2);
-        stampText(ctx, "天堂", 628, 1038, "#fff7bd", -.13);
-      } else if (theme.key === "human") {
-        posterBlob(ctx, [[0, 1048], [120, 1016], [250, 1062], [390, 1018], [534, 1070], [670, 1022], [900, 1054], [900, 1350], [0, 1350]], "rgba(84,195,93,.50)", "#54c35d", 4);
-        posterBlob(ctx, [[720, 64], [765, 42], [812, 74], [798, 124], [740, 132], [700, 98]], "#ffc735", "#f5a400", 4);
-        crayonLine(ctx, [[612, 1030], [612, 920]], "#7a4c27", 12, 3);
-        posterBlob(ctx, [[570, 940], [604, 870], [654, 922], [626, 984]], "#54c35d", "#1d1d22", 5);
-        posterBlob(ctx, [[640, 936], [688, 872], [730, 944], [690, 990]], "#3bb84a", "#1d1d22", 5);
-        crayonLine(ctx, [[762, 1050], [762, 948]], "#7a4c27", 12, 3);
-        posterBlob(ctx, [[710, 965], [760, 902], [822, 956], [790, 1016]], "#54c35d", "#1d1d22", 5);
-        crayonLine(ctx, [[552, 1115], [640, 1094], [722, 1120], [840, 1096]], "#2ea845", 9, 2);
-        stampText(ctx, "人间", 626, 104, "#dff4ce", .10);
-      } else {
-        posterBlob(ctx, [[0, 1016], [110, 1075], [220, 1018], [334, 1094], [468, 1012], [612, 1084], [744, 1018], [900, 1080], [900, 1350], [0, 1350]], "rgba(255,77,88,.54)", "#ff4d58", 4);
-        posterBlob(ctx, [[604, 190], [652, 88], [710, 206]], "#ff4d58", "#1d1d22", 6);
-        posterBlob(ctx, [[704, 210], [768, 68], [835, 214]], "#ff4d58", "#1d1d22", 6);
-        posterBlob(ctx, [[660, 210], [706, 112], [752, 214]], "#ffc735", "#1d1d22", 5);
-        crayonLine(ctx, [[600, 92], [648, 38], [706, 110], [760, 46], [820, 122], [860, 82]], "#ffc735", 12, 3);
-        crayonLine(ctx, [[578, 1090], [624, 1048], [670, 1102], [722, 1048], [774, 1106], [828, 1050], [884, 1100]], "#1d1d22", 8, 2);
-        crayonLine(ctx, [[0, 1136], [100, 1114], [210, 1150], [330, 1118], [460, 1154], [620, 1124], [900, 1148]], "#ffc735", 16, 2);
-        stampText(ctx, "地狱", 636, 116, "#ffd8d8", -.10);
-      }
-      crayonLine(ctx, [[50, 265], [138, 246], [226, 264], [320, 238]], "rgba(29,29,34,.25)", 5, 1);
-      crayonLine(ctx, [[570, 842], [666, 826], [778, 850], [850, 826]], "rgba(29,29,34,.18)", 5, 1);
+      ctx.strokeRect(42, 42, 816, 1266);
+      grain(ctx, 42, 42, 816, 1266, .045, 9);
+      ctx.fillStyle = "#111";
+      ctx.font = "700 13px Arial, Microsoft YaHei, sans-serif";
+      ctx.textAlign = "right";
+      ctx.fillText("Vegetable Rebirth Diary No.2026", 832, 70);
+      ctx.fillText("Moral Coordinate Poster", 832, 88);
+      ctx.textAlign = "left";
+      ctx.fillText("Copyright 2026 Merit Test. All Rights Reserved.", 62, 1290);
+      ctx.save();
+      drawPosterPlant(ctx, theme, 548, 126, 1.02);
       ctx.restore();
     }
 
@@ -2106,65 +2139,65 @@
       drawShareScene(ctx, theme);
 
       ctx.fillStyle = "#1d1d22";
-      ctx.font = "900 34px KaiTi, Microsoft YaHei, sans-serif";
-      ctx.fillText(`${theme.title} · 功德分投胎报告`, 62, 86);
-      ctx.font = "700 24px KaiTi, Microsoft YaHei, sans-serif";
+      ctx.font = "900 34px Arial Black, Microsoft YaHei, sans-serif";
+      ctx.fillText(`${theme.title} · 功德分投胎报告`, 62, 112);
+      ctx.font = "700 24px Arial, Microsoft YaHei, sans-serif";
       ctx.fillStyle = "#6d6d75";
-      ctx.fillText(theme.subtitle, 62, 126);
+      ctx.fillText(theme.subtitle, 62, 150);
 
       ctx.fillStyle = "#1d1d22";
-      ctx.font = "900 118px KaiTi, Microsoft YaHei, sans-serif";
-      ctx.fillText(String(lastResult.score), 62, 230);
-      ctx.font = "900 28px KaiTi, Microsoft YaHei, sans-serif";
+      ctx.font = "900 118px Arial Black, Microsoft YaHei, sans-serif";
+      ctx.fillText(String(lastResult.score), 62, 252);
+      ctx.font = "900 28px Arial Black, Microsoft YaHei, sans-serif";
       ctx.fillStyle = "#6d6d75";
-      ctx.fillText("功德分", 240, 216);
+      ctx.fillText("功德分", 240, 238);
       ctx.fillStyle = theme.accent;
       ctx.strokeStyle = "#1d1d22";
       ctx.lineWidth = 3;
-      roundedRect(ctx, 360, 180, 150, 48, 24);
+      roundedRect(ctx, 360, 202, 150, 48, 24);
       ctx.fill();
       ctx.stroke();
       ctx.fillStyle = "#1d1d22";
-      ctx.font = "900 22px KaiTi, Microsoft YaHei, sans-serif";
-      ctx.fillText(theme.name, 386, 212);
+      ctx.font = "900 22px Arial Black, Microsoft YaHei, sans-serif";
+      ctx.fillText(theme.name, 386, 234);
 
-      rectSketch(ctx, 44, 282, 812, 560, "rgba(255,255,255,.93)", 22, 5);
+      rectSketch(ctx, 62, 306, 776, 520, "#fff", 0, 4);
       grain(ctx, 54, 292, 792, 540, .055, 10);
 
-      drawItemIllustration(ctx, lastResult.item, { type: lastResult.type }, 84, 332, 300);
+      drawItemIllustration(ctx, lastResult.item, { type: lastResult.type }, 88, 348, 270);
 
       ctx.fillStyle = "#1d1d22";
-      ctx.font = "900 32px KaiTi, Microsoft YaHei, sans-serif";
+      ctx.font = "900 32px Arial Black, Microsoft YaHei, sans-serif";
       ctx.fillText(lastResult.alignment, 430, 348);
       const titleSize = fontSizeForText(ctx, lastResult.item, 370, 58, 38);
-      ctx.font = `900 ${titleSize}px KaiTi, Microsoft YaHei, sans-serif`;
+      ctx.font = `900 ${titleSize}px Arial Black, Microsoft YaHei, sans-serif`;
       ctx.fillStyle = "#1d1d22";
       const titleEndY = drawTextBlock(ctx, lastResult.item, 430, 430, 370, titleSize + 10, 3);
-      ctx.font = "800 26px KaiTi, Microsoft YaHei, sans-serif";
+      ctx.font = "800 26px Arial, Microsoft YaHei, sans-serif";
       ctx.fillStyle = "#6d6d75";
       let infoY = Math.max(570, titleEndY + 26);
       ctx.fillText(lastResult.level, 430, infoY);
       ctx.fillText(lastResult.type, 430, infoY + 38);
       ctx.fillText(`善恶轴 ${state.good >= 0 ? "+" : ""}${state.good}`, 430, infoY + 76);
       ctx.fillText(`秩序轴 ${state.order >= 0 ? "+" : ""}${state.order}`, 430, infoY + 114);
-      drawAxis(ctx, 600, 588, 210);
+      drawAxis(ctx, 594, 578, 220);
 
-      rectSketch(ctx, 44, 872, 812, 250, "rgba(255,255,255,.92)", 18, 5);
+      rectSketch(ctx, 62, 868, 776, 240, "#fff", 0, 4);
       grain(ctx, 54, 882, 792, 230, .055, 11);
       ctx.fillStyle = "#1d1d22";
-      ctx.font = "700 26px KaiTi, Microsoft YaHei, sans-serif";
+      ctx.font = "700 26px Arial, Microsoft YaHei, sans-serif";
       drawTextBlock(ctx, lastResult.text, 76, 930, 748, 42, 5);
 
-      rectSketch(ctx, 654, 1148, 168, 170, "rgba(255,255,255,.94)", 14, 4);
+      rectSketch(ctx, 654, 1148, 168, 170, "#fff", 0, 4);
       await drawShareQr(ctx, 688, 1164, 100);
       ctx.fillStyle = "#6d6d75";
-      ctx.font = "700 18px KaiTi, Microsoft YaHei, sans-serif";
+      ctx.font = "700 18px Arial, Microsoft YaHei, sans-serif";
       ctx.textAlign = "center";
       ctx.fillText("扫码测试", 738, 1288);
       ctx.textAlign = "left";
 
       ctx.fillStyle = "#6d6d75";
-      ctx.font = "700 22px KaiTi, Microsoft YaHei, sans-serif";
+      ctx.font = "700 22px Arial, Microsoft YaHei, sans-serif";
       ctx.fillText("复制图片，把这份灵魂判决发给朋友", 72, 1258);
       el.shareCanvas.classList.add("show");
     }
