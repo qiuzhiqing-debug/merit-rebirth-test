@@ -326,10 +326,65 @@
     .result {
       display: none;
       padding: 30px;
+      position: relative;
+      overflow: hidden;
     }
 
     .result.show { display: block; }
     .question-area.hide { display: none; }
+
+    .result::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s ease;
+    }
+
+    .result > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .result.theme-heaven::before {
+      opacity: 1;
+      background:
+        radial-gradient(circle at 78% 12%, rgba(255, 230, 128, .55), transparent 20%),
+        radial-gradient(circle at 18% 18%, rgba(255, 255, 255, .9), transparent 18%),
+        linear-gradient(135deg, rgba(255, 245, 198, .94), rgba(228, 241, 255, .88));
+    }
+
+    .result.theme-human::before {
+      opacity: 1;
+      background:
+        radial-gradient(circle at 16% 18%, rgba(121, 180, 93, .24), transparent 22%),
+        radial-gradient(circle at 86% 26%, rgba(239, 179, 51, .26), transparent 20%),
+        linear-gradient(135deg, rgba(255, 250, 240, .96), rgba(244, 248, 255, .9));
+    }
+
+    .result.theme-hell::before {
+      opacity: 1;
+      background:
+        radial-gradient(circle at 80% 16%, rgba(239, 85, 85, .36), transparent 23%),
+        radial-gradient(circle at 10% 90%, rgba(29, 29, 34, .18), transparent 26%),
+        linear-gradient(135deg, rgba(255, 230, 220, .94), rgba(255, 244, 210, .86));
+    }
+
+    .theme-heaven .score-card {
+      background: linear-gradient(160deg, #fff8ce, #eef7ff);
+      box-shadow: 10px 10px 0 rgba(239, 179, 51, .18);
+    }
+
+    .theme-human .score-card {
+      background: linear-gradient(160deg, #fffaf0, #eff8ea);
+      box-shadow: 10px 10px 0 rgba(121, 180, 93, .16);
+    }
+
+    .theme-hell .score-card {
+      background: linear-gradient(160deg, #ffe2dc, #fff1c5);
+      box-shadow: 10px 10px 0 rgba(239, 85, 85, .18);
+    }
 
     .result-grid {
       display: grid;
@@ -742,6 +797,44 @@
 
     const levelNames = ["天选功德人", "福报稳定型", "小善小恶正常人", "人间摇摆型", "阴德余额不足"];
     const levelThresholds = [82, 65, 48, 30, 0];
+    const scoreThemes = {
+      heaven: {
+        key: "heaven",
+        name: "天堂场景",
+        title: "天堂审判厅",
+        subtitle: "功德余额充足，系统给你开了柔光滤镜",
+        top: "#fff6c8",
+        bottom: "#edf7ff",
+        band: "rgba(255, 223, 105, .36)",
+        wash: "rgba(79, 116, 255, .10)",
+        accent: "#efb333",
+        soft: "#fff8dd"
+      },
+      human: {
+        key: "human",
+        name: "人间场景",
+        title: "人间观察站",
+        subtitle: "善恶仍在拉扯，你很适合继续体验生活",
+        top: "#fffaf0",
+        bottom: "#f0faea",
+        band: "rgba(121, 180, 93, .20)",
+        wash: "rgba(239, 179, 51, .14)",
+        accent: "#79b45d",
+        soft: "#f7fff0"
+      },
+      hell: {
+        key: "hell",
+        name: "地狱场景",
+        title: "地狱复盘室",
+        subtitle: "阴德余额告急，系统建议先写一份检讨",
+        top: "#ffe0dc",
+        bottom: "#fff1bd",
+        band: "rgba(239, 85, 85, .26)",
+        wash: "rgba(29, 29, 34, .10)",
+        accent: "#ef5555",
+        soft: "#fff0e8"
+      }
+    };
 
     let current = 0;
     let answerSignature = 0;
@@ -783,6 +876,19 @@
       return Math.max(min, Math.min(max, num));
     }
 
+    function scoreTheme(score) {
+      if (score >= 70) return scoreThemes.heaven;
+      if (score >= 35) return scoreThemes.human;
+      return scoreThemes.hell;
+    }
+
+    function applyResultTheme(score) {
+      const theme = scoreTheme(score);
+      el.result.classList.remove("theme-heaven", "theme-human", "theme-hell");
+      el.result.classList.add(`theme-${theme.key}`);
+      return theme;
+    }
+
     function levelIndex(score) {
       return levelThresholds.findIndex(threshold => score >= threshold);
     }
@@ -813,6 +919,7 @@
       lastResult = null;
       el.questionArea.classList.remove("hide");
       el.result.classList.remove("show");
+      el.result.classList.remove("theme-heaven", "theme-human", "theme-hell");
       el.shareCanvas.classList.remove("show");
       renderQuestion();
       updateMark();
@@ -1561,17 +1668,18 @@
       const chaos = Math.max(0, -state.order);
       const profile = getIdentityProfile(item);
       const verdict = makeVerdict(item, alignment, score, level);
+      const theme = applyResultTheme(score);
 
-      lastResult = { score, alignment, item, level, chaos, icon: profile.icon, type: profile.type, text: verdict };
+      lastResult = { score, alignment, item, level, chaos, icon: profile.icon, type: profile.type, text: verdict, theme };
       el.questionArea.classList.add("hide");
       el.result.classList.add("show");
       el.progress.style.width = "100%";
       el.counter.textContent = `${questions.length} / ${questions.length}`;
       el.score.textContent = score;
-      el.scoreLevel.textContent = level;
+      el.scoreLevel.textContent = `${theme.name} · ${level}`;
       el.rebirthName.textContent = item;
       el.alignmentBadge.textContent = alignment;
-      el.fateBadge.textContent = level;
+      el.fateBadge.textContent = theme.name;
       el.axisBadge.textContent = `善恶轴 ${state.good >= 0 ? "+" : ""}${state.good}`;
       el.goodMetric.textContent = state.good >= 0 ? `+${state.good}` : state.good;
       el.orderMetric.textContent = state.order >= 0 ? `+${state.order}` : state.order;
@@ -1715,26 +1823,98 @@
       ctx.restore();
     }
 
+    function drawShareScene(ctx, theme) {
+      const bg = ctx.createLinearGradient(0, 0, 0, 1350);
+      bg.addColorStop(0, theme.top);
+      bg.addColorStop(1, theme.bottom);
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, 900, 1350);
+      ctx.fillStyle = theme.band;
+      ctx.fillRect(0, 0, 900, 250);
+      ctx.fillStyle = theme.wash;
+      ctx.fillRect(0, 1010, 900, 340);
+
+      ctx.save();
+      ctx.strokeStyle = "#1d1d22";
+      ctx.lineWidth = 5;
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      if (theme.key === "heaven") {
+        ctx.fillStyle = "rgba(255,255,255,.72)";
+        [[690, 95, 58], [760, 116, 42], [716, 138, 66], [805, 88, 34]].forEach(([x, y, r]) => {
+          ctx.beginPath();
+          ctx.arc(x, y, r, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        ctx.fillStyle = "#ffe680";
+        ctx.beginPath();
+        ctx.arc(770, 190, 36, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+        for (let i = 0; i < 8; i += 1) {
+          const angle = i / 8 * Math.PI * 2;
+          ctx.beginPath();
+          ctx.moveTo(770 + Math.cos(angle) * 48, 190 + Math.sin(angle) * 48);
+          ctx.lineTo(770 + Math.cos(angle) * 64, 190 + Math.sin(angle) * 64);
+          ctx.stroke();
+        }
+      } else if (theme.key === "human") {
+        ctx.fillStyle = "#79b45d";
+        ctx.beginPath();
+        ctx.moveTo(700, 210);
+        ctx.quadraticCurveTo(735, 138, 810, 210);
+        ctx.lineTo(700, 210);
+        ctx.fill();
+        ctx.stroke();
+        ctx.fillStyle = "#efb333";
+        ctx.beginPath();
+        ctx.arc(760, 108, 24, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+        ctx.fillStyle = "rgba(255,255,255,.78)";
+        roundedRect(ctx, 650, 156, 74, 36, 18);
+        ctx.fill();
+      } else {
+        ctx.fillStyle = "#ef5555";
+        ctx.beginPath();
+        ctx.moveTo(680, 218);
+        ctx.lineTo(714, 134);
+        ctx.lineTo(746, 218);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(748, 218);
+        ctx.lineTo(790, 118);
+        ctx.lineTo(826, 218);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+        ctx.strokeStyle = "#efb333";
+        ctx.beginPath();
+        ctx.moveTo(664, 104);
+        ctx.bezierCurveTo(706, 54, 746, 142, 798, 76);
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
     async function renderShareCard(useRemoteQr = true) {
       if (!lastResult) return;
       const canvas = el.shareCanvas;
       const ctx = canvas.getContext("2d");
+      const theme = lastResult.theme || scoreTheme(lastResult.score);
       canvas.width = 900;
       canvas.height = 1350;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "#fffaf0";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "rgba(79,116,255,.11)";
-      ctx.fillRect(0, 0, canvas.width, 250);
-      ctx.fillStyle = "rgba(239,85,85,.10)";
-      ctx.fillRect(0, 1010, canvas.width, 340);
+      drawShareScene(ctx, theme);
 
       ctx.fillStyle = "#1d1d22";
       ctx.font = "900 34px Microsoft YaHei, sans-serif";
-      ctx.fillText("功德分投胎报告", 62, 86);
+      ctx.fillText(`${theme.title} · 功德分投胎报告`, 62, 86);
       ctx.font = "700 24px Microsoft YaHei, sans-serif";
       ctx.fillStyle = "#6d6d75";
-      ctx.fillText("测测你的下辈子会变成什么东西", 62, 126);
+      ctx.fillText(theme.subtitle, 62, 126);
 
       ctx.fillStyle = "#1d1d22";
       ctx.font = "900 118px Microsoft YaHei, sans-serif";
@@ -1742,8 +1922,17 @@
       ctx.font = "900 28px Microsoft YaHei, sans-serif";
       ctx.fillStyle = "#6d6d75";
       ctx.fillText("功德分", 240, 216);
+      ctx.fillStyle = theme.accent;
+      ctx.strokeStyle = "#1d1d22";
+      ctx.lineWidth = 3;
+      roundedRect(ctx, 360, 180, 150, 48, 24);
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = "#1d1d22";
+      ctx.font = "900 22px Microsoft YaHei, sans-serif";
+      ctx.fillText(theme.name, 386, 212);
 
-      ctx.fillStyle = "#fff";
+      ctx.fillStyle = "rgba(255,255,255,.94)";
       ctx.strokeStyle = "#1d1d22";
       ctx.lineWidth = 4;
       roundedRect(ctx, 44, 282, 812, 560, 20);
