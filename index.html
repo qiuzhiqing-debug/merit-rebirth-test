@@ -1785,13 +1785,15 @@
       ctx.fillStyle = "#fff";
       ctx.strokeStyle = "#1d1d22";
       ctx.lineWidth = 3;
-      roundedRect(ctx, 638, 1174, 184, 132, 14);
+      roundedRect(ctx, 654, 1134, 168, 184, 14);
       ctx.fill();
       ctx.stroke();
-      await drawShareQr(ctx, 656, 1190, 100);
+      await drawShareQr(ctx, 688, 1154, 100);
       ctx.fillStyle = "#6d6d75";
       ctx.font = "700 18px Microsoft YaHei, sans-serif";
-      ctx.fillText("扫码测试", 742, 1248);
+      ctx.textAlign = "center";
+      ctx.fillText("扫码测试", 738, 1284);
+      ctx.textAlign = "left";
 
       ctx.fillStyle = "#6d6d75";
       ctx.font = "700 22px Microsoft YaHei, sans-serif";
