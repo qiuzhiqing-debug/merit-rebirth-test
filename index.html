@@ -16,7 +16,7 @@
       --green: #79b45d;
       --gold: #efb333;
       --lilac: #8476d8;
-      --shadow: 0 18px 52px rgba(31, 31, 38, .13);
+      --shadow: 10px 12px 0 rgba(31, 31, 38, .12);
     }
 
     * { box-sizing: border-box; }
@@ -25,11 +25,28 @@
       margin: 0;
       min-height: 100vh;
       color: var(--ink);
-      font-family: "Microsoft YaHei", "PingFang SC", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: "Microsoft YaHei", "PingFang SC", "KaiTi", "Comic Sans MS", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
       background:
-        linear-gradient(135deg, rgba(239, 85, 85, .13), transparent 34%),
-        linear-gradient(225deg, rgba(79, 116, 255, .14), transparent 32%),
-        linear-gradient(180deg, #fffaf0, #f8f9ff 54%, #f7fff3);
+        radial-gradient(circle at 14% 16%, rgba(239, 85, 85, .20), transparent 19%),
+        radial-gradient(circle at 88% 10%, rgba(79, 116, 255, .18), transparent 17%),
+        radial-gradient(circle at 76% 84%, rgba(121, 180, 93, .18), transparent 22%),
+        linear-gradient(180deg, #fff2d5, #f9f0ff 54%, #f1ffd9);
+      background-attachment: fixed;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .22;
+      mix-blend-mode: multiply;
+      background:
+        repeating-linear-gradient(8deg, rgba(29,29,34,.08) 0 1px, transparent 1px 7px),
+        radial-gradient(circle at 20% 30%, rgba(29,29,34,.18) 0 1px, transparent 1.5px),
+        radial-gradient(circle at 70% 60%, rgba(29,29,34,.16) 0 1px, transparent 1.5px);
+      background-size: auto, 17px 19px, 23px 21px;
+      z-index: -1;
     }
 
     button {
@@ -58,7 +75,13 @@
     .eyebrow {
       display: inline-flex;
       margin: 0 0 14px;
-      color: #865b00;
+      padding: 6px 12px;
+      border: 2px solid var(--ink);
+      border-radius: 17px 9px 20px 11px;
+      color: #1d1d22;
+      background: #ffe680;
+      box-shadow: 4px 5px 0 rgba(29,29,34,.12);
+      transform: rotate(-1deg);
       font-size: 14px;
       font-weight: 900;
     }
@@ -69,6 +92,7 @@
       font-size: clamp(36px, 7vw, 76px);
       line-height: 1;
       letter-spacing: 0;
+      text-shadow: 3px 3px 0 rgba(239,179,51,.28);
     }
 
     .subtitle {
@@ -93,8 +117,8 @@
     .primary, .ghost {
       min-height: 48px;
       padding: 0 22px;
-      border-radius: 999px;
-      border: 1px solid var(--ink);
+      border-radius: 18px 10px 22px 12px;
+      border: 3px solid var(--ink);
       cursor: pointer;
       font-weight: 900;
       transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
@@ -103,21 +127,22 @@
     .primary {
       color: #fff;
       background: var(--ink);
-      box-shadow: 0 10px 24px rgba(29, 29, 34, .18);
+      box-shadow: 6px 7px 0 rgba(239, 179, 51, .55);
     }
 
     .ghost {
-      background: rgba(255, 255, 255, .62);
+      background: rgba(255, 255, 255, .76);
+      box-shadow: 5px 6px 0 rgba(29,29,34,.10);
     }
 
     .primary:hover, .ghost:hover {
       transform: translateY(-2px);
-      box-shadow: 0 12px 28px rgba(29, 29, 34, .16);
+      box-shadow: 7px 8px 0 rgba(29,29,34,.15);
     }
 
     .alignment-board, .panel {
-      border: 2px solid var(--ink);
-      border-radius: 8px;
+      border: 4px solid var(--ink);
+      border-radius: 20px 12px 24px 14px;
       background: rgba(255, 255, 255, .82);
       box-shadow: var(--shadow);
       overflow: hidden;
@@ -126,6 +151,7 @@
     .alignment-board {
       min-height: 368px;
       padding: 22px;
+      transform: rotate(.3deg);
     }
 
     .board-title {
@@ -265,11 +291,14 @@
       min-height: 30px;
       padding: 0 12px;
       margin-bottom: 14px;
-      border-radius: 999px;
-      background: #eff2ff;
-      color: #3158d4;
+      border: 2px solid var(--ink);
+      border-radius: 18px 9px 18px 12px;
+      background: #c9d7ff;
+      color: #1d1d22;
       font-size: 13px;
       font-weight: 900;
+      box-shadow: 4px 5px 0 rgba(29,29,34,.10);
+      transform: rotate(-.8deg);
     }
 
     h2 {
@@ -288,8 +317,8 @@
       width: 100%;
       min-height: 72px;
       padding: 16px 18px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
+      border: 3px solid var(--ink);
+      border-radius: 17px 9px 22px 12px;
       background: #fff;
       text-align: left;
       cursor: pointer;
@@ -298,19 +327,20 @@
       gap: 12px;
       align-items: center;
       transition: transform .16s ease, border-color .16s ease, background .16s ease;
+      box-shadow: 5px 6px 0 rgba(29,29,34,.08);
     }
 
     .option:hover {
       transform: translateY(-1px);
       border-color: var(--ink);
-      background: #fffaf0;
+      background: #fff2bf;
     }
 
     .letter {
       width: 34px;
       height: 34px;
       border: 1px solid var(--ink);
-      border-radius: 50%;
+      border-radius: 47% 53% 45% 55%;
       display: grid;
       place-items: center;
       font-weight: 1000;
@@ -350,24 +380,30 @@
     .result.theme-heaven::before {
       opacity: 1;
       background:
-        radial-gradient(circle at 78% 12%, rgba(255, 230, 128, .55), transparent 20%),
-        radial-gradient(circle at 18% 18%, rgba(255, 255, 255, .9), transparent 18%),
+        repeating-linear-gradient(-8deg, rgba(255,255,255,.28) 0 7px, transparent 7px 19px),
+        radial-gradient(circle at 78% 12%, rgba(255, 230, 128, .70), transparent 20%),
+        radial-gradient(circle at 18% 18%, rgba(255, 255, 255, .92), transparent 18%),
+        radial-gradient(circle at 86% 82%, rgba(79, 116, 255, .14), transparent 21%),
         linear-gradient(135deg, rgba(255, 245, 198, .94), rgba(228, 241, 255, .88));
     }
 
     .result.theme-human::before {
       opacity: 1;
       background:
+        repeating-linear-gradient(10deg, rgba(29,29,34,.045) 0 2px, transparent 2px 15px),
         radial-gradient(circle at 16% 18%, rgba(121, 180, 93, .24), transparent 22%),
         radial-gradient(circle at 86% 26%, rgba(239, 179, 51, .26), transparent 20%),
+        radial-gradient(circle at 54% 90%, rgba(79, 116, 255, .10), transparent 18%),
         linear-gradient(135deg, rgba(255, 250, 240, .96), rgba(244, 248, 255, .9));
     }
 
     .result.theme-hell::before {
       opacity: 1;
       background:
-        radial-gradient(circle at 80% 16%, rgba(239, 85, 85, .36), transparent 23%),
-        radial-gradient(circle at 10% 90%, rgba(29, 29, 34, .18), transparent 26%),
+        repeating-linear-gradient(-12deg, rgba(29,29,34,.08) 0 3px, transparent 3px 17px),
+        radial-gradient(circle at 80% 16%, rgba(239, 85, 85, .46), transparent 23%),
+        radial-gradient(circle at 10% 90%, rgba(29, 29, 34, .20), transparent 26%),
+        radial-gradient(circle at 42% 18%, rgba(239, 179, 51, .22), transparent 16%),
         linear-gradient(135deg, rgba(255, 230, 220, .94), rgba(255, 244, 210, .86));
     }
 
@@ -394,11 +430,12 @@
     }
 
     .score-card {
-      border: 2px solid var(--ink);
-      border-radius: 8px;
+      border: 4px solid var(--ink);
+      border-radius: 22px 14px 25px 12px;
       background: #fffaf0;
       padding: 20px;
       text-align: center;
+      transform: rotate(-.8deg);
     }
 
     .score {
@@ -406,6 +443,7 @@
       font-size: 76px;
       line-height: 1;
       font-weight: 1000;
+      text-shadow: 4px 4px 0 rgba(239,85,85,.18);
     }
 
     .score-label {
@@ -425,10 +463,11 @@
       width: 112px;
       height: 112px;
       margin: 0 0 18px;
-      border: 2px solid var(--ink);
-      border-radius: 8px;
+      border: 4px solid var(--ink);
+      border-radius: 18px 10px 20px 12px;
       background: linear-gradient(135deg, #fff7df, #eef3ff);
-      box-shadow: 8px 8px 0 rgba(29, 29, 34, .08);
+      box-shadow: 8px 8px 0 rgba(29, 29, 34, .16);
+      transform: rotate(-1deg);
     }
 
     .badge-row {
@@ -443,8 +482,8 @@
       align-items: center;
       min-height: 30px;
       padding: 0 10px;
-      border: 1px solid var(--ink);
-      border-radius: 999px;
+      border: 2px solid var(--ink);
+      border-radius: 14px 9px 16px 10px;
       background: #fff;
       font-size: 13px;
       font-weight: 900;
@@ -466,10 +505,11 @@
 
     .metric {
       min-height: 76px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
+      border: 3px solid var(--ink);
+      border-radius: 18px 10px 20px 12px;
       background: #fff;
       padding: 12px;
+      box-shadow: 4px 5px 0 rgba(29,29,34,.08);
     }
 
     .metric strong {
@@ -489,10 +529,11 @@
       width: min(100%, 420px);
       max-height: 76vh;
       margin-top: 22px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
+      border: 4px solid var(--ink);
+      border-radius: 20px 12px 24px 14px;
       background: #fff;
       object-fit: contain;
+      box-shadow: 8px 9px 0 rgba(29,29,34,.12);
     }
 
     .share-preview.show { display: block; }
@@ -1089,16 +1130,41 @@
       return palettes[type] || palettes["特殊轮回"];
     }
 
+    function grain(ctx, x, y, width, height, alpha = .12, step = 7) {
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      for (let yy = y; yy < y + height; yy += step) {
+        for (let xx = x; xx < x + width; xx += step) {
+          const n = Math.sin(xx * 12.9898 + yy * 78.233) * 43758.5453;
+          if ((n - Math.floor(n)) > .54) {
+            ctx.fillStyle = (n - Math.floor(n * 1.7)) > .45 ? "#1d1d22" : "#ffffff";
+            ctx.fillRect(xx, yy, 1.4, 1.4);
+          }
+        }
+      }
+      ctx.restore();
+    }
+
+    function wobble(value, seed, unit) {
+      return value + Math.sin(seed * 12.9898) * unit * 1.2;
+    }
+
     function drawItemIllustration(ctx, item, profile, x, y, size) {
       const [soft, main, accent] = paletteForType(profile.type);
       ctx.save();
       ctx.translate(x, y);
       ctx.fillStyle = soft;
       ctx.strokeStyle = "#1d1d22";
-      ctx.lineWidth = Math.max(2, size * .018);
-      roundedRect(ctx, 0, 0, size, size, size * .09);
+      ctx.lineWidth = Math.max(3, size * .022);
+      roundedRect(ctx, 0, 0, size, size, size * .10);
       ctx.fill();
       ctx.stroke();
+      ctx.globalAlpha = .24;
+      ctx.strokeStyle = "#1d1d22";
+      roundedRect(ctx, size * .015, -size * .006, size * .97, size * 1.01, size * .11);
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+      grain(ctx, 0, 0, size, size, .11, size / 25);
 
       const cx = size / 2;
       const cy = size / 2;
@@ -1107,17 +1173,30 @@
       function rect(rx, ry, rw, rh, color = main, radius = 6) {
         ctx.fillStyle = color;
         ctx.strokeStyle = "#1d1d22";
+        ctx.lineWidth = Math.max(2, size * .018);
         roundedRect(ctx, rx * unit, ry * unit, rw * unit, rh * unit, radius * unit);
         ctx.fill();
         ctx.stroke();
+        ctx.save();
+        ctx.globalAlpha = .22;
+        ctx.translate(1.2 * unit, -0.8 * unit);
+        ctx.stroke();
+        ctx.restore();
       }
       function circle(rx, ry, rr, color = main) {
         ctx.fillStyle = color;
         ctx.strokeStyle = "#1d1d22";
+        ctx.lineWidth = Math.max(2, size * .018);
         ctx.beginPath();
         ctx.arc(rx * unit, ry * unit, rr * unit, 0, Math.PI * 2);
         ctx.fill();
         ctx.stroke();
+        ctx.save();
+        ctx.globalAlpha = .24;
+        ctx.beginPath();
+        ctx.ellipse((rx + .8) * unit, (ry - .6) * unit, rr * 1.04 * unit, rr * .95 * unit, .12, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.restore();
       }
       function line(x1, y1, x2, y2, color = accent, width = 5) {
         ctx.strokeStyle = color;
@@ -1125,9 +1204,21 @@
         ctx.lineCap = "round";
         ctx.lineJoin = "round";
         ctx.beginPath();
-        ctx.moveTo(x1 * unit, y1 * unit);
-        ctx.lineTo(x2 * unit, y2 * unit);
+        ctx.moveTo(wobble(x1 * unit, x1 + y1, unit), wobble(y1 * unit, y1 + x2, unit));
+        const midX = (x1 + x2) / 2 * unit;
+        const midY = (y1 + y2) / 2 * unit;
+        ctx.quadraticCurveTo(
+          wobble(midX, x1 + y2, unit),
+          wobble(midY, y1 + x2, unit),
+          wobble(x2 * unit, x2 + y2, unit),
+          wobble(y2 * unit, y2 + x1, unit)
+        );
         ctx.stroke();
+        ctx.save();
+        ctx.globalAlpha = .35;
+        ctx.translate(.9 * unit, -.7 * unit);
+        ctx.stroke();
+        ctx.restore();
         ctx.lineWidth = Math.max(2, size * .018);
       }
       function path(points, color = main) {
@@ -1141,6 +1232,11 @@
         ctx.closePath();
         ctx.fill();
         ctx.stroke();
+        ctx.save();
+        ctx.globalAlpha = .25;
+        ctx.translate(1.1 * unit, -0.9 * unit);
+        ctx.stroke();
+        ctx.restore();
       }
       function textMark(text, tx = 50, ty = 56, fontSize = 16) {
         ctx.fillStyle = "#1d1d22";
@@ -1823,6 +1919,84 @@
       ctx.restore();
     }
 
+    function doodlePath(ctx, points, color = "#1d1d22", width = 5, closed = false) {
+      if (!points.length) return;
+      ctx.save();
+      ctx.strokeStyle = color;
+      ctx.lineWidth = width;
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      ctx.beginPath();
+      ctx.moveTo(points[0][0], points[0][1]);
+      for (let i = 1; i < points.length; i += 1) {
+        const [x, y] = points[i];
+        const [px, py] = points[i - 1];
+        const mx = (px + x) / 2 + Math.sin(i * 4.7) * 8;
+        const my = (py + y) / 2 + Math.cos(i * 3.9) * 7;
+        ctx.quadraticCurveTo(mx, my, x, y);
+      }
+      if (closed) ctx.closePath();
+      ctx.stroke();
+      ctx.globalAlpha = .28;
+      ctx.translate(4, -3);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function posterBlob(ctx, points, fill, stroke = "#1d1d22", width = 5) {
+      if (!points.length) return;
+      ctx.save();
+      ctx.fillStyle = fill;
+      ctx.strokeStyle = stroke;
+      ctx.lineWidth = width;
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      ctx.beginPath();
+      ctx.moveTo(points[0][0], points[0][1]);
+      for (let i = 1; i < points.length; i += 1) {
+        const [x, y] = points[i];
+        const [px, py] = points[i - 1];
+        ctx.quadraticCurveTo((px + x) / 2 + Math.sin(i * 2.3) * 12, (py + y) / 2 + Math.cos(i * 2.9) * 10, x, y);
+      }
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+      ctx.globalAlpha = .18;
+      ctx.translate(6, -4);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function rectSketch(ctx, x, y, width, height, fill, radius = 12, lineWidth = 4) {
+      ctx.save();
+      ctx.fillStyle = fill;
+      ctx.strokeStyle = "#1d1d22";
+      ctx.lineWidth = lineWidth;
+      roundedRect(ctx, x, y, width, height, radius);
+      ctx.fill();
+      ctx.stroke();
+      ctx.globalAlpha = .24;
+      roundedRect(ctx, x + 5, y - 3, width - 2, height + 4, radius + 3);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function stampText(ctx, text, x, y, fill, rotate = 0) {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(rotate);
+      ctx.fillStyle = fill;
+      ctx.strokeStyle = "#1d1d22";
+      ctx.lineWidth = 3;
+      roundedRect(ctx, 0, 0, 170, 48, 15);
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = "#1d1d22";
+      ctx.font = "900 22px Microsoft YaHei, sans-serif";
+      ctx.fillText(text, 22, 31);
+      ctx.restore();
+    }
+
     function drawShareScene(ctx, theme) {
       const bg = ctx.createLinearGradient(0, 0, 0, 1350);
       bg.addColorStop(0, theme.top);
@@ -1833,69 +2007,46 @@
       ctx.fillRect(0, 0, 900, 250);
       ctx.fillStyle = theme.wash;
       ctx.fillRect(0, 1010, 900, 340);
+      grain(ctx, 0, 0, 900, 1350, .11, 8);
 
       ctx.save();
       ctx.strokeStyle = "#1d1d22";
-      ctx.lineWidth = 5;
+      ctx.lineWidth = 6;
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
       if (theme.key === "heaven") {
-        ctx.fillStyle = "rgba(255,255,255,.72)";
-        [[690, 95, 58], [760, 116, 42], [716, 138, 66], [805, 88, 34]].forEach(([x, y, r]) => {
-          ctx.beginPath();
-          ctx.arc(x, y, r, 0, Math.PI * 2);
-          ctx.fill();
-        });
-        ctx.fillStyle = "#ffe680";
-        ctx.beginPath();
-        ctx.arc(770, 190, 36, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.stroke();
-        for (let i = 0; i < 8; i += 1) {
-          const angle = i / 8 * Math.PI * 2;
-          ctx.beginPath();
-          ctx.moveTo(770 + Math.cos(angle) * 48, 190 + Math.sin(angle) * 48);
-          ctx.lineTo(770 + Math.cos(angle) * 64, 190 + Math.sin(angle) * 64);
-          ctx.stroke();
-        }
+        posterBlob(ctx, [[600, 62], [682, 18], [790, 38], [850, 104], [814, 166], [692, 156], [596, 132]], "rgba(255,255,255,.80)");
+        posterBlob(ctx, [[658, 980], [746, 940], [870, 986], [900, 1070], [812, 1124], [676, 1096]], "rgba(255,255,255,.56)", "#1d1d22", 4);
+        posterBlob(ctx, [[722, 116], [772, 90], [822, 118], [814, 174], [764, 202], [718, 168]], "#ffe680");
+        doodlePath(ctx, [[678, 82], [700, 102], [720, 120]], "#efb333", 6);
+        doodlePath(ctx, [[835, 82], [816, 105], [806, 130]], "#efb333", 6);
+        doodlePath(ctx, [[742, 224], [706, 256], [682, 306], [682, 360]], "rgba(29,29,34,.44)", 5);
+        doodlePath(ctx, [[790, 224], [820, 268], [836, 322], [828, 382]], "rgba(29,29,34,.44)", 5);
+        doodlePath(ctx, [[604, 246], [648, 234], [714, 240], [778, 232], [846, 246]], "#ffffff", 10);
+        stampText(ctx, "天堂摇号处", 610, 1030, "#fff7bd", -.08);
       } else if (theme.key === "human") {
-        ctx.fillStyle = "#79b45d";
-        ctx.beginPath();
-        ctx.moveTo(700, 210);
-        ctx.quadraticCurveTo(735, 138, 810, 210);
-        ctx.lineTo(700, 210);
-        ctx.fill();
-        ctx.stroke();
-        ctx.fillStyle = "#efb333";
-        ctx.beginPath();
-        ctx.arc(760, 108, 24, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.stroke();
-        ctx.fillStyle = "rgba(255,255,255,.78)";
-        roundedRect(ctx, 650, 156, 74, 36, 18);
-        ctx.fill();
+        posterBlob(ctx, [[560, 1014], [652, 940], [796, 940], [900, 1014], [900, 1136], [734, 1102], [584, 1142]], "rgba(121,180,93,.66)");
+        posterBlob(ctx, [[628, 158], [692, 112], [796, 136], [852, 214], [824, 264], [708, 262], [612, 226]], "rgba(255,255,255,.66)");
+        posterBlob(ctx, [[736, 74], [774, 56], [808, 84], [800, 124], [754, 136], [724, 110]], "#efb333");
+        posterBlob(ctx, [[644, 1018], [700, 952], [754, 1018], [754, 1120], [642, 1120]], "#fffdf8", "#1d1d22", 5);
+        rectSketch(ctx, 678, 1050, 38, 70, "#4f74ff");
+        doodlePath(ctx, [[580, 1138], [676, 1102], [790, 1118], [900, 1086]], "#1d1d22", 5);
+        doodlePath(ctx, [[612, 928], [628, 884], [660, 870], [690, 902]], "#79b45d", 9);
+        stampText(ctx, "人间观察站", 618, 103, "#dff4ce", .07);
       } else {
-        ctx.fillStyle = "#ef5555";
-        ctx.beginPath();
-        ctx.moveTo(680, 218);
-        ctx.lineTo(714, 134);
-        ctx.lineTo(746, 218);
-        ctx.closePath();
-        ctx.fill();
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(748, 218);
-        ctx.lineTo(790, 118);
-        ctx.lineTo(826, 218);
-        ctx.closePath();
-        ctx.fill();
-        ctx.stroke();
-        ctx.strokeStyle = "#efb333";
-        ctx.beginPath();
-        ctx.moveTo(664, 104);
-        ctx.bezierCurveTo(706, 54, 746, 142, 798, 76);
-        ctx.stroke();
+        posterBlob(ctx, [[570, 1006], [620, 914], [684, 1036], [736, 898], [812, 1052], [900, 978], [900, 1220], [560, 1220]], "rgba(239,85,85,.62)");
+        posterBlob(ctx, [[650, 198], [690, 106], [724, 220]], "#ef5555");
+        posterBlob(ctx, [[724, 214], [782, 84], [832, 218]], "#ef5555");
+        posterBlob(ctx, [[700, 210], [734, 134], [760, 214]], "#efb333", "#1d1d22", 4);
+        doodlePath(ctx, [[628, 96], [668, 44], [710, 112], [754, 58], [804, 122], [842, 76]], "#efb333", 7);
+        doodlePath(ctx, [[626, 260], [686, 290], [748, 268], [814, 304], [872, 278]], "rgba(29,29,34,.48)", 6);
+        for (let i = 0; i < 7; i += 1) {
+          doodlePath(ctx, [[570 + i * 54, 1098], [596 + i * 54, 1068], [622 + i * 54, 1108]], "#1d1d22", 4);
+        }
+        stampText(ctx, "地狱复核中", 626, 118, "#ffd8d8", -.05);
       }
+      doodlePath(ctx, [[42, 266], [134, 246], [228, 260], [318, 236]], "rgba(29,29,34,.24)", 4);
+      doodlePath(ctx, [[560, 848], [666, 826], [780, 850], [852, 830]], "rgba(29,29,34,.22)", 4);
       ctx.restore();
     }
 
@@ -1932,12 +2083,8 @@
       ctx.font = "900 22px Microsoft YaHei, sans-serif";
       ctx.fillText(theme.name, 386, 212);
 
-      ctx.fillStyle = "rgba(255,255,255,.94)";
-      ctx.strokeStyle = "#1d1d22";
-      ctx.lineWidth = 4;
-      roundedRect(ctx, 44, 282, 812, 560, 20);
-      ctx.fill();
-      ctx.stroke();
+      rectSketch(ctx, 44, 282, 812, 560, "rgba(255,255,255,.93)", 22, 5);
+      grain(ctx, 54, 292, 792, 540, .055, 10);
 
       drawItemIllustration(ctx, lastResult.item, { type: lastResult.type }, 84, 332, 300);
 
@@ -1957,27 +2104,18 @@
       ctx.fillText(`秩序轴 ${state.order >= 0 ? "+" : ""}${state.order}`, 430, infoY + 114);
       drawAxis(ctx, 636, 626, 150);
 
-      ctx.fillStyle = "#fff";
-      ctx.strokeStyle = "#1d1d22";
-      ctx.lineWidth = 4;
-      roundedRect(ctx, 44, 872, 812, 276, 18);
-      ctx.fill();
-      ctx.stroke();
+      rectSketch(ctx, 44, 872, 812, 250, "rgba(255,255,255,.92)", 18, 5);
+      grain(ctx, 54, 882, 792, 230, .055, 11);
       ctx.fillStyle = "#1d1d22";
       ctx.font = "700 26px Microsoft YaHei, sans-serif";
       drawTextBlock(ctx, lastResult.text, 76, 930, 748, 42, 5);
 
-      ctx.fillStyle = "#fff";
-      ctx.strokeStyle = "#1d1d22";
-      ctx.lineWidth = 3;
-      roundedRect(ctx, 654, 1134, 168, 184, 14);
-      ctx.fill();
-      ctx.stroke();
-      await drawShareQr(ctx, 688, 1154, 100);
+      rectSketch(ctx, 654, 1148, 168, 170, "rgba(255,255,255,.94)", 14, 4);
+      await drawShareQr(ctx, 688, 1164, 100);
       ctx.fillStyle = "#6d6d75";
       ctx.font = "700 18px Microsoft YaHei, sans-serif";
       ctx.textAlign = "center";
-      ctx.fillText("扫码测试", 738, 1284);
+      ctx.fillText("扫码测试", 738, 1288);
       ctx.textAlign = "left";
 
       ctx.fillStyle = "#6d6d75";
