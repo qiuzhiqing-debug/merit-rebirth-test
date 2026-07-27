@@ -1540,10 +1540,6 @@
         textMark(item.replace(/[^\u4e00-\u9fa5A-Za-z0-9]/g, "").slice(0, 2) || "物", 50, 51, 18);
       }
 
-      ctx.fillStyle = "rgba(29,29,34,.75)";
-      ctx.font = `700 ${Math.max(10, size * .075)}px Microsoft YaHei, sans-serif`;
-      const label = item.length > 5 ? item.slice(0, 5) : item;
-      ctx.fillText(label, 10 * unit, 92 * unit);
       ctx.restore();
     }
 
