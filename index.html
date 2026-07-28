@@ -1103,15 +1103,15 @@
       } catch {
         ctx.restore();
       }
-      drawFallbackQr(ctx, x, y, size);
       if (await loadQrLibrary()) {
         try {
           const qrCanvas = document.createElement("canvas");
           await new Promise((resolve, reject) => {
-            window.QRCode.toCanvas(qrCanvas, shareUrl(), {
+            window.QRCode.toCanvas(qrCanvas, publicShareUrl, {
               width: size,
-              margin: 1,
-              color: { dark: "#1d1d22", light: "#ffffff" }
+              margin: 2,
+              errorCorrectionLevel: "M",
+              color: { dark: "#000000", light: "#ffffff" }
             }, error => error ? reject(error) : resolve());
           });
           ctx.drawImage(qrCanvas, x, y, size, size);
@@ -1121,6 +1121,7 @@
           return false;
         }
       }
+      drawFallbackQr(ctx, x, y, size);
       return false;
     }
 
