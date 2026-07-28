@@ -2516,6 +2516,14 @@
       return rows;
     }
 
+    function ellipsizeToWidth(ctx, text, maxWidth) {
+      let candidate = text;
+      while (candidate.length > 1 && ctx.measureText(`${candidate}...`).width > maxWidth) {
+        candidate = candidate.slice(0, -1);
+      }
+      return `${candidate}...`;
+    }
+
     function drawFittedTextBlock(ctx, text, x, y, maxWidth, maxHeight, startSize, minSize, weight = 800) {
       let size = startSize;
       let rows = [];
@@ -2531,7 +2539,14 @@
       if (rows.length > maxLines) {
         rows = rows.slice(0, Math.max(1, maxLines));
         const last = rows[rows.length - 1];
-        rows[rows.length - 1] = last.length > 2 ? `${last.slice(0, -2)}...` : last;
+        rows[rows.length - 1] = ellipsizeToWidth(ctx, last, maxWidth);
+      } else if (rows.length > 1) {
+        const last = rows[rows.length - 1];
+        const isDanglingTail = last.length <= 4 || ctx.measureText(last).width < maxWidth * .18;
+        if (isDanglingTail) {
+          rows.pop();
+          rows[rows.length - 1] = ellipsizeToWidth(ctx, rows[rows.length - 1], maxWidth);
+        }
       }
       rows.forEach((row, index) => ctx.fillText(row, x, y + index * lineHeight));
       return y + rows.length * lineHeight;
