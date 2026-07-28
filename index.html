@@ -338,6 +338,34 @@
       background: #fff2bf;
     }
 
+    .question-nav {
+      display: flex;
+      justify-content: flex-start;
+      margin-top: 16px;
+    }
+
+    .back-btn {
+      min-height: 44px;
+      padding: 0 18px;
+      border: 3px solid var(--ink);
+      border-radius: 0;
+      background: #fff7df;
+      color: var(--ink);
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: none;
+    }
+
+    .back-btn:hover:not(:disabled) {
+      background: #fff2bf;
+      transform: translateY(-1px);
+    }
+
+    .back-btn:disabled {
+      opacity: .38;
+      cursor: not-allowed;
+    }
+
     .letter {
       width: 34px;
       height: 34px;
@@ -633,7 +661,7 @@
       <div class="hero-copy">
         <p class="eyebrow">功德分人格测试 · 九宫格道德阵营</p>
         <h1 id="page-title">测测你的功德分，看看下辈子会投胎成什么东西</h1>
-        <p class="subtitle">18 道灵魂小题，检测你的善恶倾向、守序程度和混乱浓度。结果会生成一张可复制的投胎报告图，适合发给朋友互相审判。</p>
+        <p class="subtitle"><span id="questionCountText">24</span> 道灵魂小题，检测你的善恶倾向、守序程度和混乱浓度。结果会生成一张可复制的投胎报告图，适合发给朋友互相审判。</p>
         <div class="actions">
           <button class="primary" id="startBtn" type="button">开始测试</button>
           <button class="ghost" id="randomBtn" type="button">随机投胎一次</button>
@@ -660,7 +688,7 @@
         <div class="progress-wrap" aria-label="答题进度">
           <div class="progress" id="progress"></div>
         </div>
-        <div class="counter" id="counter">0 / 18</div>
+        <div class="counter" id="counter">0 / 24</div>
       </div>
 
       <div class="question-area" id="questionArea">
@@ -671,6 +699,9 @@
             <span class="letter">Go</span>
             <span class="option-text">我准备好了，来测我的下辈子</span>
           </button>
+        </div>
+        <div class="question-nav hide" id="questionNav">
+          <button class="back-btn" type="button" id="prevBtn">上一题</button>
         </div>
       </div>
 
@@ -701,6 +732,7 @@
               <button class="primary" type="button" id="copyImageBtn">复制结果图片</button>
               <button class="ghost" type="button" id="downloadImageBtn">下载结果图片</button>
               <button class="ghost" type="button" id="copyTextBtn">复制结果文案</button>
+              <button class="ghost" type="button" id="resultPrevBtn">返回上一题</button>
               <button class="ghost" type="button" id="restartBtn">重新测试</button>
             </div>
           </div>
@@ -907,6 +939,7 @@
     let current = 0;
     let answerSignature = 0;
     let state = { merit: 50, good: 0, order: 0 };
+    let history = [];
     let lastResult = null;
 
     const el = {
@@ -914,11 +947,15 @@
       randomBtn: document.getElementById("randomBtn"),
       readyBtn: document.getElementById("readyBtn"),
       restartBtn: document.getElementById("restartBtn"),
+      prevBtn: document.getElementById("prevBtn"),
+      resultPrevBtn: document.getElementById("resultPrevBtn"),
       copyImageBtn: document.getElementById("copyImageBtn"),
       downloadImageBtn: document.getElementById("downloadImageBtn"),
       copyTextBtn: document.getElementById("copyTextBtn"),
       questionArea: document.getElementById("questionArea"),
+      questionNav: document.getElementById("questionNav"),
       result: document.getElementById("result"),
+      questionCountText: document.getElementById("questionCountText"),
       tag: document.getElementById("questionTag"),
       title: document.getElementById("questionTitle"),
       options: document.getElementById("options"),
@@ -984,8 +1021,10 @@
       current = 0;
       answerSignature = 0;
       state = { merit: 50, good: 0, order: 0 };
+      history = [];
       lastResult = null;
       el.questionArea.classList.remove("hide");
+      el.questionNav.classList.remove("hide");
       el.result.classList.remove("show");
       el.result.classList.remove("theme-heaven", "theme-human", "theme-hell");
       el.shareCanvas.classList.remove("show");
@@ -998,6 +1037,7 @@
       const question = questions[current];
       el.tag.textContent = question.tag;
       el.title.textContent = question.title;
+      el.questionNav.classList.remove("hide");
       el.options.innerHTML = "";
       question.options.forEach((option, index) => {
         const button = document.createElement("button");
@@ -1009,9 +1049,16 @@
       });
       el.progress.style.width = `${(current / questions.length) * 100}%`;
       el.counter.textContent = `${current + 1} / ${questions.length}`;
+      el.prevBtn.disabled = history.length === 0;
+      el.prevBtn.setAttribute("aria-disabled", String(history.length === 0));
     }
 
     function choose(option, index) {
+      history.push({
+        current,
+        state: { ...state },
+        answerSignature
+      });
       state.merit += option[1];
       state.good += option[2];
       state.order += option[3];
@@ -1020,6 +1067,20 @@
       updateMark();
       if (current >= questions.length) showResult();
       else renderQuestion();
+    }
+
+    function previousQuestion() {
+      const previous = history.pop();
+      if (!previous) return;
+      current = previous.current;
+      state = { ...previous.state };
+      answerSignature = previous.answerSignature;
+      lastResult = null;
+      el.result.classList.remove("show");
+      el.shareCanvas.classList.remove("show");
+      el.questionArea.classList.remove("hide");
+      renderQuestion();
+      updateMark();
     }
 
     function pickRebirth(alignment, score) {
@@ -2294,6 +2355,8 @@
       lastResult = { score, alignment, item, level, chaos, icon: profile.icon, type: profile.type, text: verdict, theme };
       el.questionArea.classList.add("hide");
       el.result.classList.add("show");
+      el.resultPrevBtn.disabled = history.length === 0;
+      el.resultPrevBtn.setAttribute("aria-disabled", String(history.length === 0));
       el.progress.style.width = "100%";
       el.counter.textContent = `${questions.length} / ${questions.length}`;
       el.score.textContent = score;
@@ -2315,6 +2378,7 @@
       const alignments = Object.keys(rebirthPool);
       const alignment = alignments[Math.floor(Math.random() * alignments.length)];
       const randomTier = Math.floor(Math.random() * levelNames.length);
+      history = [];
       answerSignature = Math.floor(Math.random() * 1000);
       state.merit = clamp(Math.round(90 - randomTier * 17 + Math.random() * 8), 0, 100);
       state.good = alignment.includes("善良") ? 8 : alignment.includes("邪恶") ? -8 : 0;
@@ -2858,10 +2922,14 @@
     el.startBtn.addEventListener("click", start);
     el.readyBtn.addEventListener("click", start);
     el.restartBtn.addEventListener("click", start);
+    el.prevBtn.addEventListener("click", previousQuestion);
+    el.resultPrevBtn.addEventListener("click", previousQuestion);
     el.randomBtn.addEventListener("click", randomResult);
     el.copyImageBtn.addEventListener("click", copyImageResult);
     el.downloadImageBtn.addEventListener("click", downloadImageResult);
     el.copyTextBtn.addEventListener("click", copyTextResult);
+    el.questionCountText.textContent = questions.length;
+    el.counter.textContent = `0 / ${questions.length}`;
     updateMark();
   </script>
 </body>
