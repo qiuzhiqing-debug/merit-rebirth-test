@@ -2460,60 +2460,72 @@
       document.getElementById("quizPanel").scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
-    function wrapText(ctx, text, x, y, maxWidth, lineHeight, maxLines = 6) {
-      const chars = Array.from(text);
-      let line = "";
-      let lines = 0;
-      for (let i = 0; i < chars.length; i += 1) {
-        const testLine = line + chars[i];
-        if (ctx.measureText(testLine).width > maxWidth && line) {
-          ctx.fillText(line, x, y);
-          line = chars[i];
-          y += lineHeight;
-          lines += 1;
-          if (lines >= maxLines - 1) break;
-        } else {
-          line = testLine;
-        }
-      }
-      if (line && lines < maxLines) ctx.fillText(line, x, y);
+    function textWrapTokens(text) {
+      return String(text).match(/[A-Za-z0-9]+(?:[-'’][A-Za-z0-9]+)*|\s+|./gu) || [];
     }
 
-    function drawTextBlock(ctx, text, x, y, maxWidth, lineHeight, maxLines = 6) {
-      const chars = Array.from(text);
+    function splitOversizedToken(ctx, token, maxWidth) {
       const rows = [];
       let line = "";
-      for (let i = 0; i < chars.length; i += 1) {
-        const testLine = line + chars[i];
-        if (ctx.measureText(testLine).width > maxWidth && line) {
+      Array.from(token).forEach(char => {
+        const testLine = line + char;
+        if (line && ctx.measureText(testLine).width > maxWidth) {
           rows.push(line);
-          line = chars[i];
-          if (rows.length >= maxLines - 1) break;
+          line = char;
         } else {
           line = testLine;
         }
-      }
-      if (line && rows.length < maxLines) rows.push(line);
-      rows.forEach((row, index) => ctx.fillText(row, x, y + index * lineHeight));
-      return y + rows.length * lineHeight;
+      });
+      if (line) rows.push(line);
+      return rows;
     }
 
     function wrapTextRows(ctx, text, maxWidth, maxLines = Infinity) {
-      const chars = Array.from(text);
+      const tokens = textWrapTokens(text);
       const rows = [];
       let line = "";
-      for (let i = 0; i < chars.length; i += 1) {
-        const testLine = line + chars[i];
-        if (ctx.measureText(testLine).width > maxWidth && line) {
-          rows.push(line);
-          line = chars[i];
-          if (rows.length >= maxLines - 1) break;
+      for (let i = 0; i < tokens.length; i += 1) {
+        const token = tokens[i];
+        const isSpace = /^\s+$/u.test(token);
+        if (isSpace && !line) continue;
+        const normalized = isSpace ? " " : token;
+        const testLine = line + normalized;
+        if (ctx.measureText(testLine).width <= maxWidth || !line) {
+          if (!line && ctx.measureText(normalized).width > maxWidth && !isSpace) {
+            const pieces = splitOversizedToken(ctx, normalized, maxWidth);
+            rows.push(...pieces.slice(0, -1));
+            line = pieces[pieces.length - 1] || "";
+          } else {
+            line = testLine;
+          }
         } else {
-          line = testLine;
+          rows.push(line.trimEnd());
+          if (rows.length >= maxLines - 1) {
+            line = normalized.trimStart();
+            break;
+          }
+          line = isSpace ? "" : normalized;
+          if (line && ctx.measureText(line).width > maxWidth) {
+            const pieces = splitOversizedToken(ctx, line, maxWidth);
+            rows.push(...pieces.slice(0, -1));
+            line = pieces[pieces.length - 1] || "";
+          }
         }
       }
-      if (line && rows.length < maxLines) rows.push(line);
-      return rows;
+      if (line && rows.length < maxLines) rows.push(line.trimEnd());
+      return rows.filter(Boolean);
+    }
+
+    function wrapText(ctx, text, x, y, maxWidth, lineHeight, maxLines = 6) {
+      wrapTextRows(ctx, text, maxWidth, maxLines).forEach((row, index) => {
+        ctx.fillText(row, x, y + index * lineHeight);
+      });
+    }
+
+    function drawTextBlock(ctx, text, x, y, maxWidth, lineHeight, maxLines = 6) {
+      const rows = wrapTextRows(ctx, text, maxWidth, maxLines);
+      rows.forEach((row, index) => ctx.fillText(row, x, y + index * lineHeight));
+      return y + rows.length * lineHeight;
     }
 
     function ellipsizeToWidth(ctx, text, maxWidth) {
