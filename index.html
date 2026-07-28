@@ -728,7 +728,13 @@
       { tag: "第 15 题 / 工作群深夜消息", title: "晚上 11 点老板在群里问“有人在吗”，你会？", options: [["如果是紧急事项就回复", 3, 1, 2], ["已读不回，明天按流程处理", 1, 0, 2], ["回“梦里在”然后撤回", -3, 0, -4], ["把群名改成大型午夜惊悚片", -8, -2, -5]] },
       { tag: "第 16 题 / 朋友秘密", title: "你无意间知道了朋友的秘密，你会？", options: [["当作没听见，绝不外传", 8, 4, 3], ["只在对方需要时提供支持", 6, 3, 1], ["憋得很难受，但忍住", 1, 0, 0], ["匿名投稿给吃瓜号，还改个更炸的标题", -16, -5, -4]] },
       { tag: "第 17 题 / 便利店最后一盒", title: "便利店只剩最后一盒你爱吃的甜品，后面小孩也想要，你会？", options: [["让给小孩，今天修一点功德", 7, 4, 0], ["问店员还有没有库存", 3, 1, 1], ["先拿到手再思考人生", -3, 0, -1], ["当场买走并说：社会就是这样", -12, -4, -2]] },
-      { tag: "第 18 题 / 灵魂终审", title: "如果下辈子可以自己选一点点，你最想保留什么？", options: [["保留同理心，别成为讨厌的人", 8, 4, 1], ["保留好运，其他随缘", 2, 0, 0], ["保留看热闹的第一排视角", -2, 0, -2], ["保留让别人破防的能力，继续精准攻击", -13, -5, -5]] }
+      { tag: "第 18 题 / AI 伦理", title: "你用 AI 做了一份材料，里面有明显引用错误，你会？", options: [["逐条核对并改掉错误", 8, 3, 4], ["标注 AI 辅助，提醒对方复核", 5, 2, 2], ["反正看起来很真，先交了再说", -7, -3, -1], ["甩锅给 AI：它生成的，跟我无关", -14, -5, -3]] },
+      { tag: "第 19 题 / 隐私边界", title: "朋友手机亮屏弹出一条暧昧消息，你刚好看见，你会？", options: [["立刻移开视线，当没看见", 7, 4, 2], ["提醒他手机亮了，不提内容", 5, 2, 1], ["看完但不说，心里默默吃瓜", -3, -1, -1], ["凑近确认是谁，还拿来调侃", -13, -5, -4]] },
+      { tag: "第 20 题 / 资源分配", title: "团队奖励只够分给一部分人，你有决定权，你会？", options: [["按贡献公开说明规则", 8, 2, 5], ["照顾最辛苦但不爱表达的人", 6, 4, 2], ["优先给跟自己关系近的人", -8, -4, 1], ["故意模糊标准，让大家互相猜", -14, -5, -4]] },
+      { tag: "第 21 题 / 家庭边界", title: "家人用“为你好”干涉你的决定，你会？", options: [["表达感谢，但清楚说明边界", 6, 2, 4], ["先听完，再决定采不采纳", 3, 1, 1], ["嘴上答应，背后完全不管", -2, 0, -1], ["翻旧账反击，把饭桌变辩论赛", -8, -2, -5]] },
+      { tag: "第 22 题 / 环保小题", title: "你在户外看到有人把垃圾落在座位上，你会？", options: [["顺手捡起来丢掉", 6, 3, 2], ["提醒对方带走", 5, 2, 3], ["看见了但懒得管", -2, 0, 0], ["拍照发网上嘲讽，不处理现场", -7, -2, -3]] },
+      { tag: "第 23 题 / 情绪管理", title: "你心情很差，但有人正常来问你问题，你会？", options: [["说明自己状态不好，晚点认真回复", 6, 2, 3], ["尽量就事论事，不迁怒", 5, 3, 2], ["冷着脸回一句：自己不会看吗", -7, -3, -1], ["借题发挥，把无辜的人一起骂了", -14, -5, -5]] },
+      { tag: "第 24 题 / 灵魂终审", title: "如果下辈子可以自己选一点点，你最想保留什么？", options: [["保留同理心，别成为讨厌的人", 8, 4, 1], ["保留好运，其他随缘", 2, 0, 0], ["保留看热闹的第一排视角", -2, 0, -2], ["保留让别人破防的能力，继续精准攻击", -13, -5, -5]] }
     ];
 
     const rebirthPool = {
@@ -1386,6 +1392,263 @@
         line(24, 74, 76, 74, accent, 4);
         line(33, 32, 22, 22, main, 3);
         line(70, 32, 82, 22, main, 3);
+      } else if (item.includes("误入镜头") || item.includes("路人甲")) {
+        rect(18, 26, 64, 46, "#ffffff", 4);
+        line(24, 32, 36, 32, accent, 3);
+        line(64, 32, 76, 32, accent, 3);
+        circle(66, 50, 16, main);
+        rect(56, 64, 22, 16, "#ffffff", 9);
+        line(42, 37, 50, 58, "#d7d8e7", 3);
+      } else if (item.includes("遥控器") || item.includes("后盖")) {
+        rect(34, 16, 32, 70, "#ffffff", 10);
+        rect(40, 22, 20, 20, soft, 5);
+        circle(50, 52, 5, main);
+        circle(50, 66, 5, accent);
+        path([[68, 36], [84, 44], [68, 52]], "#ffffff");
+        line(70, 38, 82, 48, accent, 3);
+        textMark("OFF", 50, 82, 9);
+      } else if (item.includes("售货机按钮") || item.includes("按钮")) {
+        rect(22, 24, 56, 56, "#ffffff", 8);
+        circle(50, 52, 18, main);
+        circle(50, 52, 9, accent);
+        line(31, 34, 69, 34, "#d7d8e7", 3);
+        textMark("PUSH", 50, 88, 9);
+      } else if (item.includes("快递胶带") || item.includes("撕不开")) {
+        rect(22, 38, 56, 34, "#ffffff", 4);
+        line(22, 50, 78, 50, accent, 8);
+        line(32, 34, 48, 22, main, 4);
+        line(68, 34, 82, 22, main, 4);
+        line(36, 60, 66, 60, "#d7d8e7", 3);
+      } else if (item.includes("蓝牙音箱") || item.includes("音箱")) {
+        rect(24, 30, 48, 46, main, 10);
+        circle(42, 53, 12, "#ffffff");
+        circle(42, 53, 5, accent);
+        line(64, 38, 82, 28, accent, 4);
+        line(68, 52, 88, 52, accent, 4);
+        line(64, 66, 82, 78, accent, 4);
+      } else if (item.includes("共享单车刹车") || item.includes("刹车")) {
+        circle(32, 72, 12, "#ffffff");
+        circle(68, 72, 12, "#ffffff");
+        line(32, 72, 50, 46, main, 4);
+        line(50, 46, 68, 72, main, 4);
+        line(50, 46, 72, 36, accent, 4);
+        line(70, 35, 88, 26, "#ef5555", 4);
+        line(86, 36, 72, 24, "#ef5555", 4);
+      } else if (item.includes("裤扣")) {
+        path([[24, 35], [76, 35], [70, 76], [55, 76], [50, 58], [45, 76], [30, 76]], "#ffffff");
+        line(28, 39, 72, 39, main, 5);
+        circle(50, 55, 7, accent);
+        line(26, 28, 40, 18, "#ef5555", 4);
+        line(74, 28, 60, 18, "#ef5555", 4);
+      } else if (item.includes("充电口")) {
+        rect(22, 30, 56, 42, "#ffffff", 8);
+        rect(38, 45, 24, 12, "#d7d8e7", 4);
+        line(50, 56, 50, 88, accent, 6);
+        line(43, 82, 57, 82, accent, 5);
+        line(31, 38, 42, 31, main, 3);
+        line(70, 38, 82, 31, main, 3);
+      } else if (item.includes("闪退") || item.includes("没保存")) {
+        rect(24, 18, 52, 64, "#ffffff", 5);
+        line(34, 36, 66, 36, main, 4);
+        line(34, 50, 56, 50, main, 4);
+        circle(70, 24, 9, "#ef5555");
+        line(66, 20, 74, 28, "#ffffff", 2);
+        line(74, 20, 66, 28, "#ffffff", 2);
+      } else if (item.includes("白衬衫袖口")) {
+        rect(36, 24, 26, 58, "#ffffff", 7);
+        line(33, 60, 66, 60, accent, 6);
+        circle(48, 42, 4, "#d85a4d");
+        circle(56, 49, 3, "#d85a4d");
+        line(64, 30, 78, 18, main, 4);
+      } else if (item.includes("预装软件")) {
+        rect(26, 18, 48, 66, "#ffffff", 8);
+        for (let px = 36; px <= 58; px += 14) {
+          rect(px - 4, 32, 8, 8, main, 2);
+          rect(px - 4, 48, 8, 8, accent, 2);
+        }
+        circle(70, 22, 8, "#ef5555");
+        line(66, 22, 74, 22, "#ffffff", 2);
+      } else if (item.includes("灯箱")) {
+        rect(20, 25, 60, 42, "#fff7c7", 6);
+        line(24, 36, 76, 36, accent, 4);
+        textMark("OPEN", 50, 57, 13);
+        line(28, 68, 20, 86, main, 4);
+        line(72, 68, 80, 86, main, 4);
+        circle(18, 22, 4, "#ffe680");
+        circle(82, 22, 4, "#ffe680");
+      } else if (item.includes("空座")) {
+        rect(22, 50, 56, 18, main, 7);
+        rect(26, 28, 48, 25, "#ffffff", 8);
+        line(30, 68, 24, 84, accent, 5);
+        line(70, 68, 76, 84, accent, 5);
+        line(42, 37, 58, 37, "#d7d8e7", 3);
+      } else if (item.includes("硬币")) {
+        circle(50, 55, 23, "#ffd66b");
+        circle(50, 55, 13, "#fff1a6");
+        textMark("1", 50, 63, 20);
+        path([[18, 68], [45, 50], [82, 70], [76, 84], [26, 84]], soft);
+      } else if (item.includes("整蛊贴纸") || item.includes("贴纸")) {
+        rect(25, 28, 50, 42, "#fff7c7", 5);
+        path([[58, 70], [75, 53], [75, 70]], "#ffffff");
+        circle(40, 46, 4, "#1d1d22");
+        circle(60, 44, 4, "#1d1d22");
+        line(38, 58, 64, 55, "#ef5555", 4);
+        textMark("BOO", 50, 86, 10);
+      } else if (item.includes("播放键") || item.includes("随机播放键")) {
+        circle(50, 50, 28, "#ffffff");
+        path([[43, 34], [43, 66], [69, 50]], main);
+        line(18, 30, 33, 30, accent, 4);
+        line(67, 30, 82, 30, accent, 4);
+        line(18, 72, 33, 72, main, 4);
+        line(67, 72, 82, 72, main, 4);
+        line(30, 30, 70, 72, accent, 3);
+      } else if (item.includes("大群") || item.includes("哈哈哈")) {
+        rect(18, 30, 64, 42, "#ffffff", 8);
+        circle(34, 50, 7, main);
+        circle(50, 50, 7, accent);
+        circle(66, 50, 7, "#79b45d");
+        line(32, 74, 24, 86, "#ffffff", 4);
+      } else if (item.includes("购物车")) {
+        line(24, 28, 34, 64, "#1d1d22", 5);
+        rect(34, 38, 42, 24, "#ffffff", 4);
+        circle(42, 76, 5, main);
+        circle(68, 76, 5, main);
+        line(74, 30, 86, 18, "#ef5555", 4);
+        line(84, 32, 72, 18, "#ef5555", 4);
+      } else if (item.includes("短信")) {
+        rect(22, 30, 56, 38, "#ffffff", 8);
+        path([[36, 68], [46, 58], [56, 68]], "#ffffff");
+        line(32, 42, 68, 42, main, 4);
+        line(32, 54, 58, 54, accent, 4);
+        circle(76, 26, 9, "#ef5555");
+        textMark("!", 76, 31, 12);
+      } else if (item.includes("小广告") || item.includes("广告弹窗")) {
+        rect(20, 28, 60, 44, "#fff7c7", 6);
+        rect(58, 18, 24, 20, "#ffffff", 5);
+        line(64, 24, 76, 32, "#ef5555", 3);
+        line(76, 24, 64, 32, "#ef5555", 3);
+        textMark("AD", 50, 57, 20);
+      } else if (item.includes("扶手") || item.includes("黏感")) {
+        ctx.beginPath();
+        ctx.strokeStyle = main;
+        ctx.lineWidth = 9 * unit;
+        ctx.arc(50 * unit, 50 * unit, 27 * unit, Math.PI * .08, Math.PI * 1.9);
+        ctx.stroke();
+        circle(38, 62, 4, "#79b45d");
+        circle(58, 48, 5, "#79b45d");
+        line(34, 78, 66, 78, accent, 5);
+      } else if (item.includes("备忘录")) {
+        rect(28, 18, 44, 64, "#fff7c7", 5);
+        line(28, 32, 72, 32, "#ef5555", 3);
+        line(38, 45, 64, 45, main, 4);
+        line(38, 58, 60, 58, main, 4);
+        line(38, 71, 56, 71, accent, 4);
+      } else if (item.includes("电梯") && item.includes("屁")) {
+        rect(28, 22, 44, 60, "#ffffff", 5);
+        line(50, 22, 50, 82, "#d7d8e7", 2);
+        circle(39, 56, 6, main);
+        circle(61, 56, 6, accent);
+        line(24, 42, 12, 35, "#79b45d", 3);
+        line(78, 42, 90, 35, "#79b45d", 3);
+      } else if (item.includes("弹珠声") || item.includes("弹珠")) {
+        circle(32, 48, 8, main);
+        circle(54, 62, 7, accent);
+        circle(70, 36, 6, "#79b45d");
+        line(24, 78, 80, 78, "#1d1d22", 4);
+        line(28, 33, 74, 68, soft, 3);
+      } else if (item.includes("楼上")) {
+        rect(25, 20, 50, 56, "#ffffff", 5);
+        line(25, 48, 75, 48, "#d7d8e7", 3);
+        circle(50, 34, 6, main);
+        line(38, 66, 62, 66, accent, 5);
+      } else if (item.includes("内裤")) {
+        path([[22, 34], [78, 34], [68, 76], [56, 76], [50, 58], [44, 76], [32, 76]], "#ffffff");
+        line(26, 38, 74, 38, main, 5);
+        circle(50, 56, 6, accent);
+        line(36, 76, 30, 86, "#ef5555", 3);
+      } else if (item.includes("开屏广告")) {
+        rect(32, 16, 36, 68, "#ffffff", 8);
+        rect(38, 28, 24, 36, soft, 3);
+        line(42, 40, 58, 56, "#ef5555", 4);
+        line(58, 40, 42, 56, "#ef5555", 4);
+        textMark("跳过", 50, 78, 9);
+      } else if (item.includes("旧书") || item.includes("被认真读完")) {
+        path([[24, 26], [49, 18], [76, 26], [76, 78], [50, 70], [24, 78]], "#ffffff");
+        line(50, 20, 50, 72, "#d7d8e7", 3);
+        line(32, 40, 44, 36, main, 3);
+        line(56, 38, 68, 42, accent, 3);
+        line(32, 56, 44, 52, main, 3);
+      } else if (item.includes("充电宝")) {
+        rect(28, 26, 44, 52, "#ffffff", 9);
+        rect(38, 38, 24, 18, main, 4);
+        circle(38, 66, 3, accent);
+        circle(50, 66, 3, accent);
+        line(72, 52, 88, 52, accent, 5);
+        line(84, 46, 90, 52, accent, 4);
+        line(84, 58, 90, 52, accent, 4);
+      } else if (item.includes("关东煮")) {
+        rect(30, 48, 40, 30, "#ffffff", 6);
+        line(34, 48, 66, 48, accent, 5);
+        circle(38, 42, 8, "#fff4c2");
+        circle(52, 36, 8, main);
+        circle(64, 43, 7, "#efb333");
+        line(35, 22, 65, 72, "#1d1d22", 3);
+      } else if (item.includes("荧光棒")) {
+        line(28, 74, 72, 28, "#ffe680", 11);
+        line(28, 74, 72, 28, main, 5);
+        circle(74, 26, 5, accent);
+        circle(26, 76, 5, accent);
+        line(20, 30, 12, 18, "#ffe680", 4);
+        line(78, 74, 88, 84, "#ffe680", 4);
+      } else if (item.includes("骰子")) {
+        rect(28, 28, 44, 44, "#ffffff", 8);
+        circle(40, 40, 4, main);
+        circle(60, 40, 4, accent);
+        circle(50, 50, 4, "#1d1d22");
+        circle(40, 60, 4, accent);
+        circle(60, 60, 4, main);
+        line(24, 22, 76, 78, soft, 3);
+      } else if (item.includes("传单")) {
+        path([[26, 24], [74, 20], [78, 70], [30, 78]], "#ffffff");
+        line(34, 38, 66, 34, main, 4);
+        line(36, 52, 62, 50, accent, 4);
+        line(28, 24, 18, 15, main, 3);
+        line(74, 20, 86, 12, accent, 3);
+      } else if (item.includes("真心话卡牌")) {
+        rect(28, 24, 44, 56, "#ffffff", 6);
+        path([[50, 36], [62, 48], [50, 64], [38, 48]], "#ef5555");
+        textMark("?", 50, 56, 18);
+        line(20, 30, 30, 24, accent, 3);
+      } else if (item.includes("文件夹")) {
+        path([[22, 32], [42, 32], [48, 24], [78, 24], [78, 76], [22, 76]], "#ffffff");
+        line(28, 48, 70, 48, main, 4);
+        line(30, 62, 62, 62, accent, 4);
+        circle(70, 30, 4, accent);
+      } else if (item.includes("合同")) {
+        rect(28, 18, 44, 64, "#ffffff", 5);
+        line(38, 34, 64, 34, main, 4);
+        line(38, 48, 64, 48, main, 4);
+        line(38, 62, 56, 62, main, 4);
+        circle(62, 72, 8, "#ef5555");
+        line(58, 72, 66, 72, "#ffffff", 2);
+      } else if (item.includes("会议链接")) {
+        rect(18, 32, 64, 38, "#ffffff", 8);
+        line(34, 52, 47, 52, main, 6);
+        line(53, 52, 66, 52, main, 6);
+        line(44, 45, 56, 59, accent, 4);
+        circle(76, 28, 7, "#ef5555");
+      } else if (item.includes("风控系统")) {
+        rect(26, 22, 48, 58, "#ffffff", 7);
+        path([[50, 30], [68, 38], [64, 62], [50, 74], [36, 62], [32, 38]], main);
+        line(42, 50, 58, 50, "#ffffff", 3);
+        line(50, 42, 50, 61, "#ffffff", 3);
+        circle(72, 26, 8, "#ef5555");
+      } else if (item.includes("弹珠")) {
+        circle(32, 48, 8, main);
+        circle(54, 62, 7, accent);
+        circle(70, 36, 6, "#79b45d");
+        line(24, 78, 80, 78, "#1d1d22", 4);
+        line(28, 33, 74, 68, soft, 3);
       } else if (item.includes("草莓")) {
         path([[50, 24], [72, 42], [65, 78], [50, 88], [34, 78], [28, 42]], "#ff4d58");
         path([[38, 26], [48, 14], [54, 28], [68, 20], [60, 36]], "#54c35d");
@@ -1570,7 +1833,7 @@
       } else if (item.includes("人设") || item.includes("路人甲")) {
         circle(50, 36, 14, main);
         rect(30, 56, 40, 24, "#ffffff", 12);
-        textMark(item.includes("路人") ? "甲" : "设", 50, 70, 18);
+        textMark(item.includes("路人") ? "路人" : "人设", 50, 70, 13);
       } else if (item.includes("会员") || item.includes("续费") || item.includes("订阅") || item.includes("扣费") || item.includes("试用") || item.includes("权益") || item.includes("取消订阅")) {
         rect(22, 28, 56, 44, "#ffffff", 8);
         textMark("VIP", 50, 48, 18);
@@ -1907,7 +2170,7 @@
         rect(20, 26, 60, 48, "#ffffff", 8);
         rect(28, 18, 44, 16, main, 8);
         line(30, 58, 70, 58, accent, 4);
-        textMark(item.replace(/[^\u4e00-\u9fa5A-Za-z0-9]/g, "").slice(0, 2) || "物", 50, 51, 18);
+        circle(50, 49, 7, accent);
       }
 
       ctx.restore();
