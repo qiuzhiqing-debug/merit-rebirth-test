@@ -1328,7 +1328,65 @@
         ctx.textAlign = "left";
       }
 
-      if (item.includes("草莓")) {
+      if (item.includes("牙缝") || item.includes("菜叶")) {
+        rect(18, 25, 64, 52, "#ffffff", 10);
+        line(50, 28, 50, 78, "#d7d8e7", 2);
+        path([[48, 51], [65, 38], [74, 52], [60, 68]], "#4fb45f");
+        line(52, 54, 69, 49, "#0b5c2e", 3);
+        circle(28, 38, 3, "#fff7c7");
+        circle(72, 70, 2.5, "#fff7c7");
+      } else if (item.includes("进度条")) {
+        rect(14, 42, 72, 18, "#ffffff", 9);
+        rect(16, 44, 58, 14, main, 7);
+        line(74, 35, 84, 25, "#ef5555", 4);
+        line(82, 35, 72, 25, "#ef5555", 4);
+        textMark("99%", 50, 78, 14);
+      } else if (item.includes("便利店") || item.includes("台阶")) {
+        rect(24, 18, 52, 44, "#ffffff", 4);
+        rect(40, 32, 20, 30, soft, 3);
+        line(30, 18, 70, 18, accent, 5);
+        line(24, 62, 78, 62, "#1d1d22", 4);
+        rect(20, 66, 60, 9, main, 2);
+        rect(16, 78, 68, 9, accent, 2);
+        textMark("24h", 50, 30, 12);
+      } else if (item.includes("人设")) {
+        circle(50, 30, 12, main);
+        rect(31, 48, 38, 28, "#ffffff", 14);
+        rect(30, 68, 40, 12, accent, 5);
+        line(38, 50, 28, 40, main, 4);
+        line(62, 50, 76, 38, main, 4);
+        textMark("设", 50, 67, 18);
+      } else if (item.includes("厕所门把手")) {
+        rect(26, 18, 48, 68, "#ffffff", 5);
+        line(28, 28, 72, 28, soft, 3);
+        circle(60, 52, 6, main);
+        line(60, 52, 78, 52, accent, 7);
+        circle(35, 34, 3, "#d7d8e7");
+        textMark("WC", 46, 75, 12);
+      } else if (item.includes("拉链")) {
+        line(50, 16, 50, 82, "#1d1d22", 4);
+        for (let zy = 23; zy <= 62; zy += 9) {
+          line(42, zy, 50, zy + 4, main, 3);
+          line(58, zy, 50, zy + 4, accent, 3);
+        }
+        path([[42, 66], [58, 66], [62, 82], [38, 82]], "#ffffff");
+        circle(50, 74, 4, main);
+        line(50, 82, 50, 91, accent, 4);
+      } else if (item.includes("酸奶")) {
+        path([[30, 24], [70, 24], [66, 80], [34, 80]], "#fff7d6");
+        line(32, 32, 68, 32, "#ef5555", 5);
+        circle(40, 52, 7, accent);
+        circle(58, 48, 6, "#ef5555");
+        line(36, 70, 64, 70, "#ef5555", 4);
+        textMark("EXP", 50, 88, 11);
+      } else if (item.includes("最后一块肉") || item.includes("块肉")) {
+        circle(50, 52, 32, "#fff4c2");
+        path([[38, 42], [56, 31], [72, 45], [68, 62], [48, 70], [30, 58]], "#d85a4d");
+        circle(48, 52, 7, "#ffb08c");
+        line(24, 74, 76, 74, accent, 4);
+        line(33, 32, 22, 22, main, 3);
+        line(70, 32, 82, 22, main, 3);
+      } else if (item.includes("草莓")) {
         path([[50, 24], [72, 42], [65, 78], [50, 88], [34, 78], [28, 42]], "#ff4d58");
         path([[38, 26], [48, 14], [54, 28], [68, 20], [60, 36]], "#54c35d");
         circle(42, 48, 2.5, "#fff7c7");
