@@ -819,6 +819,7 @@
       { words: ["猫", "蚊子"], icon: "🐾", type: "活体轮回", line: "你会带着一点本能继续营业：想亲近就亲近，想消耗就消耗，命运全看你今天的道德余额。" },
       { words: ["灯", "光", "路灯"], icon: "💡", type: "发光单位", line: "你下辈子负责照亮别人，也负责暴露一些不该被看见的尴尬瞬间。" },
       { words: ["毯", "围巾", "被子", "纸巾", "创可贴"], icon: "🧣", type: "温柔物件", line: "你会变成一种低调的安慰，出现得不轰烈，但刚好能救一下场。" },
+      { words: ["护身符", "寺庙", "金光", "福"], icon: "🧿", type: "功德信物", line: "你会被认真收好、随身带着，像一小块会发光的安心感，专门替别人挡掉一点倒霉。" },
       { words: ["门禁", "表", "流程", "审批", "考勤", "KPI", "规则", "系统", "验证码"], icon: "📋", type: "规则装置", line: "你会被写进某种流程里，别人一边离不开你，一边忍不住想对你翻白眼。" },
       { words: ["广告", "弹窗", "续费", "订阅", "更新", "协议"], icon: "📢", type: "打扰型存在", line: "你会在别人最不想看见你的时候出现，主打一个精准降低人类耐心。" },
       { words: ["视频", "播放", "开屏"], icon: "▶", type: "媒介小事故", line: "你会变成一段很会抢镜的内容，不一定人人想看，但出现时绝对有存在感。" },
@@ -1027,24 +1028,33 @@
     function getIdentityProfile(item) {
       return identityRules.find(rule => rule.words.some(word => item.includes(word))) || {
         icon: "✨",
-        type: "特殊轮回",
-        line: "你会成为一个很难被归类的东西，听起来离谱，但仔细想想又很像你的灵魂状态。"
+        type: "命运小物",
+        line: "你会变成一个带着个人气质的小物件，不一定常被注意，但一出现就很像你的灵魂签名。"
       };
     }
 
     function makeVerdict(item, alignment, score, level) {
       const profile = getIdentityProfile(item);
-      const ending = verdictEndings[Math.abs(answerSignature + item.length + state.good - state.order) % verdictEndings.length];
+      const scene = score >= 70 ? "天堂审判厅" : score >= 35 ? "人间观察站" : "地狱复盘室";
       const scoreLine = score >= 82
-        ? "你的功德分亮到宇宙都得眯一下眼。"
+        ? `你拿到 ${score} 分，属于功德余额溢出的那一档，系统甚至想给你的灵魂加个防丢绳。`
         : score >= 65
-          ? "你的功德余额还挺健康，至少没被系统标红。"
+          ? `你拿到 ${score} 分，功德账户总体健康，偶尔有小划痕，但不影响继续发光。`
           : score >= 48
-            ? "你的善恶正在拉扯，像一份还没保存的草稿。"
+            ? `你拿到 ${score} 分，善恶正在互相拔河，系统决定先把你放回人间继续观察。`
             : score >= 30
-              ? "你的阴德有点漏风，建议近期少做缺德小动作。"
-              : "你的灵魂已经开始弹出风险提示。";
-      return `系统判定你属于「${alignment}」里的「${profile.type}」。${scoreLine} 下辈子你会成为「${item}」：${profile.line} ${ending}`;
+              ? `你拿到 ${score} 分，阴德余额开始变薄，系统给你安排一个比较有提醒意味的下辈子。`
+              : `你拿到 ${score} 分，地狱窗口已经开始叫号，系统建议你先别急着狡辩。`;
+      const itemLine = score >= 82
+        ? `所以你下辈子会成为「${item}」：不是被惩罚，是被郑重托付。你会替别人挡一点小灾、攒一点好运，出场自带“这东西别弄丢”的仪式感。`
+        : score >= 65
+          ? `所以你下辈子会成为「${item}」：你不是完美圣物，但很有用。别人需要一点安慰、秩序或好运时，你会刚好在场。`
+          : score >= 48
+            ? `所以你下辈子会成为「${item}」：你有时帮忙，有时添乱，像命运放在生活里的一个小按钮，按下去会发生什么全看当天状态。`
+            : score >= 30
+              ? `所以你下辈子会成为「${item}」：你会以一种不太致命但很有存在感的方式提醒大家，做人还是要给自己留点阴德。`
+              : `所以你下辈子会成为「${item}」：你会变成命运安排的小型尴尬现场，平时不起眼，关键时刻精准让人破防。`;
+      return `系统在「${scene}」复盘后判定：你属于「${alignment}」里的「${profile.type}」。${scoreLine} ${itemLine} ${profile.line}`;
     }
 
     const publicShareUrl = "https://qiuzhiqing-debug.github.io/merit-rebirth-test/";
@@ -1163,6 +1173,7 @@
         "活体轮回": ["#ffe4d6", "#ef5555", "#1d1d22"],
         "发光单位": ["#fff1b8", "#efb333", "#4f74ff"],
         "温柔物件": ["#f1e9ff", "#8476d8", "#79b45d"],
+        "功德信物": ["#fff8dd", "#8476d8", "#efb333"],
         "规则装置": ["#e9efff", "#4f74ff", "#1d1d22"],
         "打扰型存在": ["#ffe2e2", "#ef5555", "#efb333"],
         "媒介小事故": ["#f1edff", "#8476d8", "#efb333"],
@@ -1175,9 +1186,9 @@
         "噪音轮回": ["#f0e9ff", "#8476d8", "#ef5555"],
         "自然旁观者": ["#eff8e8", "#79b45d", "#6d6d75"],
         "生活机关": ["#fff0dd", "#efb333", "#1d1d22"],
-        "特殊轮回": ["#fff7df", "#8476d8", "#efb333"]
+        "命运小物": ["#fff7df", "#8476d8", "#efb333"]
       };
-      return palettes[type] || palettes["特殊轮回"];
+      return palettes[type] || palettes["命运小物"];
     }
 
     function grain(ctx, x, y, width, height, alpha = .12, step = 7) {
