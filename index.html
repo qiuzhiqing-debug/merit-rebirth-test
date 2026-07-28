@@ -2498,11 +2498,50 @@
       return y + rows.length * lineHeight;
     }
 
+    function wrapTextRows(ctx, text, maxWidth, maxLines = Infinity) {
+      const chars = Array.from(text);
+      const rows = [];
+      let line = "";
+      for (let i = 0; i < chars.length; i += 1) {
+        const testLine = line + chars[i];
+        if (ctx.measureText(testLine).width > maxWidth && line) {
+          rows.push(line);
+          line = chars[i];
+          if (rows.length >= maxLines - 1) break;
+        } else {
+          line = testLine;
+        }
+      }
+      if (line && rows.length < maxLines) rows.push(line);
+      return rows;
+    }
+
+    function drawFittedTextBlock(ctx, text, x, y, maxWidth, maxHeight, startSize, minSize, weight = 800) {
+      let size = startSize;
+      let rows = [];
+      let lineHeight = Math.round(size * 1.45);
+      while (size >= minSize) {
+        ctx.font = `${weight} ${size}px Arial, Microsoft YaHei, sans-serif`;
+        lineHeight = Math.round(size * 1.45);
+        rows = wrapTextRows(ctx, text, maxWidth);
+        if (rows.length * lineHeight <= maxHeight) break;
+        size -= 1;
+      }
+      const maxLines = Math.floor(maxHeight / lineHeight);
+      if (rows.length > maxLines) {
+        rows = rows.slice(0, Math.max(1, maxLines));
+        const last = rows[rows.length - 1];
+        rows[rows.length - 1] = last.length > 2 ? `${last.slice(0, -2)}...` : last;
+      }
+      rows.forEach((row, index) => ctx.fillText(row, x, y + index * lineHeight));
+      return y + rows.length * lineHeight;
+    }
+
     function fontSizeForText(ctx, text, maxWidth, startSize, minSize) {
       let size = startSize;
       while (size > minSize) {
         ctx.font = `900 ${size}px Arial Black, Microsoft YaHei, sans-serif`;
-        if (ctx.measureText(text).width <= maxWidth || text.length > 5) break;
+        if (ctx.measureText(text).width <= maxWidth) break;
         size -= 2;
       }
       return size;
@@ -2829,22 +2868,24 @@
 
       ctx.fillStyle = display;
       ctx.font = "900 118px Arial Black, Microsoft YaHei, sans-serif";
-      ctx.fillText(String(lastResult.score), 62, 252);
+      const scoreText = String(lastResult.score);
+      ctx.fillText(scoreText, 62, 252);
+      const scoreWidth = ctx.measureText(scoreText).width;
       ctx.font = "900 28px Arial Black, Microsoft YaHei, sans-serif";
       ctx.fillStyle = muted;
-      ctx.fillText("功德分", 240, 238);
+      ctx.fillText("功德分", Math.max(304, 62 + scoreWidth + 32), 238);
       ctx.fillStyle = decor;
       ctx.strokeStyle = border;
       ctx.lineWidth = 3;
-      roundedRect(ctx, 360, 202, 150, 48, 24);
+      roundedRect(ctx, 430, 202, 150, 48, 24);
       ctx.fill();
       ctx.stroke();
       ctx.fillStyle = theme.key === "hell" ? "#fffafa" : display;
       ctx.font = "900 22px Arial Black, Microsoft YaHei, sans-serif";
-      ctx.fillText(theme.name, 386, 234);
+      ctx.fillText(theme.name, 456, 234);
 
-      rectSketch(ctx, 62, 306, 776, 520, panel, 0, 4, border);
-      grain(ctx, 54, 292, 792, 540, .055, 10);
+      rectSketch(ctx, 62, 306, 776, 500, panel, 0, 4, border);
+      grain(ctx, 54, 292, 792, 520, .055, 10);
 
       drawItemIllustration(ctx, lastResult.item, { type: lastResult.type }, 88, 348, 270);
 
@@ -2862,20 +2903,19 @@
       ctx.fillText(lastResult.type, 430, infoY + 38);
       ctx.fillText(`善恶轴 ${state.good >= 0 ? "+" : ""}${state.good}`, 430, infoY + 76);
       ctx.fillText(`秩序轴 ${state.order >= 0 ? "+" : ""}${state.order}`, 430, infoY + 114);
-      drawAxis(ctx, 594, 578, 220);
+      drawAxis(ctx, 604, 576, 205);
 
-      rectSketch(ctx, 62, 868, 776, 240, panel, 0, 4, border);
-      grain(ctx, 54, 882, 792, 230, .055, 11);
+      rectSketch(ctx, 62, 846, 776, 292, panel, 0, 4, border);
+      grain(ctx, 54, 860, 792, 282, .055, 11);
       ctx.fillStyle = display;
-      ctx.font = "700 26px Arial, Microsoft YaHei, sans-serif";
-      drawTextBlock(ctx, lastResult.text, 76, 930, 748, 42, 5);
+      drawFittedTextBlock(ctx, lastResult.text, 76, 898, 748, 202, 25, 20, 800);
 
-      rectSketch(ctx, 650, 1122, 178, 176, panel, 0, 3, border);
-      await drawShareQr(ctx, 678, 1138, 122);
+      rectSketch(ctx, 650, 1150, 178, 150, panel, 0, 3, border);
+      await drawShareQr(ctx, 684, 1164, 110);
       ctx.fillStyle = muted;
       ctx.font = "700 18px Arial, Microsoft YaHei, sans-serif";
       ctx.textAlign = "center";
-      ctx.fillText("扫码测试", 739, 1286);
+      ctx.fillText("扫码测试", 739, 1292);
       ctx.textAlign = "left";
 
       ctx.fillStyle = muted;
