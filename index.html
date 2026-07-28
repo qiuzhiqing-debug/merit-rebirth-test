@@ -2684,6 +2684,12 @@
 
     function drawAxis(ctx, x, y, size) {
       ctx.save();
+      const pad = size * .18;
+      const labelFont = Math.max(10, size * .088);
+      const sideLabelW = size * .24;
+      const sideLabelH = size * .16;
+      const verticalLabelW = size * .38;
+      const verticalLabelH = size * .16;
       ctx.fillStyle = "#fffdf8";
       ctx.strokeStyle = "#1d1d22";
       ctx.lineWidth = Math.max(3, size * .018);
@@ -2694,10 +2700,10 @@
       ctx.strokeStyle = "#b9b5c4";
       ctx.lineWidth = Math.max(2, size * .012);
       ctx.beginPath();
-      ctx.moveTo(x + size / 2, y + 28);
-      ctx.lineTo(x + size / 2, y + size - 28);
-      ctx.moveTo(x + 28, y + size / 2);
-      ctx.lineTo(x + size - 28, y + size / 2);
+      ctx.moveTo(x + size / 2, y + pad);
+      ctx.lineTo(x + size / 2, y + size - pad);
+      ctx.moveTo(x + pad, y + size / 2);
+      ctx.lineTo(x + size - pad, y + size / 2);
       ctx.stroke();
 
       ctx.globalAlpha = .22;
@@ -2715,9 +2721,9 @@
       const pointY = y + clamp(50 - state.order * 2.8, 10, 90) / 100 * size;
       ctx.fillStyle = lastResult.score >= 65 ? "#79b45d" : lastResult.score >= 35 ? "#efb333" : "#ef5555";
       ctx.strokeStyle = "#1d1d22";
-      ctx.lineWidth = Math.max(4, size * .02);
+      ctx.lineWidth = Math.max(2.5, size * .02);
       ctx.beginPath();
-      ctx.arc(pointX, pointY, Math.max(18, size * .09), 0, Math.PI * 2);
+      ctx.arc(pointX, pointY, Math.max(8, size * .075), 0, Math.PI * 2);
       ctx.fill();
       ctx.stroke();
 
@@ -2725,17 +2731,17 @@
       ctx.strokeStyle = "#dfdce8";
       ctx.lineWidth = Math.max(2, size * .01);
       [
-        [x + 18, y + size / 2 - 36, 46, 28, "恶"],
-        [x + size - 64, y + size / 2 - 36, 46, 28, "善"],
-        [x + size / 2 - 34, y + 18, 68, 28, "混乱"],
-        [x + size / 2 - 34, y + size - 46, 68, 28, "守序"]
+        [x + size * .08, y + size / 2 - sideLabelH * 1.15, sideLabelW, sideLabelH, "恶"],
+        [x + size - size * .08 - sideLabelW, y + size / 2 - sideLabelH * 1.15, sideLabelW, sideLabelH, "善"],
+        [x + size / 2 - verticalLabelW / 2, y + size * .09, verticalLabelW, verticalLabelH, "混乱"],
+        [x + size / 2 - verticalLabelW / 2, y + size - size * .09 - verticalLabelH, verticalLabelW, verticalLabelH, "守序"]
       ].forEach(([rx, ry, rw, rh, text]) => {
-        roundedRect(ctx, rx, ry, rw, rh, 14);
+        roundedRect(ctx, rx, ry, rw, rh, Math.max(8, rh / 2));
         ctx.fill();
         ctx.stroke();
         ctx.fillStyle = "#6d6d75";
-        ctx.font = "700 20px Arial, Microsoft YaHei, sans-serif";
-        ctx.fillText(text, rx + (rw - ctx.measureText(text).width) / 2, ry + 20);
+        ctx.font = `700 ${labelFont}px Arial, Microsoft YaHei, sans-serif`;
+        ctx.fillText(text, rx + (rw - ctx.measureText(text).width) / 2, ry + rh * .68);
         ctx.fillStyle = "#fffdf8";
       });
       ctx.restore();
@@ -2849,7 +2855,7 @@
       ctx.textAlign = "left";
       ctx.fillText("Copyright 2026 Merit Test. All Rights Reserved.", 62, 1290);
       ctx.save();
-      drawPosterPlant(ctx, theme, 620, 70, .58);
+      drawPosterPlant(ctx, theme, 630, 96, .48);
       ctx.restore();
     }
 
@@ -2896,22 +2902,22 @@
       rectSketch(ctx, 62, 306, 776, 500, panel, 0, 4, border);
       grain(ctx, 54, 292, 792, 520, .055, 10);
 
-      drawItemIllustration(ctx, lastResult.item, { type: lastResult.type }, 74, 340, 318);
+      drawItemIllustration(ctx, lastResult.item, { type: lastResult.type }, 66, 334, 350);
 
       ctx.fillStyle = display;
       ctx.font = "900 32px Arial Black, Microsoft YaHei, sans-serif";
-      ctx.fillText(lastResult.alignment, 430, 348);
-      const titleSize = fontSizeForText(ctx, lastResult.item, 370, 58, 38);
+      ctx.fillText(lastResult.alignment, 450, 348);
+      const titleSize = fontSizeForText(ctx, lastResult.item, 340, 58, 38);
       ctx.font = `900 ${titleSize}px Arial Black, Microsoft YaHei, sans-serif`;
       ctx.fillStyle = display;
-      const titleEndY = drawTextBlock(ctx, lastResult.item, 430, 430, 370, titleSize + 10, 3);
+      const titleEndY = drawTextBlock(ctx, lastResult.item, 450, 430, 340, titleSize + 10, 3);
       ctx.font = "800 26px Arial, Microsoft YaHei, sans-serif";
       ctx.fillStyle = muted;
       let infoY = Math.max(560, titleEndY + 24);
-      ctx.fillText(lastResult.level, 430, infoY);
-      ctx.fillText(lastResult.type, 430, infoY + 38);
-      ctx.fillText(`善恶轴 ${state.good >= 0 ? "+" : ""}${state.good}`, 430, infoY + 76);
-      ctx.fillText(`秩序轴 ${state.order >= 0 ? "+" : ""}${state.order}`, 430, infoY + 114);
+      ctx.fillText(lastResult.level, 450, infoY);
+      ctx.fillText(lastResult.type, 450, infoY + 38);
+      ctx.fillText(`善恶轴 ${state.good >= 0 ? "+" : ""}${state.good}`, 450, infoY + 76);
+      ctx.fillText(`秩序轴 ${state.order >= 0 ? "+" : ""}${state.order}`, 450, infoY + 114);
 
       rectSketch(ctx, 62, 834, 776, 318, panel, 0, 4, border);
       grain(ctx, 54, 848, 792, 306, .055, 11);
