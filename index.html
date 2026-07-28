@@ -2318,6 +2318,38 @@
       return new Promise(resolve => canvas.toBlob(resolve, "image/png"));
     }
 
+    function resultFileName() {
+      const safeName = (el.rebirthName.textContent || "投胎结果")
+        .replace(/[\\/:*?"<>|]/g, "")
+        .slice(0, 18);
+      return `功德分投胎报告-${el.score.textContent}-${safeName}.png`;
+    }
+
+    function blobToDataUrl(blob) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+      });
+    }
+
+    function isMobileBrowser() {
+      return /Android|iPhone|iPad|iPod|Mobile|MicroMessenger/i.test(navigator.userAgent);
+    }
+
+    async function openImageSavePage(blob, fileName, pendingWindow = null) {
+      const dataUrl = await blobToDataUrl(blob);
+      const target = pendingWindow || window.open("", "_blank");
+      if (!target) {
+        window.location.href = dataUrl;
+        return;
+      }
+      target.document.open();
+      target.document.write(`<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${fileName}</title><style>body{margin:0;padding:18px;background:#111;color:#fff;font-family:Arial,'Microsoft YaHei',sans-serif;text-align:center}p{margin:0 0 14px;font-weight:800;line-height:1.6}img{display:block;width:100%;max-width:520px;margin:0 auto;background:#fff}</style></head><body><p>长按图片保存到相册，或用浏览器菜单保存图片</p><img src="${dataUrl}" alt="功德分投胎报告"></body></html>`);
+      target.document.close();
+    }
+
     async function copyImageResult() {
       await renderShareCard();
       const blob = await canvasToBlob(el.shareCanvas);
@@ -2337,19 +2369,40 @@
     }
 
     async function downloadImageResult() {
+      const pendingWindow = isMobileBrowser() ? window.open("", "_blank") : null;
       await renderShareCard();
       const blob = await canvasToBlob(el.shareCanvas);
+      const fileName = resultFileName();
+      if (isMobileBrowser()) {
+        try {
+          const file = new File([blob], fileName, { type: "image/png" });
+          if (navigator.canShare && navigator.canShare({ files: [file] }) && navigator.share) {
+            if (pendingWindow) pendingWindow.close();
+            await navigator.share({
+              files: [file],
+              title: "功德分投胎报告",
+              text: "保存或分享我的功德分投胎报告"
+            });
+            el.downloadImageBtn.textContent = "已打开保存面板";
+            setTimeout(() => el.downloadImageBtn.textContent = "下载结果图片", 1800);
+            return;
+          }
+        } catch {
+          // Fall through to the image save page for browsers without file sharing.
+        }
+        await openImageSavePage(blob, fileName, pendingWindow);
+        el.downloadImageBtn.textContent = "长按图片保存";
+        setTimeout(() => el.downloadImageBtn.textContent = "下载结果图片", 2200);
+        return;
+      }
       const url = URL.createObjectURL(blob);
-      const safeName = (el.rebirthName.textContent || "投胎结果")
-        .replace(/[\\/:*?"<>|]/g, "")
-        .slice(0, 18);
       const link = document.createElement("a");
       link.href = url;
-      link.download = `功德分投胎报告-${el.score.textContent}-${safeName}.png`;
+      link.download = fileName;
       document.body.appendChild(link);
       link.click();
       link.remove();
-      URL.revokeObjectURL(url);
+      setTimeout(() => URL.revokeObjectURL(url), 1200);
       el.downloadImageBtn.textContent = "已开始下载";
       setTimeout(() => el.downloadImageBtn.textContent = "下载结果图片", 1500);
     }
