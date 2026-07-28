@@ -2859,6 +2859,69 @@
       ctx.restore();
     }
 
+    function drawSharePanelFiller(ctx, theme, x, y, width, height) {
+      const border = theme.border || "#111";
+      const decor = theme.decor || theme.accent || "#efb333";
+      const display = theme.display || border;
+      const baseY = y + height - 96;
+      ctx.save();
+      ctx.globalAlpha = .13;
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      if (theme.key === "heaven") {
+        ctx.strokeStyle = border;
+        ctx.fillStyle = decor;
+        ctx.lineWidth = 5;
+        [[x + 84, baseY + 18, 72], [x + 540, baseY + 42, 58], [x + 648, baseY + 10, 42]].forEach(([cx, cy, r]) => {
+          ctx.beginPath();
+          ctx.arc(cx, cy, r * .42, Math.PI, 0);
+          ctx.arc(cx + r * .36, cy - r * .1, r * .34, Math.PI, 0);
+          ctx.arc(cx + r * .68, cy, r * .38, Math.PI, 0);
+          ctx.stroke();
+        });
+        [[x + 318, baseY + 12], [x + 708, baseY + 68], [x + 214, baseY + 70]].forEach(([cx, cy]) => {
+          poly(ctx, [[cx, cy - 20], [cx + 9, cy - 5], [cx + 26, cy], [cx + 9, cy + 7], [cx, cy + 24], [cx - 10, cy + 7], [cx - 28, cy], [cx - 10, cy - 5]], decor, border, 4);
+        });
+      } else if (theme.key === "hell") {
+        ctx.strokeStyle = display;
+        ctx.fillStyle = decor;
+        ctx.lineWidth = 5;
+        for (let i = 0; i < 5; i += 1) {
+          const sx = x + 80 + i * 138;
+          poly(ctx, [[sx, baseY + 82], [sx + 34, baseY + 20], [sx + 66, baseY + 84]], decor, display, 4);
+        }
+        ctx.beginPath();
+        ctx.moveTo(x + 54, baseY + 76);
+        for (let i = 0; i < 11; i += 1) {
+          ctx.lineTo(x + 54 + i * 66, baseY + 62 + (i % 2 ? 18 : -8));
+        }
+        ctx.stroke();
+      } else {
+        ctx.strokeStyle = border;
+        ctx.fillStyle = decor;
+        ctx.lineWidth = 5;
+        ctx.beginPath();
+        ctx.moveTo(x + 44, baseY + 72);
+        ctx.bezierCurveTo(x + 160, baseY + 38, x + 260, baseY + 96, x + 380, baseY + 60);
+        ctx.bezierCurveTo(x + 500, baseY + 24, x + 610, baseY + 78, x + width - 42, baseY + 48);
+        ctx.stroke();
+        [[x + 126, baseY + 10, 36], [x + 626, baseY + 2, 30], [x + 718, baseY + 56, 24]].forEach(([tx, ty, s]) => {
+          ctx.fillRect(tx, ty + s * .9, s * .16, s * 1.08);
+          poly(ctx, [[tx - s * .72, ty + s * .42], [tx, ty - s * .36], [tx + s * .8, ty + s * .44], [tx + s * .08, ty + s * .76]], decor, border, 3);
+        });
+      }
+      ctx.globalAlpha = .10;
+      ctx.fillStyle = decor;
+      for (let i = 0; i < 24; i += 1) {
+        const px = x + 36 + ((i * 83) % (width - 72));
+        const py = baseY + 8 + ((i * 37) % 86);
+        ctx.beginPath();
+        ctx.arc(px, py, 3 + (i % 3), 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.restore();
+    }
+
     async function renderShareCard(useRemoteQr = true) {
       if (!lastResult) return;
       const canvas = el.shareCanvas;
@@ -2901,6 +2964,7 @@
 
       rectSketch(ctx, 62, 306, 776, 500, panel, 0, 4, border);
       grain(ctx, 54, 292, 792, 520, .055, 10);
+      drawSharePanelFiller(ctx, theme, 62, 306, 776, 500);
 
       drawItemIllustration(ctx, lastResult.item, { type: lastResult.type }, 82, 352, 308);
 
@@ -2922,7 +2986,7 @@
       rectSketch(ctx, 62, 834, 776, 318, panel, 0, 4, border);
       grain(ctx, 54, 848, 792, 306, .055, 11);
       ctx.fillStyle = display;
-      drawFittedTextBlock(ctx, lastResult.text, 76, 886, 748, 238, 24, 17, 800);
+      drawFittedTextBlock(ctx, lastResult.text, 76, 878, 748, 252, 28, 18, 800);
 
       drawAxis(ctx, 472, 1162, 132);
       rectSketch(ctx, 658, 1160, 164, 138, panel, 0, 3, border);
