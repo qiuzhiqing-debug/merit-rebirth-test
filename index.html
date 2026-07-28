@@ -2849,7 +2849,7 @@
       ctx.textAlign = "left";
       ctx.fillText("Copyright 2026 Merit Test. All Rights Reserved.", 62, 1290);
       ctx.save();
-      drawPosterPlant(ctx, theme, 568, 82, .74);
+      drawPosterPlant(ctx, theme, 620, 70, .58);
       ctx.restore();
     }
 
@@ -2896,7 +2896,7 @@
       rectSketch(ctx, 62, 306, 776, 500, panel, 0, 4, border);
       grain(ctx, 54, 292, 792, 520, .055, 10);
 
-      drawItemIllustration(ctx, lastResult.item, { type: lastResult.type }, 88, 348, 270);
+      drawItemIllustration(ctx, lastResult.item, { type: lastResult.type }, 74, 340, 318);
 
       ctx.fillStyle = display;
       ctx.font = "900 32px Arial Black, Microsoft YaHei, sans-serif";
@@ -2907,18 +2907,18 @@
       const titleEndY = drawTextBlock(ctx, lastResult.item, 430, 430, 370, titleSize + 10, 3);
       ctx.font = "800 26px Arial, Microsoft YaHei, sans-serif";
       ctx.fillStyle = muted;
-      let infoY = Math.max(570, titleEndY + 26);
+      let infoY = Math.max(560, titleEndY + 24);
       ctx.fillText(lastResult.level, 430, infoY);
       ctx.fillText(lastResult.type, 430, infoY + 38);
       ctx.fillText(`善恶轴 ${state.good >= 0 ? "+" : ""}${state.good}`, 430, infoY + 76);
       ctx.fillText(`秩序轴 ${state.order >= 0 ? "+" : ""}${state.order}`, 430, infoY + 114);
-      drawAxis(ctx, 604, 576, 205);
 
       rectSketch(ctx, 62, 834, 776, 318, panel, 0, 4, border);
       grain(ctx, 54, 848, 792, 306, .055, 11);
       ctx.fillStyle = display;
       drawFittedTextBlock(ctx, lastResult.text, 76, 886, 748, 238, 24, 17, 800);
 
+      drawAxis(ctx, 472, 1162, 132);
       rectSketch(ctx, 658, 1160, 164, 138, panel, 0, 3, border);
       await drawShareQr(ctx, 690, 1172, 100);
       ctx.fillStyle = muted;
