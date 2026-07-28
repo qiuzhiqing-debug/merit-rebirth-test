@@ -1414,6 +1414,27 @@
         line(38, 38, 64, 38, main, 4);
         line(38, 52, 60, 52, accent, 4);
         textMark("¥", 50, 69, 16);
+      } else if (item.includes("汽水")) {
+        ctx.save();
+        ctx.rotate(-0.08);
+        path([[34, 26], [68, 24], [74, 78], [40, 84]], "#ffffff");
+        rect(37, 43, 34, 22, main, 5);
+        line(38, 33, 66, 31, accent, 4);
+        line(43, 79, 69, 75, accent, 4);
+        ctx.beginPath();
+        ctx.strokeStyle = "#1d1d22";
+        ctx.lineWidth = 4 * unit;
+        ctx.ellipse(52 * unit, 24 * unit, 12 * unit, 6 * unit, -0.1, 0, Math.PI * 2);
+        ctx.stroke();
+        line(50, 20, 62, 14, "#1d1d22", 3);
+        circle(56, 14, 3.5, accent);
+        ctx.restore();
+        line(34, 20, 24, 8, accent, 4);
+        line(48, 16, 48, 4, "#79b45d", 4);
+        line(62, 18, 76, 8, accent, 4);
+        circle(26, 28, 3, "#9ed8ff");
+        circle(72, 30, 3.4, "#9ed8ff");
+        circle(82, 46, 2.6, "#9ed8ff");
       } else if (item.includes("彩带") || item.includes("纸皇冠") || item.includes("传单") || item.includes("贴纸") || item.includes("拍立得") || item.includes("表情包") || item.includes("背景音乐") || item.includes("语音") || item.includes("哈哈哈")) {
         if (item.includes("纸皇冠")) {
           path([[22, 68], [30, 35], [46, 55], [50, 25], [58, 55], [74, 35], [78, 68]], main);
