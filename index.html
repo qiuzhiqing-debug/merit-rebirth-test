@@ -999,13 +999,29 @@
       return levelThresholds.findIndex(threshold => score >= threshold);
     }
 
-    function getAlignment() {
-      const moral = state.good > 4 ? "善良" : state.good < -4 ? "邪恶" : "中立";
-      const action = state.order > 4 ? "守序" : state.order < -4 ? "混乱" : "";
+    function getCalibratedAxes(score) {
+      let good = state.good;
+      const order = state.order;
+      if (score >= 82) good = Math.max(good, 10);
+      else if (score >= 70) good = Math.max(good, 6);
+      else if (score >= 48) good = Math.max(good, 0);
+      else if (score <= 25) good = Math.min(good, -8);
+      else if (score <= 35) good = Math.min(good, -5);
+      else if (score <= 45) good = Math.min(good, 0);
+      return { good: clamp(good, -50, 50), order: clamp(order, -50, 50) };
+    }
+
+    function getAlignmentFromAxes(good, order) {
+      const moral = good > 4 ? "善良" : good < -4 ? "邪恶" : "中立";
+      const action = order > 4 ? "守序" : order < -4 ? "混乱" : "";
       if (moral === "中立" && action === "") return "绝对中立";
       if (moral === "中立") return action + "中立";
       if (action === "") return "中立" + moral;
       return action + moral;
+    }
+
+    function getAlignment() {
+      return getAlignmentFromAxes(state.good, state.order);
     }
 
     function updateMark() {
@@ -2412,6 +2428,9 @@
 
     function showResult() {
       const score = clamp(state.merit, 0, 100);
+      const calibrated = getCalibratedAxes(score);
+      state.good = calibrated.good;
+      state.order = calibrated.order;
       const alignment = getAlignment();
       const tier = levelIndex(score);
       const item = pickRebirth(alignment, score);
