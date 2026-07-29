@@ -1451,96 +1451,109 @@
       }
 
       if (item.includes("导盲犬")) {
-        const fur = "#f6deb6";
-        const shade = "#e0b17c";
-        const ear = "#6f4d32";
-        const vest = "#4f74ff";
-        const guide = "#efb333";
+        const fur = "#ffd47a";
+        const furLight = "#ffe19a";
+        const shade = "#d9822b";
+        const ear = "#c16b24";
+        const pack = "#ef3f32";
         ctx.save();
         ctx.lineCap = "round";
         ctx.lineJoin = "round";
         ctx.strokeStyle = "#1d1d22";
+
         ctx.lineWidth = 3.2 * unit;
-        ctx.fillStyle = fur;
+        ctx.fillStyle = shade;
         ctx.beginPath();
-        ctx.moveTo(36 * unit, 49 * unit);
-        ctx.bezierCurveTo(45 * unit, 37 * unit, 67 * unit, 37 * unit, 78 * unit, 49 * unit);
-        ctx.bezierCurveTo(86 * unit, 58 * unit, 80 * unit, 70 * unit, 65 * unit, 71 * unit);
-        ctx.lineTo(43 * unit, 70 * unit);
-        ctx.bezierCurveTo(31 * unit, 69 * unit, 27 * unit, 58 * unit, 36 * unit, 49 * unit);
+        ctx.moveTo(78 * unit, 55 * unit);
+        ctx.bezierCurveTo(88 * unit, 58 * unit, 93 * unit, 70 * unit, 96 * unit, 79 * unit);
+        ctx.bezierCurveTo(88 * unit, 78 * unit, 81 * unit, 70 * unit, 75 * unit, 62 * unit);
         ctx.fill();
         ctx.stroke();
 
         ctx.fillStyle = fur;
         ctx.beginPath();
-        ctx.moveTo(28 * unit, 35 * unit);
-        ctx.bezierCurveTo(39 * unit, 30 * unit, 51 * unit, 38 * unit, 48 * unit, 51 * unit);
-        ctx.bezierCurveTo(46 * unit, 61 * unit, 35 * unit, 65 * unit, 24 * unit, 58 * unit);
-        ctx.bezierCurveTo(13 * unit, 51 * unit, 15 * unit, 40 * unit, 28 * unit, 35 * unit);
+        ctx.moveTo(35 * unit, 47 * unit);
+        ctx.bezierCurveTo(48 * unit, 39 * unit, 69 * unit, 40 * unit, 82 * unit, 50 * unit);
+        ctx.lineTo(88 * unit, 68 * unit);
+        ctx.bezierCurveTo(75 * unit, 73 * unit, 52 * unit, 73 * unit, 34 * unit, 66 * unit);
+        ctx.bezierCurveTo(28 * unit, 58 * unit, 29 * unit, 51 * unit, 35 * unit, 47 * unit);
+        ctx.fill();
+        ctx.stroke();
+
+        [[39, 66, 35, 88, furLight], [55, 68, 52, 88, furLight], [70, 68, 76, 88, shade], [84, 66, 90, 86, furLight]].forEach(([x1, y1, x2, y2, color]) => {
+          ctx.strokeStyle = "#1d1d22";
+          ctx.lineWidth = 6.2 * unit;
+          ctx.beginPath();
+          ctx.moveTo(x1 * unit, y1 * unit);
+          ctx.lineTo(x2 * unit, y2 * unit);
+          ctx.stroke();
+          ctx.strokeStyle = color;
+          ctx.lineWidth = 4.6 * unit;
+          ctx.beginPath();
+          ctx.moveTo(x1 * unit, y1 * unit);
+          ctx.lineTo(x2 * unit, y2 * unit);
+          ctx.stroke();
+        });
+
+        ctx.strokeStyle = "#1d1d22";
+        ctx.lineWidth = 3.2 * unit;
+        ctx.fillStyle = furLight;
+        ctx.beginPath();
+        ctx.moveTo(30 * unit, 33 * unit);
+        ctx.lineTo(17 * unit, 37 * unit);
+        ctx.lineTo(9 * unit, 49 * unit);
+        ctx.lineTo(17 * unit, 61 * unit);
+        ctx.lineTo(35 * unit, 61 * unit);
+        ctx.bezierCurveTo(42 * unit, 55 * unit, 42 * unit, 42 * unit, 30 * unit, 33 * unit);
         ctx.fill();
         ctx.stroke();
 
         ctx.fillStyle = ear;
         ctx.beginPath();
-        ctx.moveTo(26 * unit, 36 * unit);
-        ctx.bezierCurveTo(19 * unit, 25 * unit, 11 * unit, 19 * unit, 8 * unit, 16 * unit);
-        ctx.bezierCurveTo(10 * unit, 30 * unit, 15 * unit, 43 * unit, 25 * unit, 48 * unit);
-        ctx.bezierCurveTo(29 * unit, 45 * unit, 30 * unit, 40 * unit, 26 * unit, 36 * unit);
+        ctx.moveTo(35 * unit, 35 * unit);
+        ctx.bezierCurveTo(48 * unit, 35 * unit, 50 * unit, 47 * unit, 39 * unit, 59 * unit);
+        ctx.bezierCurveTo(32 * unit, 56 * unit, 30 * unit, 43 * unit, 35 * unit, 35 * unit);
         ctx.fill();
         ctx.stroke();
 
         ctx.fillStyle = "#1d1d22";
         ctx.beginPath();
-        ctx.arc(30 * unit, 45 * unit, 3.2 * unit, 0, Math.PI * 2);
+        ctx.arc(27 * unit, 43 * unit, 2.7 * unit, 0, Math.PI * 2);
         ctx.fill();
         ctx.beginPath();
-        ctx.arc(18 * unit, 53 * unit, 4.8 * unit, 0, Math.PI * 2);
+        ctx.moveTo(9 * unit, 49 * unit);
+        ctx.bezierCurveTo(13 * unit, 45 * unit, 17 * unit, 46 * unit, 19 * unit, 49 * unit);
+        ctx.bezierCurveTo(16 * unit, 55 * unit, 11 * unit, 55 * unit, 9 * unit, 49 * unit);
         ctx.fill();
 
         ctx.strokeStyle = "#1d1d22";
-        ctx.lineWidth = 4 * unit;
-        [[41, 70, 37, 86], [55, 71, 54, 87], [70, 70, 76, 86], [31, 66, 26, 82]].forEach(([x1, y1, x2, y2]) => {
-          ctx.beginPath();
-          ctx.moveTo(x1 * unit, y1 * unit);
-          ctx.lineTo(x2 * unit, y2 * unit);
-          ctx.stroke();
-        });
-        ctx.strokeStyle = shade;
-        ctx.lineWidth = 5.5 * unit;
-        [[41, 70, 37, 86], [55, 71, 54, 87], [70, 70, 76, 86], [31, 66, 26, 82]].forEach(([x1, y1, x2, y2]) => {
-          ctx.beginPath();
-          ctx.moveTo(x1 * unit, y1 * unit);
-          ctx.lineTo(x2 * unit, y2 * unit);
-          ctx.stroke();
-        });
-
-        ctx.strokeStyle = "#1d1d22";
-        ctx.lineWidth = 3 * unit;
-        ctx.strokeStyle = "#6f86ff";
-        ctx.lineWidth = 4.8 * unit;
+        ctx.lineWidth = 4.6 * unit;
         ctx.beginPath();
-        ctx.moveTo(38 * unit, 50 * unit);
-        ctx.bezierCurveTo(47 * unit, 47 * unit, 58 * unit, 47 * unit, 72 * unit, 50 * unit);
+        ctx.moveTo(31 * unit, 58 * unit);
+        ctx.lineTo(52 * unit, 69 * unit);
         ctx.stroke();
-        ctx.strokeStyle = "#1d1d22";
-        ctx.lineWidth = 1.7 * unit;
         ctx.beginPath();
-        ctx.moveTo(38 * unit, 50 * unit);
-        ctx.bezierCurveTo(47 * unit, 47 * unit, 58 * unit, 47 * unit, 72 * unit, 50 * unit);
+        ctx.moveTo(52 * unit, 47 * unit);
+        ctx.lineTo(61 * unit, 70 * unit);
+        ctx.stroke();
+
+        ctx.fillStyle = pack;
+        ctx.lineWidth = 3 * unit;
+        roundedRect(ctx, 56 * unit, 43 * unit, 22 * unit, 24 * unit, 6 * unit);
+        ctx.fill();
+        ctx.stroke();
+        ctx.strokeStyle = pack;
+        ctx.lineWidth = 5 * unit;
+        ctx.beginPath();
+        ctx.moveTo(61 * unit, 42 * unit);
+        ctx.bezierCurveTo(62 * unit, 34 * unit, 73 * unit, 34 * unit, 74 * unit, 42 * unit);
         ctx.stroke();
 
         ctx.strokeStyle = "#1d1d22";
         ctx.lineWidth = 3 * unit;
-        ctx.fillStyle = vest;
-        roundedRect(ctx, 45 * unit, 50 * unit, 31 * unit, 17 * unit, 7 * unit);
-        ctx.fill();
-        ctx.stroke();
-
-        ctx.strokeStyle = "#8ca0ff";
-        ctx.lineWidth = 4.2 * unit;
         ctx.beginPath();
-        ctx.moveTo(41 * unit, 55 * unit);
-        ctx.bezierCurveTo(47 * unit, 58 * unit, 52 * unit, 61 * unit, 55 * unit, 66 * unit);
+        ctx.moveTo(30 * unit, 58 * unit);
+        ctx.lineTo(13 * unit, 92 * unit);
         ctx.stroke();
         ctx.restore();
       } else if (item.includes("燕子")) {
