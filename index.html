@@ -3117,7 +3117,11 @@
       grain(ctx, 54, 292, 792, 520, .055, 10);
       drawSharePanelFiller(ctx, theme, 62, 306, 776, 500);
 
-      drawItemIllustration(ctx, lastResult.item, { type: lastResult.type }, 82, 352, 308);
+      const illustrationX = 82;
+      const illustrationY = 352;
+      const illustrationSize = 308;
+      const illustrationBottom = illustrationY + illustrationSize;
+      drawItemIllustration(ctx, lastResult.item, { type: lastResult.type }, illustrationX, illustrationY, illustrationSize);
 
       ctx.fillStyle = display;
       ctx.font = "900 32px Arial Black, Microsoft YaHei, sans-serif";
@@ -3130,11 +3134,13 @@
       const titleEndY = drawTextBlock(ctx, lastResult.item, mainTextX, 430, mainTextWidth, titleSize + 10, 3);
       ctx.font = "800 26px Arial, Microsoft YaHei, sans-serif";
       ctx.fillStyle = muted;
-      let infoY = Math.max(560, titleEndY + 24);
+      const infoGap = 38;
+      const infoBaselineOffset = 8;
+      let infoY = Math.max(titleEndY + 24, illustrationBottom - infoGap * 3 - infoBaselineOffset);
       ctx.fillText(lastResult.level, mainTextX, infoY);
-      ctx.fillText(lastResult.type, mainTextX, infoY + 38);
-      ctx.fillText(`善恶轴 ${state.good >= 0 ? "+" : ""}${state.good}`, mainTextX, infoY + 76);
-      ctx.fillText(`秩序轴 ${state.order >= 0 ? "+" : ""}${state.order}`, mainTextX, infoY + 114);
+      ctx.fillText(lastResult.type, mainTextX, infoY + infoGap);
+      ctx.fillText(`善恶轴 ${state.good >= 0 ? "+" : ""}${state.good}`, mainTextX, infoY + infoGap * 2);
+      ctx.fillText(`秩序轴 ${state.order >= 0 ? "+" : ""}${state.order}`, mainTextX, infoY + infoGap * 3);
 
       rectSketch(ctx, 62, 834, 776, 318, panel, 0, 4, border);
       grain(ctx, 54, 848, 792, 306, .055, 11);
