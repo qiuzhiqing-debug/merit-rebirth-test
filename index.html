@@ -731,7 +731,7 @@
             <img class="qr-image" id="qrImage" alt="" crossorigin="anonymous" />
             <div class="result-actions">
               <button class="primary" type="button" id="copyImageBtn">复制结果图片</button>
-              <button class="ghost" type="button" id="downloadImageBtn">下载结果图片</button>
+              <button class="ghost" type="button" id="downloadImageBtn">保存结果图片</button>
               <button class="ghost" type="button" id="copyTextBtn">复制结果文案</button>
               <button class="ghost" type="button" id="resultPrevBtn">返回上一题</button>
               <button class="ghost" type="button" id="restartBtn">重新测试</button>
@@ -3154,6 +3154,41 @@
       return /Android|iPhone|iPad|iPod|Mobile|MicroMessenger/i.test(navigator.userAgent);
     }
 
+    function resetDownloadButton(delay = 1600) {
+      setTimeout(() => el.downloadImageBtn.textContent = "保存结果图片", delay);
+    }
+
+    function makeImageFile(blob, fileName) {
+      if (typeof File === "function") {
+        return new File([blob], fileName, { type: "image/png" });
+      }
+      return null;
+    }
+
+    function canNativeShareImage(file) {
+      return !!(
+        file &&
+        navigator.share &&
+        navigator.canShare &&
+        navigator.canShare({ files: [file] })
+      );
+    }
+
+    async function tryNativeImageSave(blob, fileName) {
+      const file = makeImageFile(blob, fileName);
+      if (!canNativeShareImage(file)) return false;
+      try {
+        await navigator.share({
+          files: [file],
+          title: "功德分投胎报告",
+          text: "保存或分享我的功德分投胎报告"
+        });
+        return true;
+      } catch (error) {
+        return error && error.name === "AbortError";
+      }
+    }
+
     async function openImageSavePage(blob, fileName, pendingWindow = null) {
       const dataUrl = await blobToDataUrl(blob);
       const target = pendingWindow || window.open("", "_blank");
@@ -3162,7 +3197,7 @@
         return;
       }
       target.document.open();
-      target.document.write(`<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${fileName}</title><style>body{margin:0;padding:18px;background:#111;color:#fff;font-family:Arial,'Microsoft YaHei',sans-serif;text-align:center}p{margin:0 0 14px;font-weight:800;line-height:1.6}img{display:block;width:100%;max-width:520px;margin:0 auto;background:#fff}</style></head><body><p>长按图片保存到相册，或用浏览器菜单保存图片</p><img src="${dataUrl}" alt="功德分投胎报告"></body></html>`);
+      target.document.write(`<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${fileName}</title><style>body{margin:0;padding:18px;background:#111;color:#fff;font-family:Arial,'Microsoft YaHei',sans-serif;text-align:center}p{margin:0 0 14px;font-weight:800;line-height:1.6}img{display:block;width:100%;max-width:520px;margin:0 auto;background:#fff}</style></head><body><p>如果系统没有弹出保存面板，请长按图片选择“保存到相册/保存图片”</p><img src="${dataUrl}" alt="功德分投胎报告"></body></html>`);
       target.document.close();
     }
 
@@ -3185,30 +3220,21 @@
     }
 
     async function downloadImageResult() {
-      const pendingWindow = isMobileBrowser() ? window.open("", "_blank") : null;
+      const mobile = isMobileBrowser();
+      const mayUseNativeShare = mobile && navigator.share && navigator.canShare && typeof File === "function";
+      const pendingWindow = mobile && !mayUseNativeShare ? window.open("", "_blank") : null;
       await renderShareCard();
       const blob = await canvasToBlob(el.shareCanvas);
       const fileName = resultFileName();
-      if (isMobileBrowser()) {
-        try {
-          const file = new File([blob], fileName, { type: "image/png" });
-          if (navigator.canShare && navigator.canShare({ files: [file] }) && navigator.share) {
-            if (pendingWindow) pendingWindow.close();
-            await navigator.share({
-              files: [file],
-              title: "功德分投胎报告",
-              text: "保存或分享我的功德分投胎报告"
-            });
-            el.downloadImageBtn.textContent = "已打开保存面板";
-            setTimeout(() => el.downloadImageBtn.textContent = "下载结果图片", 1800);
-            return;
-          }
-        } catch {
-          // Fall through to the image save page for browsers without file sharing.
+      if (mobile) {
+        if (await tryNativeImageSave(blob, fileName)) {
+          el.downloadImageBtn.textContent = "已打开保存面板";
+          resetDownloadButton(1800);
+          return;
         }
         await openImageSavePage(blob, fileName, pendingWindow);
         el.downloadImageBtn.textContent = "长按图片保存";
-        setTimeout(() => el.downloadImageBtn.textContent = "下载结果图片", 2200);
+        resetDownloadButton(2200);
         return;
       }
       const url = URL.createObjectURL(blob);
@@ -3220,7 +3246,7 @@
       link.remove();
       setTimeout(() => URL.revokeObjectURL(url), 1200);
       el.downloadImageBtn.textContent = "已开始下载";
-      setTimeout(() => el.downloadImageBtn.textContent = "下载结果图片", 1500);
+      resetDownloadButton(1500);
     }
 
     async function copyTextResult() {
