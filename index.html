@@ -1489,14 +1489,6 @@
         ctx.fill();
         ctx.stroke();
 
-        ctx.fillStyle = shade;
-        ctx.beginPath();
-        ctx.moveTo(42 * unit, 38 * unit);
-        ctx.bezierCurveTo(52 * unit, 27 * unit, 60 * unit, 31 * unit, 55 * unit, 47 * unit);
-        ctx.bezierCurveTo(52 * unit, 55 * unit, 45 * unit, 54 * unit, 42 * unit, 38 * unit);
-        ctx.fill();
-        ctx.stroke();
-
         ctx.fillStyle = "#1d1d22";
         ctx.beginPath();
         ctx.arc(30 * unit, 45 * unit, 3.2 * unit, 0, Math.PI * 2);
@@ -1504,13 +1496,6 @@
         ctx.beginPath();
         ctx.arc(18 * unit, 53 * unit, 4.8 * unit, 0, Math.PI * 2);
         ctx.fill();
-
-        ctx.strokeStyle = "#ef5555";
-        ctx.lineWidth = 2.4 * unit;
-        ctx.beginPath();
-        ctx.moveTo(18 * unit, 60 * unit);
-        ctx.bezierCurveTo(25 * unit, 64 * unit, 34 * unit, 63 * unit, 42 * unit, 59 * unit);
-        ctx.stroke();
 
         ctx.strokeStyle = "#1d1d22";
         ctx.lineWidth = 4 * unit;
@@ -1531,34 +1516,31 @@
 
         ctx.strokeStyle = "#1d1d22";
         ctx.lineWidth = 3 * unit;
-        ctx.fillStyle = vest;
-        roundedRect(ctx, 46 * unit, 48 * unit, 28 * unit, 15 * unit, 7 * unit);
-        ctx.fill();
-        ctx.stroke();
-        ctx.strokeStyle = vest;
-        ctx.lineWidth = 5 * unit;
+        ctx.strokeStyle = "#6f86ff";
+        ctx.lineWidth = 4.8 * unit;
         ctx.beginPath();
-        ctx.moveTo(43 * unit, 48 * unit);
-        ctx.bezierCurveTo(52 * unit, 44 * unit, 65 * unit, 44 * unit, 77 * unit, 48 * unit);
-        ctx.stroke();
-
-        ctx.strokeStyle = ear;
-        ctx.lineWidth = 5 * unit;
-        ctx.beginPath();
-        ctx.moveTo(79 * unit, 50 * unit);
-        ctx.bezierCurveTo(91 * unit, 45 * unit, 91 * unit, 34 * unit, 85 * unit, 30 * unit);
-        ctx.stroke();
-
-        ctx.strokeStyle = guide;
-        ctx.lineWidth = 3.6 * unit;
-        ctx.beginPath();
-        ctx.moveTo(60 * unit, 44 * unit);
-        ctx.bezierCurveTo(67 * unit, 33 * unit, 77 * unit, 24 * unit, 90 * unit, 24 * unit);
+        ctx.moveTo(38 * unit, 50 * unit);
+        ctx.bezierCurveTo(47 * unit, 47 * unit, 58 * unit, 47 * unit, 72 * unit, 50 * unit);
         ctx.stroke();
         ctx.strokeStyle = "#1d1d22";
-        ctx.lineWidth = 2.2 * unit;
+        ctx.lineWidth = 1.7 * unit;
         ctx.beginPath();
-        ctx.arc(92 * unit, 24 * unit, 5 * unit, 0, Math.PI * 2);
+        ctx.moveTo(38 * unit, 50 * unit);
+        ctx.bezierCurveTo(47 * unit, 47 * unit, 58 * unit, 47 * unit, 72 * unit, 50 * unit);
+        ctx.stroke();
+
+        ctx.strokeStyle = "#1d1d22";
+        ctx.lineWidth = 3 * unit;
+        ctx.fillStyle = vest;
+        roundedRect(ctx, 45 * unit, 50 * unit, 31 * unit, 17 * unit, 7 * unit);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.strokeStyle = "#8ca0ff";
+        ctx.lineWidth = 4.2 * unit;
+        ctx.beginPath();
+        ctx.moveTo(41 * unit, 55 * unit);
+        ctx.bezierCurveTo(47 * unit, 58 * unit, 52 * unit, 61 * unit, 55 * unit, 66 * unit);
         ctx.stroke();
         ctx.restore();
       } else if (item.includes("燕子")) {
