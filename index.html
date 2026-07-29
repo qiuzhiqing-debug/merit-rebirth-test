@@ -566,6 +566,20 @@
 
     .share-preview.show { display: block; }
 
+    .mobile-save-image {
+      display: none;
+      width: min(100%, 420px);
+      max-height: 76vh;
+      margin-top: 22px;
+      border: 4px solid var(--ink);
+      border-radius: 0;
+      background: #fffdf8;
+      object-fit: contain;
+      box-shadow: none;
+    }
+
+    .mobile-save-image.show { display: block; }
+
     .qr-image {
       display: none;
     }
@@ -593,6 +607,7 @@
       .breakdown { grid-template-columns: 1fr; }
       .score-card { max-width: 320px; }
       .share-preview { width: min(100%, 360px); max-height: none; }
+      .mobile-save-image { width: min(100%, 360px); max-height: none; }
       .result-actions .primary,
       .result-actions .ghost { flex: 1 1 180px; }
     }
@@ -728,10 +743,11 @@
               <div class="metric"><strong id="chaosMetric">0</strong><span>混乱浓度：越高越像随机事件</span></div>
             </div>
             <canvas class="share-preview" id="shareCanvas" width="900" height="1350" aria-label="结果图片预览"></canvas>
+            <img class="mobile-save-image" id="mobileSaveImage" alt="长按保存功德分投胎报告" />
             <img class="qr-image" id="qrImage" alt="" crossorigin="anonymous" />
             <div class="result-actions">
               <button class="primary" type="button" id="copyImageBtn">复制结果图片</button>
-              <button class="ghost" type="button" id="downloadImageBtn">保存结果图片</button>
+              <button class="ghost" type="button" id="downloadImageBtn">下载结果图片</button>
               <button class="ghost" type="button" id="copyTextBtn">复制结果文案</button>
               <button class="ghost" type="button" id="resultPrevBtn">返回上一题</button>
               <button class="ghost" type="button" id="restartBtn">重新测试</button>
@@ -975,6 +991,7 @@
       orderMetric: document.getElementById("orderMetric"),
       chaosMetric: document.getElementById("chaosMetric"),
       shareCanvas: document.getElementById("shareCanvas"),
+      mobileSaveImage: document.getElementById("mobileSaveImage"),
       qrImage: document.getElementById("qrImage")
     };
 
@@ -1045,6 +1062,8 @@
       el.result.classList.remove("show");
       el.result.classList.remove("theme-heaven", "theme-human", "theme-hell");
       el.shareCanvas.classList.remove("show");
+      el.mobileSaveImage.classList.remove("show");
+      el.mobileSaveImage.removeAttribute("src");
       renderQuestion();
       updateMark();
       document.getElementById("quizPanel").scrollIntoView({ behavior: "smooth", block: "start" });
@@ -1095,6 +1114,8 @@
       lastResult = null;
       el.result.classList.remove("show");
       el.shareCanvas.classList.remove("show");
+      el.mobileSaveImage.classList.remove("show");
+      el.mobileSaveImage.removeAttribute("src");
       el.questionArea.classList.remove("hide");
       renderQuestion();
       updateMark();
@@ -2550,6 +2571,9 @@
       el.orderMetric.textContent = state.order >= 0 ? `+${state.order}` : state.order;
       el.chaosMetric.textContent = chaos;
       el.resultCopy.textContent = lastResult.text;
+      el.mobileSaveImage.classList.remove("show");
+      el.mobileSaveImage.removeAttribute("src");
+      el.downloadImageBtn.textContent = isMobileBrowser() ? "长按保存图片" : "下载结果图片";
       renderResultIllustration();
       renderShareCard();
       updateMark();
@@ -3155,7 +3179,9 @@
     }
 
     function resetDownloadButton(delay = 1600) {
-      setTimeout(() => el.downloadImageBtn.textContent = "保存结果图片", delay);
+      setTimeout(() => {
+        el.downloadImageBtn.textContent = isMobileBrowser() ? "长按保存图片" : "下载结果图片";
+      }, delay);
     }
 
     function makeImageFile(blob, fileName) {
@@ -3221,19 +3247,16 @@
 
     async function downloadImageResult() {
       const mobile = isMobileBrowser();
-      const mayUseNativeShare = mobile && navigator.share && navigator.canShare && typeof File === "function";
-      const pendingWindow = mobile && !mayUseNativeShare ? window.open("", "_blank") : null;
       await renderShareCard();
       const blob = await canvasToBlob(el.shareCanvas);
       const fileName = resultFileName();
       if (mobile) {
-        if (await tryNativeImageSave(blob, fileName)) {
-          el.downloadImageBtn.textContent = "已打开保存面板";
-          resetDownloadButton(1800);
-          return;
-        }
-        await openImageSavePage(blob, fileName, pendingWindow);
-        el.downloadImageBtn.textContent = "长按图片保存";
+        el.mobileSaveImage.src = URL.createObjectURL(blob);
+        el.mobileSaveImage.alt = fileName.replace(/\.png$/i, "");
+        el.mobileSaveImage.classList.add("show");
+        el.shareCanvas.classList.remove("show");
+        el.downloadImageBtn.textContent = "长按保存图片";
+        el.mobileSaveImage.scrollIntoView({ behavior: "smooth", block: "center" });
         resetDownloadButton(2200);
         return;
       }
