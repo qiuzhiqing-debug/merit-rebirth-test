@@ -3121,18 +3121,20 @@
 
       ctx.fillStyle = display;
       ctx.font = "900 32px Arial Black, Microsoft YaHei, sans-serif";
-      ctx.fillText(lastResult.alignment, 450, 348);
-      const titleSize = fontSizeForText(ctx, lastResult.item, 340, 58, 38);
+      const mainTextX = 424;
+      const mainTextWidth = 394;
+      ctx.fillText(lastResult.alignment, mainTextX, 348);
+      const titleSize = fontSizeForText(ctx, lastResult.item, mainTextWidth, 58, 38);
       ctx.font = `900 ${titleSize}px Arial Black, Microsoft YaHei, sans-serif`;
       ctx.fillStyle = display;
-      const titleEndY = drawTextBlock(ctx, lastResult.item, 450, 430, 340, titleSize + 10, 3);
+      const titleEndY = drawTextBlock(ctx, lastResult.item, mainTextX, 430, mainTextWidth, titleSize + 10, 3);
       ctx.font = "800 26px Arial, Microsoft YaHei, sans-serif";
       ctx.fillStyle = muted;
       let infoY = Math.max(560, titleEndY + 24);
-      ctx.fillText(lastResult.level, 450, infoY);
-      ctx.fillText(lastResult.type, 450, infoY + 38);
-      ctx.fillText(`善恶轴 ${state.good >= 0 ? "+" : ""}${state.good}`, 450, infoY + 76);
-      ctx.fillText(`秩序轴 ${state.order >= 0 ? "+" : ""}${state.order}`, 450, infoY + 114);
+      ctx.fillText(lastResult.level, mainTextX, infoY);
+      ctx.fillText(lastResult.type, mainTextX, infoY + 38);
+      ctx.fillText(`善恶轴 ${state.good >= 0 ? "+" : ""}${state.good}`, mainTextX, infoY + 76);
+      ctx.fillText(`秩序轴 ${state.order >= 0 ? "+" : ""}${state.order}`, mainTextX, infoY + 114);
 
       rectSketch(ctx, 62, 834, 776, 318, panel, 0, 4, border);
       grain(ctx, 54, 848, 792, 306, .055, 11);
