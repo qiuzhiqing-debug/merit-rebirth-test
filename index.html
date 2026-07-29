@@ -3159,7 +3159,16 @@
       ctx.fillStyle = muted;
       ctx.font = "700 22px Arial, Microsoft YaHei, sans-serif";
       ctx.fillText("复制图片，把这份灵魂判决发给朋友", 72, 1258);
-      el.shareCanvas.classList.add("show");
+      if (isMobileBrowser()) {
+        el.mobileSaveImage.src = canvas.toDataURL("image/png");
+        el.mobileSaveImage.alt = resultFileName().replace(/\.png$/i, "");
+        el.mobileSaveImage.classList.add("show");
+        el.shareCanvas.classList.remove("show");
+      } else {
+        el.mobileSaveImage.classList.remove("show");
+        el.mobileSaveImage.removeAttribute("src");
+        el.shareCanvas.classList.add("show");
+      }
     }
 
     function canvasToBlob(canvas) {
@@ -3255,19 +3264,19 @@
 
     async function downloadImageResult() {
       const mobile = isMobileBrowser();
-      await renderShareCard();
-      const blob = await canvasToBlob(el.shareCanvas);
-      const fileName = resultFileName();
       if (mobile) {
-        el.mobileSaveImage.src = URL.createObjectURL(blob);
-        el.mobileSaveImage.alt = fileName.replace(/\.png$/i, "");
+        if (!el.mobileSaveImage.getAttribute("src")) {
+          await renderShareCard();
+        }
         el.mobileSaveImage.classList.add("show");
         el.shareCanvas.classList.remove("show");
         el.downloadImageBtn.textContent = "长按保存图片";
         el.mobileSaveImage.scrollIntoView({ behavior: "smooth", block: "center" });
-        resetDownloadButton(2200);
         return;
       }
+      await renderShareCard();
+      const blob = await canvasToBlob(el.shareCanvas);
+      const fileName = resultFileName();
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
